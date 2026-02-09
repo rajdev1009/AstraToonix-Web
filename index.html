@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AstraToonix Movies</title>
+    <title>AstraToonix - By Rajdev</title>
     <meta name="theme-color" content="#000000">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -21,42 +21,69 @@
             </div>
             <div id="searchBar" class="search-bar hidden">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search movies (e.g. Pushpa)...">
+                <input type="text" id="searchInput" placeholder="Search movies...">
             </div>
         </header>
 
-        <div id="heroSlider" class="hero-slider"></div>
+        <div class="developer-card">
+            <div class="dev-header">
+                <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="Rajdev" class="dev-photo">
+                <div class="dev-info">
+                    <h3>Rajdev</h3>
+                    <span class="dev-badge">Full Stack Developer</span>
+                </div>
+            </div>
+            <p class="dev-desc">
+                Hi, I'm <b>Rajdev</b>. Join my Telegram for live streams & fast downloads. 
+                Need help? Ask my AI Chatbot below! 👇
+            </p>
+            <a href="https://t.me/raj_dev_01" target="_blank" class="contact-btn">
+                <i class="fab fa-telegram"></i> Message @raj_dev_01
+            </a>
+        </div>
 
+        <div id="heroSlider" class="hero-slider"></div>
         <div class="section-title">Trending Top 10</div>
         <div class="horizontal-scroll" id="trendingList"></div>
-
         <div class="section-title">All Movies (1-100)</div>
         <div class="container">
             <div id="movieGrid" class="movie-grid"></div>
             <div id="noResults" class="no-results hidden">
-                <p>No movie found with that name.</p>
+                <p>No movie found.</p>
             </div>
         </div>
+        
+        <footer>
+            <p>Developed with ❤️ by <span>Rajdev</span></p>
+        </footer>
     </div>
 
+    <div class="chat-float-btn" onclick="toggleChatbot()">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <div class="chat-window hidden" id="chatWindow">
+        <div class="chat-header">
+            <span>🤖 AstraToonix AI</span>
+            <i class="fas fa-times" onclick="toggleChatbot()"></i>
+        </div>
+        <iframe src="https://high-rhinoceros-dminemraj-83bdb398.koyeb.app/" title="Chatbot"></iframe>
+    </div>
     <div id="loadingScreen" class="loading-overlay hidden">
         <div class="loader-content">
             <div class="logo-container">
                 <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AstraToonix">
             </div>
-            <h2 id="loadingText">Requesting Server...</h2>
+            <h2 id="loadingText">Connecting...</h2>
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
-            <p class="wait-text">Searching for movie link...</p>
         </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
     </script>
 </body>
 </html>
