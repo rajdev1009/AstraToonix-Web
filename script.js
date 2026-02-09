@@ -1,106 +1,114 @@
 // CONFIGURATION
-const TELEGRAM_LINK = "https://t.me/+u4cmm3JmIrFlNzZl"; // Aapka Telegram Link
-const LOADING_DURATION = 3000; // 3 seconds loading time
+const TELEGRAM_LINK = "https://t.me/+u4cmm3JmIrFlNzZl"; 
+const DEVELOPER_NAME = "Raj Dev";
 
-// === DATA: 100+ MOVIES (All Images Fixed) ===
-// Using TMDB public image base URL for reliable loading
-const TMDB_BASE_URL = "https://image.tmdb.org/t/p/w500";
-const TMDB_ORIGINAL_URL = "https://image.tmdb.org/t/p/original";
+// === UNIQUE MOVIE DATA (100 Mixed Movies) ===
+// Note: Images are sourced from reliable public posters to avoid black screens.
+const moviesDB = [
+    // TOP 10 (Trending)
+    { id: 1, title: "Kalki 2898 AD", img: "https://upload.wikimedia.org/wikipedia/en/4/4c/Kalki_2898_AD.jpg" },
+    { id: 2, title: "Animal", img: "https://upload.wikimedia.org/wikipedia/en/9/90/Animal_%282023_film%29_poster.jpg" },
+    { id: 3, title: "Salaar", img: "https://upload.wikimedia.org/wikipedia/en/a/ad/Salaar_Part_1_–_Ceasefire_poster.jpg" },
+    { id: 4, title: "Jawan", img: "https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg" },
+    { id: 5, title: "Leo", img: "https://upload.wikimedia.org/wikipedia/en/7/71/Leo_%282023_Indian_film%29.jpg" },
+    { id: 6, title: "Tiger 3", img: "https://upload.wikimedia.org/wikipedia/en/d/d9/Tiger_3_poster.jpg" },
+    { id: 7, title: "12th Fail", img: "https://upload.wikimedia.org/wikipedia/en/f/f2/12th_Fail_poster.jpeg" },
+    { id: 8, title: "Dunki", img: "https://upload.wikimedia.org/wikipedia/en/d/d7/Dunki_poster.jpg" },
+    { id: 9, title: "Oppenheimer", img: "https://upload.wikimedia.org/wikipedia/en/4/4a/Oppenheimer_%28film%29.jpg" },
+    { id: 10, title: "Gadar 2", img: "https://upload.wikimedia.org/wikipedia/en/6/62/Gadar_2_poster.jpg" },
 
-const allMovies = [
-    // --- SLIDER HERO MOVIES (Big Hits - High Quality) ---
-    { title: "Jawan", poster: `${TMDB_ORIGINAL_URL}/jcdkpX8VX5s13e9SjL33X7Gg0q.jpg`, isHero: true },
-    { title: "Animal", poster: `${TMDB_ORIGINAL_URL}/hr9rjR3J0xBBKmlJ4n3gHId9ccx.jpg`, isHero: true },
-    { title: "Avatar: The Way of Water", poster: `${TMDB_ORIGINAL_URL}/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg`, isHero: true },
-    { title: "KGF: Chapter 2", poster: `${TMDB_ORIGINAL_URL}/5DpNIccT3V1jXN3t6JtU5e1k3c.jpg`, isHero: true },
-    { title: "Leo", poster: `${TMDB_ORIGINAL_URL}/pD6sL4vntUOXHmuvJPPZAgvyfd9.jpg`, isHero: true },
-
-    // --- TRENDING / RECENT (Poster Size) ---
-    { title: "Salaar: Part 1 - Ceasefire", poster: `${TMDB_BASE_URL}/m1b9bq7qZDpQ9ON85shEELpTyyk.jpg` },
-    { title: "Dunki", poster: `${TMDB_BASE_URL}/cZzv2Lq4Y7gK3c1q5gX2R.jpg` }, // Fixed
-    { title: "Tiger 3", poster: `${TMDB_BASE_URL}/7I6VvfcY4acOSAdLTjWWJqJ7a0.jpg` },
-    { title: "12th Fail", poster: `${TMDB_BASE_URL}/mK4oF5Xyq5Xyq5Xyq5Xyq5Xy.jpg` },
-    { title: "Oppenheimer", poster: `${TMDB_BASE_URL}/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg` },
-    { title: "Pathaan", poster: `${TMDB_BASE_URL}/m1b9bq7qZDpQ9ON85shEELpTyyk.jpg` },
-    { title: "RRR", poster: `${TMDB_BASE_URL}/nEuGuZ7560bM8Z4N5u2R7.jpg` }, // Fixed
-    { title: "Pushpa: The Rise", poster: `${TMDB_BASE_URL}/r1yAzpRb7XJcR8iT8g0QhC7F7.jpg` },
-    { title: "Baahubali 2: The Conclusion", poster: `${TMDB_BASE_URL}/2CAL2433ZeIihf62tXL4vXuyZIG.jpg` },
-    { title: "Brahmāstra: Part One – Shiva", poster: `${TMDB_BASE_URL}/x61q9iV4xXYX2xX2xX2xX2xX.jpg` },
-
-    // --- MASS LIST (More Movies) ---
-    { title: "Avengers: Endgame", poster: `${TMDB_BASE_URL}/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg` },
-    { title: "Avengers: Infinity War", poster: `${TMDB_BASE_URL}/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg` },
-    { title: "Spider-Man: No Way Home", poster: `${TMDB_BASE_URL}/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg` },
-    { title: "The Batman", poster: `${TMDB_BASE_URL}/74xTEgt7R36Fpooo50r9T25onhq.jpg` },
-    { title: "Joker", poster: `${TMDB_BASE_URL}/udDclJoHjfjb8EkGsdr7UUslc9t.jpg` },
-    { title: "Interstellar", poster: `${TMDB_BASE_URL}/gEU2QniL6C8z1dY4uY2I1.jpg` },
-    { title: "Inception", poster: `${TMDB_BASE_URL}/9gk7admal4zl248s.jpg` },
-    { title: "Iron Man", poster: `${TMDB_BASE_URL}/78lPtwv72eTNqFW9COBykBkvO.jpg` },
-    { title: "Thor: Ragnarok", poster: `${TMDB_BASE_URL}/rzRwTcFvttcN1ZpX2xv4j3tbi82.jpg` }, // Fixed
-    { title: "Captain America: Civil War", poster: `${TMDB_BASE_URL}/rAGiXaUfPzY7CDEyNKUofUnFeE.jpg` }, // Fixed
-    { title: "Black Panther", poster: `${TMDB_BASE_URL}/uxzzxijgPIY7slzFvMotPv8wjKA.jpg` },
-    { title: "Doctor Strange", poster: `${TMDB_BASE_URL}/uGBVj3bEbCoZbDjjl9wTxcygko1.jpg` },
-    { title: "Venom", poster: `${TMDB_BASE_URL}/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg` },
-    { title: "Deadpool", poster: `${TMDB_BASE_URL}/inVq3FRqcYIRl2la8iZikYYxFk6.jpg` },
-    { title: "Logan", poster: `${TMDB_BASE_URL}/fnbjc3vrF87t72a.jpg` },
-    { title: "X-Men: Days of Future Past", poster: `${TMDB_BASE_URL}/qKkFk9PpTYZhHbK.jpg` }, // Fixed
-    { title: "Fast X", poster: `${TMDB_BASE_URL}/fiVW06jE7z9YnO4trhaMEdcl4Cn.jpg` },
-    { title: "F9", poster: `${TMDB_BASE_URL}/bOFaAXmWWXC3Rbv4u4uM9ZSzRXP.jpg` },
-    { title: "Hobbs & Shaw", poster: `${TMDB_BASE_URL}/qRby1nL.jpg` },
-    { title: "Jurassic World Dominion", poster: `${TMDB_BASE_URL}/kAVRgw7GgK1CfYEJq8ME6EvRI.jpg` }, // Fixed
-    { title: "Godzilla vs. Kong", poster: `${TMDB_BASE_URL}/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg` },
-    { title: "The Super Mario Bros. Movie", poster: `${TMDB_BASE_URL}/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg` },
-    { title: "Minions: The Rise of Gru", poster: `${TMDB_BASE_URL}/wCn3V2.jpg` }, // Fixed
-    { title: "Frozen II", poster: `${TMDB_BASE_URL}/pjeMs3yqRmFL3giJy4PMXWZTTPa.jpg` },
-    { title: "Moana", poster: `${TMDB_BASE_URL}/4JeejGugONWskkbnGpKDCuHkOVP.jpg` },
-    { title: "Coco", poster: `${TMDB_BASE_URL}/eKi8dIrr8voCdba069JpnE2T4SS.jpg` },
-    { title: "Encanto", poster: `${TMDB_BASE_URL}/4j0PNHkMr5ax3IA8tjtxcmPU3QT.jpg` },
-    { title: "Toy Story 4", poster: `${TMDB_BASE_URL}/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg` },
-    { title: "Kung Fu Panda 4", poster: `${TMDB_BASE_URL}/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg` },
-    { title: "Dune: Part Two", poster: `${TMDB_BASE_URL}/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg` },
-    { title: "John Wick: Chapter 4", poster: `${TMDB_BASE_URL}/vZloFAK7NmvMGKE7VkF5UPurDq.jpg` },
-    { title: "Mission: Impossible - Dead Reckoning", poster: `${TMDB_BASE_URL}/nnl6OWkyPpuMm595hmAxNW3rZFn.jpg` },
-    { title: "Top Gun: Maverick", poster: `${TMDB_BASE_URL}/62HCnUTziyWcpDaBO2i1DX17ljH.jpg` },
-    { title: "Transformers: Rise of the Beasts", poster: `${TMDB_BASE_URL}/gPbM0MK8CP8A174rmUwGsADNYKD.jpg` }, // Fixed
-    { title: "Harry Potter and the Sorcerer's Stone", poster: `${TMDB_BASE_URL}/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg` },
-    { title: "Harry Potter and the Deathly Hallows: Part 2", poster: `${TMDB_BASE_URL}/iGoXIpPf7ENBB7Ajo1LfC6ddW6.jpg` },
-    { title: "The Lord of the Rings: The Fellowship of the Ring", poster: `${TMDB_BASE_URL}/6oom5QYQ2yQTMJIbnvbkBL9c0Bf.jpg` },
-    { title: "Titanic", poster: `${TMDB_BASE_URL}/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg` },
-    { title: "Squid Game", poster: `${TMDB_BASE_URL}/dDlE2FcE6d.jpg` },
-    { title: "Money Heist", poster: `${TMDB_BASE_URL}/reEMJA193XQVPPtxf9egx62alL.jpg` },
-    { title: "Stranger Things", poster: `${TMDB_BASE_URL}/x2LSRK2Cm7MZhjluni1msUQ36HG.jpg` },
-    { title: "Wednesday", poster: `${TMDB_BASE_URL}/9Rj8l6gElLpRL7Kj17iZhrT5Zuw.jpg` },
-    { title: "One Piece Film: Red", poster: `${TMDB_BASE_URL}/ogeeHS3871p.jpg` }, // Fixed
-    { title: "Naruto Shippuden the Movie", poster: `${TMDB_BASE_URL}/vDk6.jpg` }, // Fixed
-    { title: "Demon Slayer: Mugen Train", poster: `${TMDB_BASE_URL}/h8rb9.jpg` },
-    { title: "Dragon Ball Super: Broly", poster: `${TMDB_BASE_URL}/f03Yk.jpg` }, // Fixed
-    { title: "Death Note", poster: `${TMDB_BASE_URL}/t22.jpg` },
-    { title: "Attack on Titan", poster: `${TMDB_BASE_URL}/h8rb9.jpg` },
-    { title: "Gadar 2", poster: `${TMDB_BASE_URL}/ipo.jpg` },
-    { title: "OMG 2", poster: `${TMDB_BASE_URL}/h81.jpg` },
-    { title: "Dream Girl 2", poster: `${TMDB_BASE_URL}/h82.jpg` },
-    { title: "Rocky Aur Rani Kii Prem Kahaani", poster: `${TMDB_BASE_URL}/h83.jpg` },
-    { title: "Bholaa", poster: `${TMDB_BASE_URL}/h84.jpg` },
-    { title: "Drishyam 2", poster: `${TMDB_BASE_URL}/h85.jpg` },
-    { title: "Bhool Bhulaiyaa 2", poster: `${TMDB_BASE_URL}/h86.jpg` },
-    { title: "Kabir Singh", poster: `${TMDB_BASE_URL}/h87.jpg` },
-    { title: "War", poster: `${TMDB_BASE_URL}/h88.jpg` },
-    { title: "Sanju", poster: `${TMDB_BASE_URL}/h89.jpg` },
-    { title: "Dangal", poster: `${TMDB_BASE_URL}/h90.jpg` },
-    { title: "Sultan", poster: `${TMDB_BASE_URL}/h91.jpg` },
-    { title: "Bajrangi Bhaijaan", poster: `${TMDB_BASE_URL}/h92.jpg` },
-    { title: "PK", poster: `${TMDB_BASE_URL}/h93.jpg` },
-    { title: "3 Idiots", poster: `${TMDB_BASE_URL}/h94.jpg` },
-    { title: "Chennai Express", poster: `${TMDB_BASE_URL}/h95.jpg` },
-    { title: "Kick", poster: `${TMDB_BASE_URL}/h96.jpg` },
-    { title: "Ek Tha Tiger", poster: `${TMDB_BASE_URL}/h97.jpg` },
-    { title: "Dhoom 3", poster: `${TMDB_BASE_URL}/h98.jpg` },
-    { title: "Krrish 3", poster: `${TMDB_BASE_URL}/h99.jpg` },
-    { title: "Ra.One", poster: `${TMDB_BASE_URL}/h00.jpg` },
+    // 11-100 (General List)
+    { id: 11, title: "Pathaan", img: "https://upload.wikimedia.org/wikipedia/en/c/c3/Pathaan_film_poster.jpg" },
+    { id: 12, title: "KGF Chapter 2", img: "https://upload.wikimedia.org/wikipedia/en/d/d0/K.G.F_Chapter_2.jpg" },
+    { id: 13, title: "RRR", img: "https://upload.wikimedia.org/wikipedia/en/d/d7/RRR_Poster.jpg" },
+    { id: 14, title: "Pushpa The Rise", img: "https://upload.wikimedia.org/wikipedia/en/7/75/Pushpa_The_Rise.jpg" },
+    { id: 15, title: "Brahmastra", img: "https://upload.wikimedia.org/wikipedia/en/4/40/Brahmastra_Part_One_Shiva.jpg" },
+    { id: 16, title: "Baahubali 2", img: "https://upload.wikimedia.org/wikipedia/en/9/93/Baahubali_2_The_Conclusion_poster.jpg" },
+    { id: 17, title: "Kantara", img: "https://upload.wikimedia.org/wikipedia/en/8/84/Kantara_poster.jpeg" },
+    { id: 18, title: "Vikram", img: "https://upload.wikimedia.org/wikipedia/en/9/93/Vikram_2022_poster.jpg" },
+    { id: 19, title: "Jailer", img: "https://upload.wikimedia.org/wikipedia/en/c/cb/Jailer_2023_Tamil_film_poster.jpg" },
+    { id: 20, title: "Drishyam 2", img: "https://upload.wikimedia.org/wikipedia/en/d/dc/Drishyam_2_2022_poster.jpg" },
+    { id: 21, title: "Bhool Bhulaiyaa 2", img: "https://upload.wikimedia.org/wikipedia/en/2/23/Bhool_Bhulaiyaa_2_poster.jpg" },
+    { id: 22, title: "Kabir Singh", img: "https://upload.wikimedia.org/wikipedia/en/d/dc/Kabir_Singh.jpg" },
+    { id: 23, title: "War", img: "https://upload.wikimedia.org/wikipedia/en/6/6f/War_official_poster.jpg" },
+    { id: 24, title: "Sanju", img: "https://upload.wikimedia.org/wikipedia/en/f/f1/Sanju_poster.jpg" },
+    { id: 25, title: "Dangal", img: "https://upload.wikimedia.org/wikipedia/en/9/99/Dangal_Poster.jpg" },
+    { id: 26, title: "Sultan", img: "https://upload.wikimedia.org/wikipedia/en/1/1f/Sultan_film_poster.jpg" },
+    { id: 27, title: "Bajrangi Bhaijaan", img: "https://upload.wikimedia.org/wikipedia/en/d/dd/Bajrangi_Bhaijaan_Poster.jpg" },
+    { id: 28, title: "PK", img: "https://upload.wikimedia.org/wikipedia/en/c/c3/PK_poster.jpg" },
+    { id: 29, title: "3 Idiots", img: "https://upload.wikimedia.org/wikipedia/en/d/df/3_idiots_poster.jpg" },
+    { id: 30, title: "Chennai Express", img: "https://upload.wikimedia.org/wikipedia/en/1/1b/Chennai_Express.jpg" },
+    { id: 31, title: "Don 3", img: "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Don_3_Poster.jpg/220px-Don_3_Poster.jpg" }, // Placeholder if not released
+    { id: 32, title: "Avengers Endgame", img: "https://upload.wikimedia.org/wikipedia/en/0/0d/Avengers_Endgame_poster.jpg" },
+    { id: 33, title: "Avatar 2", img: "https://upload.wikimedia.org/wikipedia/en/5/54/Avatar_The_Way_of_Water_poster.jpg" },
+    { id: 34, title: "Spider-Man NWH", img: "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg" },
+    { id: 35, title: "The Batman", img: "https://upload.wikimedia.org/wikipedia/en/f/ff/The_Batman_%28film%29_poster.jpg" },
+    { id: 36, title: "Joker", img: "https://upload.wikimedia.org/wikipedia/en/e/e1/Joker_%282019_film%29_poster.jpg" },
+    { id: 37, title: "Inception", img: "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg" },
+    { id: 38, title: "Interstellar", img: "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg" },
+    { id: 39, title: "Titanic", img: "https://upload.wikimedia.org/wikipedia/en/1/18/Titanic_%281997_film%29_poster.png" },
+    { id: 40, title: "Fast X", img: "https://upload.wikimedia.org/wikipedia/en/d/d0/Fast_X_poster.jpg" },
+    { id: 41, title: "John Wick 4", img: "https://upload.wikimedia.org/wikipedia/en/c/c6/John_Wick_Chapter_4_poster.jpg" },
+    { id: 42, title: "Mission Impossible 7", img: "https://upload.wikimedia.org/wikipedia/en/f/f0/Mission_Impossible_–_Dead_Reckoning_Part_One_poster.jpg" },
+    { id: 43, title: "Top Gun Maverick", img: "https://upload.wikimedia.org/wikipedia/en/1/13/Top_Gun_Maverick_Poster.jpg" },
+    { id: 44, title: "Black Panther", img: "https://upload.wikimedia.org/wikipedia/en/d/d6/Black_Panther_%28film%29_poster.jpg" },
+    { id: 45, title: "Iron Man", img: "https://upload.wikimedia.org/wikipedia/en/0/02/Iron_Man_%282008_film%29_poster.jpg" },
+    { id: 46, title: "Thor Ragnarok", img: "https://upload.wikimedia.org/wikipedia/en/7/7d/Thor_Ragnarok_poster.jpg" },
+    { id: 47, title: "Deadpool", img: "https://upload.wikimedia.org/wikipedia/en/4/46/Deadpool_poster.jpg" },
+    { id: 48, title: "Logan", img: "https://upload.wikimedia.org/wikipedia/en/3/37/Logan_2017_poster.jpg" },
+    { id: 49, title: "Venom", img: "https://upload.wikimedia.org/wikipedia/en/1/17/Venom_poster.jpg" },
+    { id: 50, title: "Godzilla vs Kong", img: "https://upload.wikimedia.org/wikipedia/en/6/63/Godzilla_vs._Kong.jpg" },
+    { id: 51, title: "Jurassic World", img: "https://upload.wikimedia.org/wikipedia/en/6/6e/Jurassic_World_poster.jpg" },
+    { id: 52, title: "Frozen 2", img: "https://upload.wikimedia.org/wikipedia/en/c/c5/Frozen_II_poster.jpg" },
+    { id: 53, title: "Moana", img: "https://upload.wikimedia.org/wikipedia/en/2/26/Moana_Teaser_Poster.jpg" },
+    { id: 54, title: "Coco", img: "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg" },
+    { id: 55, title: "Toy Story 4", img: "https://upload.wikimedia.org/wikipedia/en/4/4c/Toy_Story_4_poster.jpg" },
+    { id: 56, title: "Kung Fu Panda", img: "https://upload.wikimedia.org/wikipedia/en/7/76/Kungfupanda.jpg" },
+    { id: 57, title: "Minions", img: "https://upload.wikimedia.org/wikipedia/en/3/32/Minions_poster.jpg" },
+    { id: 58, title: "Super Mario Movie", img: "https://upload.wikimedia.org/wikipedia/en/4/44/The_Super_Mario_Bros._Movie_poster.jpg" },
+    { id: 59, title: "Squid Game", img: "https://upload.wikimedia.org/wikipedia/en/d/dd/Squid_Game.jpg" },
+    { id: 60, title: "Money Heist", img: "https://upload.wikimedia.org/wikipedia/en/3/3b/Money_Heist_Part_5_Volume_2_poster.jpg" },
+    { id: 61, title: "Stranger Things", img: "https://upload.wikimedia.org/wikipedia/en/7/78/Stranger_Things_season_4.jpg" },
+    { id: 62, title: "Wednesday", img: "https://upload.wikimedia.org/wikipedia/en/6/62/Wednesday_Netflix_series_poster.png" },
+    { id: 63, title: "One Piece Red", img: "https://upload.wikimedia.org/wikipedia/en/2/2c/One_Piece_Film_Red_Visual_Poster.jpg" },
+    { id: 64, title: "Demon Slayer", img: "https://upload.wikimedia.org/wikipedia/en/2/21/Kimetsu_no_Yaiba_Mugen_Ressha_Hen_Poster.jpg" },
+    { id: 65, title: "Naruto", img: "https://upload.wikimedia.org/wikipedia/en/c/c9/Naruto_Shippuden_the_Movie.jpg" },
+    { id: 66, title: "Dragon Ball Super", img: "https://upload.wikimedia.org/wikipedia/en/1/13/Dragon_Ball_Super_Broly_poster.jpg" },
+    { id: 67, title: "Death Note", img: "https://upload.wikimedia.org/wikipedia/en/6/6f/Death_Note_Vol_1.jpg" },
+    { id: 68, title: "Attack on Titan", img: "https://upload.wikimedia.org/wikipedia/en/d/d6/Shingeki_no_Kyojin_manga_volume_1.jpg" },
+    { id: 69, title: "Loki", img: "https://upload.wikimedia.org/wikipedia/en/4/43/Loki_Season_2_Poster.jpg" },
+    { id: 70, title: "WandaVision", img: "https://upload.wikimedia.org/wikipedia/en/5/5e/WandaVision_poster.jpg" },
+    { id: 71, title: "Mirzapur", img: "https://upload.wikimedia.org/wikipedia/en/3/3c/Mirzapur_Poster.jpg" },
+    { id: 72, title: "Family Man", img: "https://upload.wikimedia.org/wikipedia/en/8/89/The_Family_Man_Season_2.jpg" },
+    { id: 73, title: "Sacred Games", img: "https://upload.wikimedia.org/wikipedia/en/4/4e/Sacred_Games_Title.png" },
+    { id: 74, title: "Asur", img: "https://upload.wikimedia.org/wikipedia/en/d/d3/Asur_web_series_poster.jpg" },
+    { id: 75, title: "Farzi", img: "https://upload.wikimedia.org/wikipedia/en/7/75/Farzi_poster.jpg" },
+    { id: 76, title: "Scam 1992", img: "https://upload.wikimedia.org/wikipedia/en/e/e3/Scam_1992_poster.jpg" },
+    { id: 77, title: "Panchayat", img: "https://upload.wikimedia.org/wikipedia/en/2/29/Panchayat_poster.jpeg" },
+    { id: 78, title: "Kota Factory", img: "https://upload.wikimedia.org/wikipedia/en/0/07/Kota_Factory_poster.jpg" },
+    { id: 79, title: "Aspirants", img: "https://upload.wikimedia.org/wikipedia/en/5/52/Aspirants_Poster.jpg" },
+    { id: 80, title: "Special OPS", img: "https://upload.wikimedia.org/wikipedia/en/c/c5/Special_OPS_poster.jpeg" },
+    { id: 81, title: "Hera Pheri", img: "https://upload.wikimedia.org/wikipedia/en/5/58/Hera_Pheri_Poster.jpg" },
+    { id: 82, title: "Welcome", img: "https://upload.wikimedia.org/wikipedia/en/8/83/Welcome_2007_Hindi_Film_Poster.jpg" },
+    { id: 83, title: "Dhamaal", img: "https://upload.wikimedia.org/wikipedia/en/4/49/Dhamaal_2007.jpg" },
+    { id: 84, title: "Golmaal", img: "https://upload.wikimedia.org/wikipedia/en/7/7e/Golmaal_Fun_Unlimited.jpg" },
+    { id: 85, title: "Housefull", img: "https://upload.wikimedia.org/wikipedia/en/6/6f/Housefull_poster.jpg" },
+    { id: 86, title: "Bhagam Bhag", img: "https://upload.wikimedia.org/wikipedia/en/9/91/Bhagam_Bhag.jpg" },
+    { id: 87, title: "Chup Chup Ke", img: "https://upload.wikimedia.org/wikipedia/en/8/8d/Chup_Chup_Ke.jpg" },
+    { id: 88, title: "Dhol", img: "https://upload.wikimedia.org/wikipedia/en/4/41/Dhol_poster.png" },
+    { id: 89, title: "Malamaal Weekly", img: "https://upload.wikimedia.org/wikipedia/en/2/29/Malamaal_Weekly_poster.jpg" },
+    { id: 90, title: "Hungama", img: "https://upload.wikimedia.org/wikipedia/en/e/e8/Hungama_%282003_film%29_poster.jpg" },
+    { id: 91, title: "Rockstar", img: "https://upload.wikimedia.org/wikipedia/en/c/ca/Rockstar_%282011_film%29_poster.jpg" },
+    { id: 92, title: "Tamasha", img: "https://upload.wikimedia.org/wikipedia/en/3/36/Tamasha_film_poster.jpg" },
+    { id: 93, title: "Barfi", img: "https://upload.wikimedia.org/wikipedia/en/2/2e/Barfi%21_poster.jpg" },
+    { id: 94, title: "Yeh Jawaani Hai Deewani", img: "https://upload.wikimedia.org/wikipedia/en/1/15/Yeh_Jawaani_Hai_Deewani.jpg" },
+    { id: 95, title: "Zindagi Na Milegi Dobara", img: "https://upload.wikimedia.org/wikipedia/en/3/3d/Zindaginamilegidobara.jpg" },
+    { id: 96, title: "Queen", img: "https://upload.wikimedia.org/wikipedia/en/4/45/QueenMoviePoster7thMarch.jpg" },
+    { id: 97, title: "Piku", img: "https://upload.wikimedia.org/wikipedia/en/e/e3/Piku_Poster.jpg" },
+    { id: 98, title: "Andhadhun", img: "https://upload.wikimedia.org/wikipedia/en/4/47/Andhadhun_poster.jpg" },
+    { id: 99, title: "Tumbbad", img: "https://upload.wikimedia.org/wikipedia/en/4/41/Tumbbad_poster.jpg" },
+    { id: 100, title: "Gangs of Wasseypur", img: "https://upload.wikimedia.org/wikipedia/en/6/6a/Gangs_of_Wasseypur_poster.jpg" }
 ];
-
-// Duplicate list to reach "100+" feel if list is short
-const fullMovieList = [...allMovies, ...allMovies];
 
 // DOM Elements
 const heroSlider = document.getElementById('heroSlider');
@@ -108,109 +116,112 @@ const trendingList = document.getElementById('trendingList');
 const movieGrid = document.getElementById('movieGrid');
 const searchInput = document.getElementById('searchInput');
 const searchBar = document.getElementById('searchBar');
+const mainApp = document.getElementById('main-app');
+const loadingScreen = document.getElementById('loadingScreen');
 
-// --- 1. RENDER SLIDER (Auto Change) ---
+// --- 1. RENDER SLIDER (Auto Change - Top 5) ---
 function renderSlider() {
-    const heroMovies = allMovies.filter(m => m.isHero);
+    const heroMovies = moviesDB.slice(0, 5); // Use first 5 as Hero
     heroSlider.innerHTML = '';
-
+    
     heroMovies.forEach((movie, index) => {
         const slide = document.createElement('div');
         slide.className = `slide ${index === 0 ? 'active' : ''}`;
-        slide.style.backgroundImage = `url('${movie.poster}')`;
-        slide.innerHTML = `
-            <div class="slide-overlay">
-                <div class="slide-title">${movie.title}</div>
-            </div>
-        `;
-        slide.onclick = startRedirectProcess;
+        slide.style.backgroundImage = `url('${movie.img}')`;
+        slide.innerHTML = `<div class="slide-overlay"><div class="slide-title">${movie.title}</div></div>`;
+        slide.onclick = () => startRedirect(movie.title);
         heroSlider.appendChild(slide);
     });
 
-    // Auto Change Logic (Every 3.5 Seconds)
-    let currentSlide = 0;
+    let current = 0;
     setInterval(() => {
         const slides = document.querySelectorAll('.slide');
-        if (slides.length > 0) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-    }, 3500);
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+    }, 4000);
 }
 
-// --- 2. RENDER TRENDING (Horizontal) ---
+// --- 2. RENDER TRENDING (Top 10 Horizontal with Numbers) ---
 function renderTrending() {
-    const trendingMovies = allMovies.slice(5, 15); // Pick top 10 from list
+    const trendingMovies = moviesDB.slice(0, 10);
     trendingList.innerHTML = '';
-    trendingMovies.forEach(movie => {
+    
+    trendingMovies.forEach((movie, index) => {
         const card = document.createElement('div');
         card.className = 'h-card';
-        card.innerHTML = `<img src="${movie.poster}" alt="${movie.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/140x210?text=No+Image'">`;
-        card.onclick = startRedirectProcess;
+        card.innerHTML = `
+            <img src="${movie.img}" alt="${movie.title}" onerror="this.src='https://placehold.co/130x195?text=No+Img'">
+            <div class="rank-number">${index + 1}</div>
+        `;
+        card.onclick = () => startRedirect(movie.title);
         trendingList.appendChild(card);
     });
 }
 
-// --- 3. RENDER ALL MOVIES (Grid) ---
+// --- 3. RENDER ALL MOVIES GRID (1-100) ---
 function renderGrid(list) {
     movieGrid.innerHTML = '';
-    if(list.length === 0) {
+    
+    if (list.length === 0) {
         document.getElementById('noResults').classList.remove('hidden');
     } else {
         document.getElementById('noResults').classList.add('hidden');
         list.forEach(movie => {
             const card = document.createElement('div');
             card.className = 'movie-card';
-            // Added onerror handler for any remaining broken links
-            card.innerHTML = `<img src="${movie.poster}" alt="${movie.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x300?text=No+Image'">`;
-            card.onclick = startRedirectProcess;
+            card.innerHTML = `
+                <div class="movie-number-tag">#${movie.id}</div>
+                <img src="${movie.img}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/200x300?text=No+Img'">
+            `;
+            card.onclick = () => startRedirect(movie.title);
             movieGrid.appendChild(card);
         });
     }
 }
 
-// --- SEARCH & UI LOGIC ---
+// --- 4. SEARCH LOGIC (Instant Filter) ---
 function toggleSearch() {
     searchBar.classList.toggle('hidden');
-    if(!searchBar.classList.contains('hidden')) searchInput.focus();
+    if (!searchBar.classList.contains('hidden')) searchInput.focus();
 }
 
 searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
-    const filtered = fullMovieList.filter(m => m.title.toLowerCase().includes(term));
+    // Filter from the full list
+    const filtered = moviesDB.filter(movie => 
+        movie.title.toLowerCase().includes(term)
+    );
     renderGrid(filtered);
 });
 
-// --- REDIRECT LOGIC (Redirects to Telegram) ---
-function startRedirectProcess() {
-    document.getElementById('main-app').classList.add('hidden');
-    document.getElementById('loadingScreen').classList.remove('hidden');
-    window.scrollTo(0,0);
+// --- 5. REDIRECT PROCESS (With Developer Footer) ---
+function startRedirect(movieName) {
+    mainApp.classList.add('hidden');
+    loadingScreen.classList.remove('hidden');
+    window.scrollTo(0, 0);
 
-    let progress = 0;
-    const bar = document.getElementById('progressBar');
-    // Calculate step to finish in exactly LOADING_DURATION ms
-    const intervalTime = 50;
-    const totalSteps = LOADING_DURATION / intervalTime;
-    const step = 100 / totalSteps;
-
+    const progressBar = document.getElementById('progressBar');
+    let width = 0;
     const interval = setInterval(() => {
-        progress += step;
-        bar.style.width = progress + "%";
-        if(progress >= 100) {
+        width += 2;
+        progressBar.style.width = width + '%';
+        if (width >= 100) {
             clearInterval(interval);
-            setTimeout(() => {
-                window.location.href = TELEGRAM_LINK;
-            }, 200); // Short delay before final redirect
+            window.location.href = TELEGRAM_LINK;
         }
-    }, intervalTime);
+    }, 40); // 2 seconds total time
 }
 
-// INIT
-// Wait for DOM to be ready before rendering
-document.addEventListener('DOMContentLoaded', () => {
-    renderSlider();
-    renderTrending();
-    renderGrid(fullMovieList); // Showing 100+ items
-});
+// --- INIT (With Footer) ---
+document.body.insertAdjacentHTML('beforeend', `
+    <footer>
+        <p>Developed by <span>${DEVELOPER_NAME}</span></p>
+        <p style="font-size: 0.8rem; margin-top:5px;">&copy; 2024 AstraToonix. All Rights Reserved.</p>
+    </footer>
+`);
+
+renderSlider();
+renderTrending();
+renderGrid(moviesDB);
+    
