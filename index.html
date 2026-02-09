@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AstraToonix Movies</title>
-    <meta name="theme-color" content="#141414">
+    <meta name="theme-color" content="#000000">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -20,24 +20,21 @@
                 </div>
             </div>
             <div id="searchBar" class="search-bar hidden">
-                <input type="text" id="searchInput" placeholder="Search for a movie...">
-                <i class="fas fa-times" onclick="toggleSearch()"></i>
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search movies (e.g. Pushpa)...">
             </div>
         </header>
 
-        <div id="heroSlider" class="hero-slider">
-            </div>
+        <div id="heroSlider" class="hero-slider"></div>
 
-        <div class="section-title">Trending Now</div>
-        <div class="horizontal-scroll" id="trendingList">
-            </div>
+        <div class="section-title">Trending Top 10</div>
+        <div class="horizontal-scroll" id="trendingList"></div>
 
-        <div class="section-title">All Movies</div>
+        <div class="section-title">All Movies (1-100)</div>
         <div class="container">
-            <div id="movieGrid" class="movie-grid">
-                </div>
+            <div id="movieGrid" class="movie-grid"></div>
             <div id="noResults" class="no-results hidden">
-                <p>No movies found.</p>
+                <p>No movie found with that name.</p>
             </div>
         </div>
     </div>
@@ -45,13 +42,13 @@
     <div id="loadingScreen" class="loading-overlay hidden">
         <div class="loader-content">
             <div class="logo-container">
-                <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AstraToonix" class="pulse-logo">
+                <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AstraToonix">
             </div>
-            <h2 id="loadingText">Connecting...</h2>
+            <h2 id="loadingText">Requesting Server...</h2>
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
-            <p class="wait-text">Join our Telegram for the full movie!</p>
+            <p class="wait-text">Searching for movie link...</p>
         </div>
     </div>
 
