@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AstraToonix - By Rajdev</title>
+    <title>AstraToonix Movies</title>
     <meta name="theme-color" content="#000000">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -25,26 +25,28 @@
             </div>
         </header>
 
-        <div class="developer-card dev-trigger" onclick="toggleDevModal()">
-            <div class="dev-header">
-                <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="Rajdev" class="dev-photo">
-                <div class="dev-info">
-                    <h3>Rajdev</h3>
-                    <span class="dev-badge">Full Stack Developer</span>
-                </div>
-                <i class="fas fa-chevron-right" style="margin-left: auto; color: #666;"></i>
+        <div class="dev-header-bar" onclick="toggleDevModal()">
+            <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="Rajdev">
+            <div class="dev-header-text">
+                <span>Developed by Rajdev</span>
+                <small>Tap for info & contact</small>
             </div>
-            <p style="font-size: 0.8rem; color: #aaa;">Tap to view full profile & settings</p>
+            <i class="fas fa-info-circle"></i>
         </div>
-
         <div id="heroSlider" class="hero-slider"></div>
+
         <div class="section-title">Trending Top 10</div>
         <div class="horizontal-scroll" id="trendingList"></div>
-        <div class="section-title">All Movies (1-100)</div>
+
+        <div class="section-title">All Movies (100+)</div>
         <div class="container">
             <div id="movieGrid" class="movie-grid"></div>
+            
             <div id="noResults" class="no-results hidden">
-                <p>No movie found.</p>
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Ye movie abhi tak add nahi kiya gaya.</p>
+                <small>Kripya Raj ko message karke bole.</small>
+                <a href="https://t.me/raj_dev_01" target="_blank" class="error-btn">Message Raj</a>
             </div>
         </div>
         
@@ -54,33 +56,30 @@
     </div>
 
     <div id="devModal" class="modal-overlay hidden">
-        <div class="modal-content">
+        <div class="modal-content animate-up">
             <div class="modal-header">
                 <h3>Developer Profile</h3>
                 <i class="fas fa-times" onclick="toggleDevModal()"></i>
             </div>
-            <div class="modal-body">
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="Rajdev" class="dev-photo-large">
-                    <h2 style="margin-top: 10px;">Rajdev</h2>
-                    <span class="dev-badge">Full Stack Developer</span>
+            <div class="modal-body center-text">
+                <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" class="modal-profile-pic">
+                <h2>Rajdev</h2>
+                <span class="badge">Full Stack Developer</span>
+                
+                <div class="desc-box">
+                    <p>Hello, Main <b>Rajdev</b> hun. Maine yeh website isliye banayi hai taaki aap logon ko movie find karne mein koi problem na ho.</p>
+                    <p>Aap yahan search karke direct mere Telegram Group mein ja sakte hain. Wahan <b>Live Stream</b> aur <b>Fast Download</b> available hai.</p>
                 </div>
-                <div class="setting-item">
-                    <h4>About Me</h4>
-                    <p class="dev-desc">
-                        Hi, I'm <b>Rajdev</b>. Join my Telegram Group for live streams & fast downloads.
-                    </p>
-                </div>
-                <div class="setting-item">
-                    <h4>Contact</h4>
-                    <a href="https://t.me/raj_dev_01" target="_blank" class="contact-btn">
-                        <i class="fab fa-telegram"></i> Message @raj_dev_01
+
+                <div class="contact-box">
+                    <p>Agar koi problem ho ya tutorial chahiye, to contact karein:</p>
+                    <a href="https://t.me/raj_dev_01" target="_blank" class="telegram-btn">
+                        <i class="fab fa-telegram"></i> @raj_dev_01
                     </a>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="chat-float-btn" onclick="toggleChatbot()">
         <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AI Chat">
     </div>
@@ -96,12 +95,13 @@
     <div id="loadingScreen" class="loading-overlay hidden">
         <div class="loader-content">
             <div class="logo-container">
-                <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AstraToonix">
+                <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="Loading">
             </div>
             <h2 id="loadingText">Connecting...</h2>
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
+            <p class="wait-text">Redirecting to channel...</p>
         </div>
     </div>
 
