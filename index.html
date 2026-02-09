@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AstraToonix Movies</title>
+    <meta name="theme-color" content="#141414">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="main-app">
+        <header>
+            <div class="logo">ASTRA<span>TOONIX</span></div>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search movies...">
+            </div>
+        </header>
+
+        <div class="container">
+            <div id="movieGrid" class="movie-grid">
+                </div>
+            <div id="noResults" class="no-results hidden">
+                <p>No movies found.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingScreen" class="loading-overlay hidden">
+        <div class="loader-content">
+            <div class="logo-container">
+                <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AstraToonix Logo" class="pulse-logo">
+            </div>
+            <h2 id="loadingText">Connecting to Server...</h2>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p class="wait-text">Please wait, redirecting to channel...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker Registered'));
+        }
+    </script>
+</body>
+</html>
