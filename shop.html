@@ -7,144 +7,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* --- DARK THEME STYLES --- */
-        body {
-            background-color: #0f0f10; /* Dark Background */
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Header */
-        header {
-            background: #1a1a1a;
-            padding: 15px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 2px solid #e50914;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        header { background: #1a1a1a; padding: 15px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #e50914; display: flex; flex-direction: column; gap: 10px; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-decoration: none; }
         .logo span { color: #e50914; }
-
-        .back-btn {
-            background: #333;
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-
-        /* Search Bar */
-        .search-box {
-            width: 100%;
-            display: flex;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            background: #2a2a2a;
-            color: white;
-            outline: none;
-        }
-
-        /* Product Grid (Responsive) */
-        .shop-container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Mobile: 2 items */
-            gap: 15px;
-        }
-
-        /* PC View */
-        @media (min-width: 768px) {
-            .product-grid {
-                grid-template-columns: repeat(5, 1fr); /* PC: 5 items */
-            }
-        }
-
-        /* Product Card Design */
-        .product-card {
-            background: #181818;
-            border: 1px solid #333;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: #e50914;
-            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
-        }
-
-        .img-box {
-            width: 100%;
-            height: 180px;
-            background: #222;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .info-box {
-            padding: 10px;
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
+        .back-btn { background: #333; color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px; font-size: 0.9rem; }
+        .search-box { width: 100%; display: flex; }
+        .search-box input { width: 100%; padding: 10px; border-radius: 5px; border: none; background: #2a2a2a; color: white; outline: none; }
+        .shop-container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(5, 1fr); } }
+        .product-card { background: #181818; border: 1px solid #333; border-radius: 8px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; }
+        .product-card:hover { transform: translateY(-5px); border-color: #e50914; box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3); }
+        .img-box { width: 100%; height: 180px; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .info-box { padding: 10px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .p-id { font-size: 0.7rem; color: #666; margin-bottom: 5px; }
         .p-title { font-size: 0.95rem; margin-bottom: 5px; font-weight: 500; }
-        
-        .p-price { 
-            color: #4caf50; 
-            font-size: 1.1rem; 
-            font-weight: bold; 
-            margin-bottom: 10px; 
-        }
-
-        .buy-btn {
-            background: #e50914;
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+        .p-price { color: #4caf50; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; }
+        .buy-btn { background: #e50914; color: white; padding: 8px; border-radius: 4px; text-decoration: none; font-size: 0.9rem; cursor: pointer; transition: 0.2s; }
         .buy-btn:hover { background: #ff1f2d; }
-
     </style>
 </head>
 <body>
@@ -161,56 +44,37 @@
 
     <div class="shop-container">
         <p style="color: #888; text-align: center;">Showing 200 Products</p>
-        <div class="product-grid" id="grid">
-            </div>
+        <div class="product-grid" id="grid"></div>
     </div>
 
     <script>
         // === 1. CONFIGURATION ===
         const TOTAL_PRODUCTS = 200; 
-        const DEFAULT_LINK = "https://t.me/raj_dev_01"; // Agar kisi ka link nahi dala to ye khulega
         
-        // Placeholder image agar photo na ho
+        // YAHAN MAINE CHANNEL LINK DAL DIYA HAI (Ye 100% chalega)
+        const DEFAULT_LINK = "https://t.me/+u4cmm3JmIrFlNzZl"; 
+        
         const PLACEHOLDER_IMG = "https://placehold.co/400x400/222/e50914?text=Astra+Shop";
 
-        // === 2. DATABASE GENERATOR (Automatic 1 to 200) ===
+        // === 2. DATABASE GENERATOR ===
         let productsDB = [];
-
         for (let i = 1; i <= TOTAL_PRODUCTS; i++) {
             productsDB.push({
                 id: i,
-                name: `Product Item ${i}`, // Default Name
-                price: "₹999",             // Default Price
-                img: PLACEHOLDER_IMG,      // Default Image
-                link: DEFAULT_LINK         // Default Link
+                name: `Product Item ${i}`, 
+                price: "₹999",             
+                img: PLACEHOLDER_IMG,      
+                link: DEFAULT_LINK         
             });
         }
 
-        // =========================================================
-        // ===  3. CUSTOMIZATION AREA (YAHAN EDIT KAREIN)        ===
-        // =========================================================
-        // Jis number ke product ko change karna hai, bas niche line add karo.
-        // Format: updateProduct(ID, "Name", "Price", "Image URL", "Link");
-
-        // --- Examples (Ise hatakar apna data dalein) ---
+        // === 3. CUSTOMIZATION AREA ===
+        // Example: updateProduct(1, "Name", "Price", "Img", "Link");
+        updateProduct(1, "Men's T-Shirt", "₹499", "https://m.media-amazon.com/images/I/71xyz3+8XLL._AC_UY1100_.jpg", DEFAULT_LINK);
         
-        updateProduct(1, "Men's Black T-Shirt", "₹499", "https://m.media-amazon.com/images/I/71xyz3+8XLL._AC_UY1100_.jpg", "https://t.me/AstraToonix/shirt1");
-        
-        updateProduct(2, "Gaming Mouse RGB", "₹1,200", "https://m.media-amazon.com/images/I/61lCLRk+C4L._AC_UF1000,1000_QL80_.jpg", "https://t.me/AstraToonix/mouse");
-
-        updateProduct(3, "Sports Watch", "₹850", "https://m.media-amazon.com/images/I/61S-r5qGZXL._AC_UF1000,1000_QL80_.jpg", "https://t.me/your_custom_link");
-
-        // Aap aur bhi add kar sakte hain:
-        // updateProduct(4, "New Item Name", "₹100", "image_link", "telegram_link");
-        // updateProduct(100, "Special Item 100", "₹5000", "image_link", "telegram_link");
-
-
-        // =========================================================
-        // ===  LOGIC (DO NOT TOUCH BELOW)                       ===
-        // =========================================================
-
+        // --- LOGIC ---
         function updateProduct(id, newName, newPrice, newImg, newLink) {
-            const index = id - 1; // Array 0 se start hota hai
+            const index = id - 1; 
             if (productsDB[index]) {
                 productsDB[index].name = newName;
                 productsDB[index].price = newPrice;
@@ -244,16 +108,13 @@
             });
         }
 
-        // Initial Render
         renderProducts(productsDB);
 
-        // Search Functionality
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = productsDB.filter(p => p.name.toLowerCase().includes(term));
             renderProducts(filtered);
         });
-
     </script>
 
 </body>
