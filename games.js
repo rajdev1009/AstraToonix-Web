@@ -1,4 +1,4 @@
-/* ================= GAME LOGIC FILE ================= */
+/* ================= GAME LOGIC FILE (FIXED) ================= */
 
 // --- 1. MODAL & MENU LOGIC ---
 function toggleGameModal() {
@@ -103,7 +103,7 @@ function endTTT(msg) {
     document.getElementById('tttStatus').innerText = msg;
 }
 
-// --- 3. CHESS ENGINE (Using Chess.js & Chessboard.js) ---
+// --- 3. CHESS ENGINE (FIXED IMAGES) ---
 var board = null;
 var game = new Chess();
 
@@ -134,7 +134,7 @@ function onDrop (source, target) {
     var move = game.move({
         from: source,
         to: target,
-        promotion: 'q' // NOTE: always promote to a queen for example simplicity
+        promotion: 'q' // NOTE: always promote to a queen
     });
 
     // illegal move
@@ -155,16 +155,20 @@ function initChess() {
     var config = {
         draggable: true,
         position: 'start',
+        
+        // --- YE WALI LINE MISSING THI ---
+        // Ab ye internet se images uthayega
+        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png',
+        
         onDragStart: onDragStart,
         onDrop: onDrop,
         onSnapEnd: onSnapEnd,
-        showNotation: false // Mobile pe clean dikhne ke liye
+        showNotation: false 
     }
     
     // Destroy old board instance if exists to prevent errors
     if(board && typeof board.destroy === 'function') {
-        // board.destroy() might not exist in all versions, 
-        // but re-initializing usually works fine.
+        // board.destroy() might not exist in all versions
     }
     
     board = Chessboard('myBoard', config);
