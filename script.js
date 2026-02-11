@@ -1,5 +1,6 @@
 // CONFIGURATION
 const TELEGRAM_LINK = "https://t.me/+u4cmm3JmIrFlNzZl"; 
+const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
 // === RELIABLE IMAGE SOURCE (TMDB) ===
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
@@ -143,23 +144,22 @@ const noResultsDiv = document.getElementById('noResults');
 function renderSlider() {
     const heroMovies = moviesDB.slice(0, 5);
     heroSlider.innerHTML = '';
-    
     heroMovies.forEach((movie, index) => {
         const slide = document.createElement('div');
         slide.className = `slide ${index === 0 ? 'active' : ''}`;
         slide.style.backgroundImage = `url('${movie.img}')`;
         slide.innerHTML = `<div class="slide-overlay"><div class="slide-title">${movie.title}</div></div>`;
-        slide.onclick = () => startRedirect();
+        slide.onclick = () => startRedirect(movie.title);
         heroSlider.appendChild(slide);
     });
-
-    let current = 0;
+    
+    let c = 0;
     setInterval(() => {
         const slides = document.querySelectorAll('.slide');
-        if (slides.length > 0) {
-            slides[current].classList.remove('active');
-            current = (current + 1) % slides.length;
-            slides[current].classList.add('active');
+        if(slides.length) { 
+            slides[c].classList.remove('active'); 
+            c = (c + 1) % slides.length; 
+            slides[c].classList.add('active'); 
         }
     }, 4000);
 }
@@ -168,15 +168,15 @@ function renderSlider() {
 function renderTrending() {
     const trendingMovies = moviesDB.slice(5, 15);
     trendingList.innerHTML = '';
-    
     trendingMovies.forEach((movie, index) => {
         const card = document.createElement('div');
         card.className = 'h-card';
         card.innerHTML = `
-            <img src="${movie.img}" alt="${movie.title}" onerror="this.src='https://placehold.co/130x195?text=No+Img'">
+            <img src="${movie.img}" alt="${movie.title}" 
+                 onerror="this.src='https://placehold.co/130x195?text=${encodeURIComponent(movie.title)}'">
             <div class="rank-number">${index + 1}</div>
         `;
-        card.onclick = () => startRedirect();
+        card.onclick = () => startRedirect(movie.title);
         trendingList.appendChild(card);
     });
 }
@@ -184,7 +184,6 @@ function renderTrending() {
 // 3. RENDER GRID (All Movies)
 function renderGrid(list) {
     movieGrid.innerHTML = '';
-    
     if (list.length === 0) {
         // === CUSTOM NO RESULT MESSAGE (Injecting HTML via JS) ===
         noResultsDiv.classList.remove('hidden');
@@ -209,13 +208,13 @@ function renderGrid(list) {
                 <img src="${movie.img}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/200x300?text=Poster'">
                 <div class="movie-title-text">${movie.title}</div>
             `;
-            card.onclick = () => startRedirect();
+            card.onclick = () => startRedirect(movie.title);
             movieGrid.appendChild(card);
         });
     }
 }
 
-// 4. SEARCH LOGIC
+// 4. SEARCH
 function toggleSearch() {
     searchBar.classList.toggle('hidden');
     if (!searchBar.classList.contains('hidden')) searchInput.focus();
@@ -223,25 +222,28 @@ function toggleSearch() {
 
 searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
-    const filtered = moviesDB.filter(movie => 
-        movie.title.toLowerCase().includes(term)
-    );
+    const filtered = moviesDB.filter(m => m.title.toLowerCase().includes(term));
     renderGrid(filtered);
 });
 
-// 5. REDIRECT PROCESS
-function startRedirect() {
+// 5. REDIRECT
+function startRedirect(movieName) {
     mainApp.classList.add('hidden');
     loadingScreen.classList.remove('hidden');
     window.scrollTo(0, 0);
 
+    // Encode movie name for Telegram Search
+    const messageText = `Search: ${movieName}`;
+    const encodedText = encodeURIComponent(messageText);
+    const finalURL = `${TELEGRAM_LINK}?text=${encodedText}`;
+
     let width = 0;
     const interval = setInterval(() => {
-        width += 2;
+        width += 2; 
         progressBar.style.width = width + '%';
-        if (width >= 100) {
-            clearInterval(interval);
-            window.location.href = TELEGRAM_LINK;
+        if (width >= 100) { 
+            clearInterval(interval); 
+            window.location.href = finalURL; 
         }
     }, 40);
 }

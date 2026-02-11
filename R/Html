@@ -15,28 +15,10 @@
         <header>
             <div class="nav-container">
                 <div class="logo">ASTRA<span>TOONIX</span></div>
-                
-                <div class="nav-actions">
-                    
-                    <a href="https://youtube.com/@astratoonix?si=KBw-c3A1Y9y5TbdN" target="_blank" class="nav-icon" title="Subscribe">
-                        <i class="fab fa-youtube" style="color: #ff0000;"></i>
-                    </a>
-
-                    <a href="shop.html" class="nav-icon" id="shop-btn" title="Visit Shop">
-                        <i class="fas fa-store" style="color: #2ecc71;"></i>
-                        <span class="shop-badge">NEW</span>
-                    </a>
-
-                    <div class="nav-icon" onclick="toggleChatbot()" title="AI Assistant">
-                        <i class="fas fa-robot"></i>
-                    </div>
-
-                    <div class="nav-icon search-trigger" onclick="toggleSearch()" title="Search">
-                        <i class="fas fa-search"></i>
-                    </div>
+                <div class="search-icon" onclick="toggleSearch()">
+                    <i class="fas fa-search"></i>
                 </div>
             </div>
-
             <div id="searchBar" class="search-bar hidden">
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchInput" placeholder="Search movies...">
@@ -51,7 +33,6 @@
             </div>
             <i class="fas fa-info-circle"></i>
         </div>
-
         <div id="heroSlider" class="hero-slider"></div>
 
         <div class="section-title">Trending Top 10</div>
@@ -99,7 +80,6 @@
             </div>
         </div>
     </div>
-
     <div class="chat-float-btn" onclick="toggleChatbot()">
         <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AI Chat">
     </div>

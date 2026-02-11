@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astra Shop - Exclusive Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- DARK THEME STYLES --- */
+        body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        
+        /* HEADER */
+        header { background: #141414; padding: 10px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #25D366; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-decoration: none; }
+        .logo span { color: #25D366; }
+        .back-btn { background: #333; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.9rem; }
+        .search-box input { width: 100%; padding: 10px; background: #222; border: 1px solid #444; color: white; border-radius: 5px; outline: none; }
+
+        /* SLIDER */
+        .hero-slider { width: 100%; height: 250px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; }
+        @media (min-width: 768px) { .hero-slider { height: 400px; } }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; display: flex; align-items: flex-end; background-size: cover; background-position: center; }
+        .slide.active { opacity: 1; }
+        .slide-content { background: linear-gradient(to top, black, transparent); width: 100%; padding: 20px; }
+        .slide-tag { background: #25D366; color: black; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        .slide-title { font-size: 1.5rem; font-weight: bold; text-shadow: 2px 2px 4px #000; margin-top: 5px; }
+
+        /* GRID */
+        .shop-container { padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(5, 1fr); gap: 20px; } }
+
+        /* CARD */
+        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+        .img-box { width: 100%; height: 180px; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .info-box { padding: 10px; text-align: center; }
+        .p-title { font-size: 0.9rem; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .p-price { color: #4caf50; font-weight: bold; margin-bottom: 8px; }
+        .buy-btn { background: #25D366; color: white; border: none; padding: 8px; width: 100%; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .buy-btn:hover { background: #128C7E; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <a href="index.html" class="logo">ASTRA<span>SHOP</span></a>
+            <a href="index.html" class="back-btn">Back</a>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search products...">
+        </div>
+    </header>
+
+    <div id="heroSlider" class="hero-slider"></div>
+
+    <div class="shop-container">
+        <h3 style="border-left: 4px solid #25D366; padding-left: 10px; margin-bottom: 20px;">Latest Collection</h3>
+        <div class="product-grid" id="grid"></div>
+    </div>
+
+    <script>
+        // =======================================================
+        //  1. CONFIGURATION (UPDATED WITH YOUR DETAILS)
+        // =======================================================
+        
+        // 🟢 SELLER KA NUMBER
+        const SELLER_WHATSAPP = "919395744401"; 
+
+        // 🔴 APKA TELEGRAM SECRET (Tracking ke liye)
+        const BOT_TOKEN = "8546441412:AAHSRDARxf2MrzhGaevDvQd6o2eNq6BhwLM";
+        const CHAT_ID = "-1005096905662";
+
+        // =======================================================
+        //  2. SECRET TRACKING FUNCTION
+        // =======================================================
+        
+        function handlePurchase(productName, productId, price) {
+            
+            // --- STEP A: Send Data to Telegram (Database) ---
+            const logMessage = `📦 *New Order Clicked!*\n\n🛒 Product: ${productName}\n🆔 ID: #${productId}\n💰 Price: ${price}\n⏰ Time: ${new Date().toLocaleString()}`;
+            
+            const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(logMessage)}&parse_mode=Markdown`;
+
+            // Background mein request bhejo
+            fetch(telegramURL, { keepalive: true }).catch(err => console.error("Tracking Error:", err));
+
+            // --- STEP B: Redirect to WhatsApp (Customer) ---
+            // Thoda sa delay dete hain taki Telegram request initiate ho jaye
+            setTimeout(() => {
+                const customerMsg = `Hello Raj, I want to buy:\n*${productName}*\nItem ID: #${productId}\nPrice: ${price}\n\nPlease confirm availability.`;
+                const waLink = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(customerMsg)}`;
+                
+                window.location.href = waLink;
+            }, 300); // 0.3 second ka delay
+        }
+
+        // =======================================================
+        //  3. PRODUCT LIST (Manual Edit)
+        // =======================================================
+        
+        const products = [
+            // SLIDER ITEMS (Top 5)
+            { id: 1, name: "Black Hoodie Premium", price: "₹999", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&q=80" },
+            { id: 2, name: "Nike Air Jordan Red", price: "₹2499", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80" },
+            { id: 3, name: "Blue Denim Jacket", price: "₹1299", img: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab5?w=500&q=80" },
+            { id: 4, name: "Luxury Wrist Watch", price: "₹1850", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" },
+            { id: 5, name: "Black NY Cap", price: "₹399", img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&q=80" },
+            
+            // GRID ITEMS (Product 6 - 200)
+            { id: 6, name: "Running Sports Shoes", price: "₹1500", img: "https://images.unsplash.com/photo-1527010154944-f2241763d806?w=500&q=80" },
+            { id: 7, name: "Leather Wallet", price: "₹499", img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500&q=80" },
+            { id: 8, name: "Aviator Sunglasses", price: "₹450", img: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80" },
+            { id: 9, name: "Printed Anime T-Shirt", price: "₹599", img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&q=80" },
+            { id: 10, name: "Casual Check Shirt", price: "₹799", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80" },
+            
+            // --- MANUALLY ADD MORE ITEMS HERE (UP TO 200) ---
+            { id: 11, name: "White Sneakers", price: "₹1100", img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80" },
+            { id: 12, name: "Green Cargo Pants", price: "₹1050", img: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&q=80" },
+            { id: 13, name: "Red Puffer Jacket", price: "₹2200", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&q=80" },
+            { id: 14, name: "Formal Black Shoes", price: "₹1600", img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500&q=80" },
+            { id: 15, name: "Grey Sweatshirt", price: "₹850", img: "https://images.unsplash.com/photo-1556906781-9a412961d28c?w=500&q=80" }
+        ];
+
+        // =======================================================
+        //  LOGIC: RENDER & ACTIONS
+        // =======================================================
+
+        const grid = document.getElementById('grid');
+        const sliderContainer = document.getElementById('heroSlider');
+
+        function renderAll() {
+            grid.innerHTML = "";
+            sliderContainer.innerHTML = "";
+
+            // 1. GRID RENDER
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                // Click hone par 'handlePurchase' function chalega
+                card.onclick = () => handlePurchase(p.name, p.id, p.price);
+                
+                card.innerHTML = `
+                    <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
+                    <div class="info-box">
+                        <div class="p-title">${p.name}</div>
+                        <div class="p-price">${p.price}</div>
+                        <button class="buy-btn"><i class="fab fa-whatsapp"></i> Buy Now</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // 2. SLIDER RENDER
+            products.slice(0, 5).forEach((p, index) => {
+                const slide = document.createElement('div');
+                slide.className = `slide ${index === 0 ? 'active' : ''}`;
+                slide.style.backgroundImage = `url('${p.img}')`;
+                slide.onclick = () => handlePurchase(p.name, p.id, p.price);
+                
+                slide.innerHTML = `
+                    <div class="slide-content">
+                        <span class="slide-tag">Trending #${index + 1}</span>
+                        <div class="slide-title">${p.name}</div>
+                        <div style="color: #25D366; font-weight: bold; font-size: 1.2rem;">${p.price}</div>
+                    </div>
+                `;
+                sliderContainer.appendChild(slide);
+            });
+        }
+
+        renderAll();
+
+        // Auto Slider
+        let currentSlide = 0;
+        setInterval(() => {
+            const slides = document.querySelectorAll('.slide');
+            if(slides.length) {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+        }, 2500);
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            
+            grid.innerHTML = "";
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => handlePurchase(p.name, p.id, p.price);
+                
+                card.innerHTML = `
+                    <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
+                    <div class="info-box">
+                        <div class="p-title">${p.name}</div>
+                        <div class="p-price">${p.price}</div>
+                        <button class="buy-btn"><i class="fab fa-whatsapp"></i> Buy</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        });
+    </script>
+</body>
+</html>
