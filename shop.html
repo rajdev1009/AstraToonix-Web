@@ -1,70 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astra Shop - Exclusive Store</title>
+    <title>AstraToonix - Exclusive Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- DARK THEME STYLES --- */
+        /* --- DARK THEME & STYLING --- */
         body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        
         header { background: #141414; padding: 10px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #25D366; }
         .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-decoration: none; }
         .logo span { color: #25D366; }
-        .back-btn { background: #333; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.9rem; }
-        .search-box input { width: 100%; padding: 10px; background: #222; border: 1px solid #444; color: white; border-radius: 5px; outline: none; box-sizing: border-box; }
+        .search-box input { width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 8px; outline: none; box-sizing: border-box; }
 
         .hero-slider { width: 100%; height: 250px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; }
         @media (min-width: 768px) { .hero-slider { height: 400px; } }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; display: flex; align-items: flex-end; background-size: cover; background-position: center; }
+        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s; display: flex; align-items: flex-end; background-size: cover; background-position: center; }
         .slide.active { opacity: 1; }
         .slide-content { background: linear-gradient(to top, black, transparent); width: 100%; padding: 20px; }
-        .slide-tag { background: #25D366; color: black; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
-        .slide-title { font-size: 1.5rem; font-weight: bold; text-shadow: 2px 2px 4px #000; margin-top: 5px; }
+        .slide-title { font-size: 1.4rem; font-weight: bold; }
 
-        .shop-container { padding: 10px; max-width: 1200px; margin: 0 auto; }
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(5, 1fr); gap: 20px; } }
+        .shop-container { padding: 15px; max-width: 1200px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(5, 1fr); } }
 
-        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
-        .img-box { width: 100%; height: 180px; overflow: hidden; }
+        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; transition: 0.3s; }
+        .img-box { width: 100%; height: 160px; overflow: hidden; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .info-box { padding: 10px; text-align: center; }
-        .p-title { font-size: 0.9rem; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .p-price { color: #4caf50; font-weight: bold; margin-bottom: 8px; }
-        .buy-btn { background: #25D366; color: white; border: none; padding: 8px; width: 100%; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .buy-btn:hover { background: #128C7E; }
+        .info-box { padding: 12px; text-align: center; }
+        .p-title { font-size: 0.9rem; margin-bottom: 8px; height: 35px; overflow: hidden; }
+        .p-price { color: #25D366; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
+        .buy-btn { background: #25D366; color: black; border: none; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-top">
-            <a href="#" class="logo">ASTRA<span>SHOP</span></a>
-            <a href="#" class="back-btn">Back</a>
+            <a href="#" class="logo">ASTRA<span>TOONIX</span></a>
         </div>
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search 200+ products...">
+            <input type="text" id="searchInput" placeholder="Search 100+ products...">
         </div>
     </header>
 
     <div id="heroSlider" class="hero-slider"></div>
 
     <div class="shop-container">
-        <h3 style="border-left: 4px solid #25D366; padding-left: 10px; margin-bottom: 20px;">Premium Collection</h3>
+        <h3 style="border-left: 4px solid #25D366; padding-left: 10px;">Premium Collection</h3>
         <div class="product-grid" id="grid"></div>
     </div>
 
     <script>
+        // --- 1. CONFIGURATION (TOKENS & IDS) ---
         const SELLER_WHATSAPP = "919395744401"; 
-        const BOT_TOKEN = "8546441412:AAHSRDARxf2MrzhGaevDvQd6o2eNq6BhwLM";
-        const CHAT_ID = "-1005096905662";
+        const BOT_TOKEN = "8546441412:AAHaEQ0PEnJeoDuDAyfDEL_qbv4kWI1IkmU";
+        const CHAT_ID = "-1003766501173";
 
-        // SABHI 200 PRODUCTS EK HI LIST MEIN
+        // --- 2. COMPLETE PRODUCT LIST (ID 1 TO 100) ---
         const products = [
-            { id: 1, name: "Black Hoodie Premium", price: "₹999", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500" },
+            { id: 1, name: "Premium Black Hoodie", price: "₹999", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500" },
             { id: 2, name: "Nike Air Jordan Red", price: "₹2499", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" },
             { id: 3, name: "Blue Denim Jacket", price: "₹1299", img: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab5?w=500" },
             { id: 4, name: "Luxury Wrist Watch", price: "₹1850", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" },
@@ -94,18 +90,79 @@
             { id: 28, name: "Suede Loafers", price: "₹1750", img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=500" },
             { id: 29, name: "Plaid Shirt", price: "₹950", img: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=500" },
             { id: 30, name: "Hooded Sweatshirt", price: "₹1350", img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500" },
-            { id: 101, name: "Yonex Badminton Racket", price: "₹1850", img: "https://images.unsplash.com/photo-1626225453014-4927a5bc3d61?w=500" },
-            { id: 102, name: "Mikasa Official Volleyball", price: "₹999", img: "https://images.unsplash.com/photo-1592656094267-764a45160876?w=500" },
-            { id: 103, name: "Adidas Football (Size 5)", price: "₹1299", img: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500" },
-            { id: 104, name: "Lays Classic Salted Chips", price: "₹20", img: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=500" },
-            { id: 105, name: "Doritos Nacho Cheese", price: "₹50", img: "https://images.unsplash.com/photo-1600952841320-db931384f0b6?w=500" },
-            { id: 106, name: "Kurkure Masala Munch", price: "₹30", img: "https://images.unsplash.com/photo-1613919113640-25732ec5e61f?w=500" },
-            { id: 107, name: "Basketball Spalding", price: "₹2400", img: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=500" },
-            { id: 108, name: "Cricket Bat", price: "₹3500", img: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=500" }
-            // Note: Aap aise hi baki 200 tak comma laga kar add kar sakte hain
+            { id: 31, name: "V-Neck T-Shirt", price: "₹499", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500" },
+            { id: 32, name: "Sports Water Bottle", price: "₹550", img: "https://images.unsplash.com/photo-1602143393494-721d002d350b?w=500" },
+            { id: 33, name: "Winter Parka", price: "₹4500", img: "https://images.unsplash.com/photo-1539533713203-5180c4dc933f?w=500" },
+            { id: 34, name: "Laptop Sleeve", price: "₹750", img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500" },
+            { id: 35, name: "Ceramic Coffee Mug", price: "₹399", img: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500" },
+            { id: 36, name: "Desk Lamp", price: "₹1200", img: "https://images.unsplash.com/photo-1507473885765-e6ed657dbbb8?w=500" },
+            { id: 37, name: "Wall Clock", price: "₹900", img: "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=500" },
+            { id: 38, name: "Bluetooth Speaker", price: "₹2200", img: "https://images.unsplash.com/photo-1608351689224-8a192404095a?w=500" },
+            { id: 39, name: "Duffel Bag", price: "₹1650", img: "https://images.unsplash.com/photo-1544640855-52ec3babc110?w=500" },
+            { id: 40, name: "Yoga Mat", price: "₹899", img: "https://images.unsplash.com/photo-1592432676554-2b1b44c2bc85?w=500" },
+            { id: 41, name: "Running Socks", price: "₹250", img: "https://images.unsplash.com/photo-1582966772640-310b9a400ec4?w=500" },
+            { id: 42, name: "Formal Trousers", price: "₹1400", img: "https://images.unsplash.com/photo-1594932224828-b4b059b6fe68?w=500" },
+            { id: 43, name: "Windbreaker Jacket", price: "₹1850", img: "https://images.unsplash.com/photo-1504191467541-25110380bad5?w=500" },
+            { id: 44, name: "Pocket Diary", price: "₹199", img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=500" },
+            { id: 45, name: "Card Holder", price: "₹450", img: "https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=500" },
+            { id: 46, name: "Overcoat", price: "₹5000", img: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500" },
+            { id: 47, name: "Silk Tie", price: "₹699", img: "https://images.unsplash.com/photo-1589756823851-41a561b28017?w=500" },
+            { id: 48, name: "Reading Glasses", price: "₹850", img: "https://images.unsplash.com/photo-1577803645773-f96470509666?w=500" },
+            { id: 49, name: "Raincoat", price: "₹750", img: "https://images.unsplash.com/photo-1542393545-10f5cde2c810?w=500" },
+            { id: 50, name: "Swim Goggles", price: "₹499", img: "https://images.unsplash.com/photo-1558235281-5696d744b62d?w=500" },
+            { id: 51, name: "Sanitizer Holder", price: "₹150", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=500" },
+            { id: 52, name: "Umbrella", price: "₹350", img: "https://images.unsplash.com/photo-1565551390315-777f985b8827?w=500" },
+            { id: 53, name: "Electric Kettle", price: "₹1500", img: "https://images.unsplash.com/photo-1594213111582-4501f2bd2bb9?w=500" },
+            { id: 54, name: "Laptop Stand", price: "₹1100", img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500" },
+            { id: 55, name: "Power Bank", price: "₹1200", img: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500" },
+            { id: 56, name: "Flashlight", price: "₹450", img: "https://images.unsplash.com/photo-1563212891-28562725e1df?w=500" },
+            { id: 57, name: "Sleeping Bag", price: "₹2800", img: "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?w=500" },
+            { id: 58, name: "Camping Tent", price: "₹5500", img: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=500" },
+            { id: 59, name: "Bike Helmet", price: "₹2200", img: "https://images.unsplash.com/photo-1557180215-46e47963673c?w=500" },
+            { id: 60, name: "Cycling Gloves", price: "₹650", img: "https://images.unsplash.com/photo-1591130901023-ec1570195aa4?w=500" },
+            { id: 61, name: "Trench Coat", price: "₹3800", img: "https://images.unsplash.com/photo-1580665275043-41c304d9c025?w=500" },
+            { id: 62, name: "Tote Bag", price: "₹400", img: "https://images.unsplash.com/photo-1591348113547-756ca3b1c6e9?w=500" },
+            { id: 63, name: "Espresso Cups", price: "₹600", img: "https://images.unsplash.com/photo-1544787210-2827448b30e0?w=500" },
+            { id: 64, name: "Towel Set", price: "₹1200", img: "https://images.unsplash.com/photo-1594050229296-fa5896f64939?w=500" },
+            { id: 65, name: "Bed Sheets", price: "₹1800", img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=500" },
+            { id: 66, name: "Indoor Plants", price: "₹550", img: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500" },
+            { id: 67, name: "Scented Candle", price: "₹450", img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=500" },
+            { id: 68, name: "Kitchen Apron", price: "₹300", img: "https://images.unsplash.com/photo-1583953623787-ada99d338235?w=500" },
+            { id: 69, name: "Table Runner", price: "₹450", img: "https://images.unsplash.com/photo-1544207617-417a98ca96a1?w=500" },
+            { id: 70, name: "Throw Pillow", price: "₹500", img: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=500" },
+            { id: 71, name: "Hand Mixer", price: "₹1900", img: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500" },
+            { id: 72, name: "Iron Skillet", price: "₹2200", img: "https://images.unsplash.com/photo-1594213111582-4501f2bd2bb9?w=500" },
+            { id: 73, name: "Wine Rack", price: "₹1500", img: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500" },
+            { id: 74, name: "Cutting Board", price: "₹450", img: "https://images.unsplash.com/photo-1594385208974-2e75f9d8ad48?w=500" },
+            { id: 75, name: "Spice Jar Set", price: "₹850", img: "https://images.unsplash.com/photo-1590244439192-6ca885f82d2a?w=500" },
+            { id: 76, name: "Cotton Slippers", price: "₹400", img: "https://images.unsplash.com/photo-1591534002146-152427303f26?w=500" },
+            { id: 77, name: "Pajama Set", price: "₹1100", img: "https://images.unsplash.com/photo-1515434126000-961d90ff09db?w=500" },
+            { id: 78, name: "Bathrobe", price: "₹1800", img: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?w=500" },
+            { id: 79, name: "Face Towel", price: "₹200", img: "https://images.unsplash.com/photo-1563163447-108107575191?w=500" },
+            { id: 80, name: "Linen Curtains", price: "₹2500", img: "https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=500" },
+            { id: 81, name: "Desk Organizer", price: "₹650", img: "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?w=500" },
+            { id: 82, name: "Fountain Pen", price: "₹1200", img: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=500" },
+            { id: 83, name: "Hard Drive", price: "₹4500", img: "https://images.unsplash.com/photo-1531062235864-767a99c43e90?w=500" },
+            { id: 84, name: "Phone Tripod", price: "₹999", img: "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=500" },
+            { id: 85, name: "Webcam", price: "₹3200", img: "https://images.unsplash.com/photo-1551033339-16016f4995f5?w=500" },
+            { id: 86, name: "USB Hub", price: "₹850", img: "https://images.unsplash.com/photo-1616423641454-9964f4c2810e?w=500" },
+            { id: 87, name: "Microfiber Cloth", price: "₹150", img: "https://images.unsplash.com/photo-1583947582383-74737d6e4df4?w=500" },
+            { id: 88, name: "Cleaning Spray", price: "₹250", img: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=500" },
+            { id: 89, name: "Travel Pillow", price: "₹550", img: "https://images.unsplash.com/photo-1545415712-426b3ca15112?w=500" },
+            { id: 90, name: "Eye Mask", price: "₹199", img: "https://images.unsplash.com/photo-1596708143200-a23e59714397?w=500" },
+            { id: 91, name: "Earplugs", price: "₹100", img: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500" },
+            { id: 92, name: "First Aid Kit", price: "₹750", img: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=500" },
+            { id: 93, name: "Passport Holder", price: "₹450", img: "https://images.unsplash.com/photo-1563806951231-f2f281e3a473?w=500" },
+            { id: 94, name: "Luggage Tags", price: "₹150", img: "https://images.unsplash.com/photo-1581553670339-0154cc9bd91d?w=500" },
+            { id: 95, name: "Suitcase Cover", price: "₹650", img: "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?w=500" },
+            { id: 96, name: "Sports Tote", price: "₹350", img: "https://images.unsplash.com/photo-1544816153-12ad5d7132a1?w=500" },
+            { id: 97, name: "Denim Jeans", price: "₹1450", img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500" },
+            { id: 98, name: "Leather Jacket", price: "₹4500", img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500" },
+            { id: 99, name: "Cardigan", price: "₹1200", img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500" },
+            { id: 100, name: "Bomber Jacket", price: "₹2100", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" }
         ];
 
-        // RENDER GRID FUNCTION
+        // --- 3. RENDER FUNCTIONS ---
         function renderGrid(items) {
             const grid = document.getElementById('grid');
             grid.innerHTML = items.map(p => `
@@ -120,37 +177,45 @@
             `).join('');
         }
 
-        // SEARCH LOGIC
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-            renderGrid(filtered);
-        });
+        // --- 4. PURCHASE & TELEGRAM LOGIC ---
+        function handlePurchase(name, id, price) {
+            const logMessage = `📦 *New Order Clicked!*\n\n🛒 Product: ${name}\n🆔 ID: #${id}\n💰 Price: ${price}`;
+            
+            // Send to Telegram
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: logMessage,
+                    parse_mode: 'Markdown'
+                })
+            }).then(() => console.log("Telegram Notified!"));
 
-        // PURCHASE & TRACKING
-        function handlePurchase(productName, productId, price) {
-            const logMessage = `📦 *New Order Clicked!*\n\n🛒 Product: ${productName}\n🆔 ID: #${productId}\n💰 Price: ${price}`;
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(logMessage)}&parse_mode=Markdown`);
-
+            // Redirect to WhatsApp
             setTimeout(() => {
-                const customerMsg = `Hello Raj, I want to buy:\n*${productName}*\nItem ID: #${productId}\nPrice: ${price}`;
+                const customerMsg = `Hello Raj, I want to buy:\n*${name}*\nItem ID: #${id}\nPrice: ${price}`;
                 window.location.href = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(customerMsg)}`;
-            }, 300);
+            }, 500);
         }
 
-        // SLIDER LOGIC
+        // --- 5. SEARCH & SLIDER LOGIC ---
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            renderGrid(products.filter(p => p.name.toLowerCase().includes(term)));
+        });
+
         const slider = document.getElementById('heroSlider');
         slider.innerHTML = products.slice(0, 5).map((p, i) => `
             <div class="slide ${i === 0 ? 'active' : ''}" style="background-image: url('${p.img}')">
                 <div class="slide-content">
-                    <span class="slide-tag">BEST SELLER</span>
                     <div class="slide-title">${p.name}</div>
                 </div>
             </div>
         `).join('');
 
         let currentSlide = 0;
-            setInterval(() => {
+        setInterval(() => {
             const slides = document.querySelectorAll('.slide');
             if(slides.length > 0) {
                 slides[currentSlide].classList.remove('active');
@@ -159,7 +224,7 @@
             }
         }, 3000);
 
-        // INITIAL RENDER
+        // --- INITIAL RENDER ---
         renderGrid(products);
     </script>
 </body>
