@@ -102,13 +102,40 @@
         }
         .search-box input:focus { border-color: #25D366; }
 
-        /* --- SLIDER & GRID --- */
-        .hero-slider { width: 100%; height: 220px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s; background-size: cover; background-position: center; }
+        /* --- SLIDER STYLES (FIXED) --- */
+        .hero-slider { 
+            width: 100%; 
+            height: 220px; 
+            position: relative; 
+            overflow: hidden; 
+            margin-bottom: 20px; 
+            background: #000; 
+        }
+
+        .slide { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            opacity: 0; 
+            transition: opacity 0.8s; 
+            /* FIX: cover hata kar 100% 100% kiya taaki puri photo dikhe */
+            background-size: 100% 100%; 
+            background-position: center; 
+            background-repeat: no-repeat;
+        }
+        
         .slide.active { opacity: 1; }
-        .slide-content { position: absolute; bottom: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 20px; }
+        
+        .slide-content { 
+            position: absolute; 
+            bottom: 0; 
+            width: 100%; 
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); 
+            padding: 20px; 
+        }
         .slide-title { font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 3px black; }
 
+        /* --- GRID STYLES --- */
         .shop-container { padding: 0 10px; max-width: 1200px; margin: 0 auto; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         @media (min-width: 600px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -137,7 +164,7 @@
         .p-price { color: #25D366; font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
         .buy-btn { background: #25D366; color: black; border: none; padding: 8px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
 
-        /* --- CHATBOT STYLES (Copied for Shop Page) --- */
+        /* --- CHATBOT STYLES --- */
         .chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 3px solid #25D366; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4); z-index: 200; background: #000; cursor: pointer; }
         .chat-float-btn img { width: 100%; height: 100%; object-fit: cover; }
         
