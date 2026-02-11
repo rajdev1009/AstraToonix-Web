@@ -4,7 +4,7 @@ const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
 // === FINAL 100 MOVIES DATABASE ===
 const moviesDB = [
-    // --- 1 to 10: SLIDER (Top 10 HD Movies) ---
+    // --- 1 to 10: SLIDER ---
     { id: 1, title: "Avengers: Endgame", img: `${IMG_BASE}/or06FN3Dka5tukK1e9sl16pB3iy.jpg` },
     { id: 2, title: "Avatar: Way of Water", img: `${IMG_BASE}/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg` },
     { id: 3, title: "Spider-Man: NWH", img: `${IMG_BASE}/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg` },
@@ -16,7 +16,7 @@ const moviesDB = [
     { id: 9, title: "Iron Man", img: `${IMG_BASE}/78lPtwv72eTNqFW9COBYI0dWDJa.jpg` },
     { id: 10, title: "Thor: Ragnarok", img: `${IMG_BASE}/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg` },
 
-    // --- 11 to 20: TRENDING INDIA (Latest Hits) ---
+    // --- 11 to 20: TRENDING INDIA ---
     { id: 11, title: "Kalki 2898 AD", img: `${IMG_BASE}/sc1abg5EnyBFMCC66R8uQ.jpg` },
     { id: 12, title: "Stree 2", img: `${IMG_BASE}/dN51c6c5.jpg` }, 
     { id: 13, title: "Animal", img: `${IMG_BASE}/hr9rjR3J0xBBKCt8WMnDWJ7l6yV.jpg` },
@@ -139,6 +139,7 @@ function renderSlider() {
         slide.className = `slide ${index === 0 ? 'active' : ''}`;
         slide.style.backgroundImage = `url('${movie.img}')`;
         slide.innerHTML = `<div class="slide-overlay"><div class="slide-title">${movie.title}</div></div>`;
+        // Pass movie title to startRedirect
         slide.onclick = () => startRedirect(movie.title);
         heroSlider.appendChild(slide);
     });
@@ -166,6 +167,7 @@ function renderTrending() {
                  onerror="this.src='https://placehold.co/130x195?text=${encodeURIComponent(movie.title)}'">
             <div class="rank-number">${index + 1}</div>
         `;
+        // Pass movie title to startRedirect
         card.onclick = () => startRedirect(movie.title);
         trendingList.appendChild(card);
     });
@@ -189,6 +191,7 @@ function renderGrid(list) {
                 </div>
                 <div class="movie-title-text">${movie.title}</div>
             `;
+            // Pass movie title to startRedirect
             card.onclick = () => startRedirect(movie.title);
             movieGrid.appendChild(card);
         });
@@ -207,15 +210,14 @@ searchInput.addEventListener('input', (e) => {
     renderGrid(filtered);
 });
 
-// 5. REDIRECT WITH SEARCH PARAMETER
+// 5. REDIRECT WITH AUTOMATIC SEARCH TEXT
 function startRedirect(movieName) {
     mainApp.classList.add('hidden');
     loadingScreen.classList.remove('hidden');
     window.scrollTo(0, 0);
 
-    // Telegram redirection logic with automatic search text
-    const messageText = `Search: ${movieName}`;
-    const encodedText = encodeURIComponent(messageText);
+    // Ye logic Telegram me automatic movie name type kar dega
+    const encodedText = encodeURIComponent(movieName);
     const finalURL = `${TELEGRAM_LINK}?text=${encodedText}`;
 
     let width = 0;
@@ -224,6 +226,7 @@ function startRedirect(movieName) {
         progressBar.style.width = width + '%';
         if (width >= 100) { 
             clearInterval(interval); 
+            // Ab ye redirect hote hi movie ka naam telegram box me paste kar dega
             window.location.href = finalURL; 
         }
     }, 40);
@@ -233,7 +236,7 @@ function startRedirect(movieName) {
 function toggleChatbot() { chatWindow.classList.toggle('hidden'); }
 function toggleDevModal() { devModal.classList.toggle('hidden'); }
 
-// 7. FLOAT BUTTON DRAG LOGIC
+// 7. FLOAT BUTTON
 const floatBtn = document.querySelector('.chat-float-btn');
 let isDrag = false, hasMoved = false;
 
