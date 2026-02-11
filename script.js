@@ -32,7 +32,7 @@ const moviesDB = [
     { id: 10, title: "Thor: Ragnarok", img: "/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg" },
 
     // --- 11 to 20: TRENDING INDIA ---
-    { id: 11, title: "Kalki 2898 AD", img: "/sc1abg5EnyBFMCC66R8uQ.jpg" },
+    { id: 11, title: "Kalki 2898 AD", img: "https://i.ibb.co/jk6f1mHZ/Kalki-2898-AD.jpg" },
     { id: 12, title: "Stree 2", img: "/dN51c6c5.jpg" }, 
     { id: 13, title: "Animal", img: "/hr9rjR3J0xBBKCt8WMnDWJ7l6yV.jpg" },
     { id: 14, title: "Jawan", img: "/jcdqxDqN40A4k5d5e5f5.jpg" },
