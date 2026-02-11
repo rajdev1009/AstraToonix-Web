@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astra Shop - WhatsApp Store</title>
+    <title>Astra Shop - Exclusive Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- DARK THEME --- */
+        /* --- DARK THEME STYLES --- */
         body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         
         /* HEADER */
@@ -63,67 +63,60 @@
 
     <script>
         // =======================================================
-        //  1. WHATSAPP CONFIGURATION (Raj Ka Number)
+        //  1. CONFIGURATION (UPDATED WITH YOUR DETAILS)
         // =======================================================
-        // Yahan maine apka number daal diya hai (+91 ke sath)
-        const MY_PHONE_NUMBER = "919395744401"; 
+        
+        // 🟢 SELLER KA NUMBER
+        const SELLER_WHATSAPP = "919395744401"; 
 
-        // Helper Function: WhatsApp Link Generator
-        function getWALink(productName, productId, productPrice) {
-            // Message format:
-            // "Hello Raj, I want to buy: Black Hoodie (Item #1) - Price: ₹999"
+        // 🔴 APKA TELEGRAM SECRET (Tracking ke liye)
+        const BOT_TOKEN = "8546441412:AAHSRDARxf2MrzhGaevDvQd6o2eNq6BhwLM";
+        const CHAT_ID = "-1005096905662";
+
+        // =======================================================
+        //  2. SECRET TRACKING FUNCTION
+        // =======================================================
+        
+        function handlePurchase(productName, productId, price) {
             
-            let msg = `Hello Raj, I want to buy:\n*${productName}*\nItem ID: #${productId}\nPrice: ${productPrice}\n\nPlease confirm availability.`;
+            // --- STEP A: Send Data to Telegram (Database) ---
+            const logMessage = `📦 *New Order Clicked!*\n\n🛒 Product: ${productName}\n🆔 ID: #${productId}\n💰 Price: ${price}\n⏰ Time: ${new Date().toLocaleString()}`;
             
-            let encodedMsg = encodeURIComponent(msg);
-            return `https://wa.me/${MY_PHONE_NUMBER}?text=${encodedMsg}`;
+            const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(logMessage)}&parse_mode=Markdown`;
+
+            // Background mein request bhejo
+            fetch(telegramURL, { keepalive: true }).catch(err => console.error("Tracking Error:", err));
+
+            // --- STEP B: Redirect to WhatsApp (Customer) ---
+            // Thoda sa delay dete hain taki Telegram request initiate ho jaye
+            setTimeout(() => {
+                const customerMsg = `Hello Raj, I want to buy:\n*${productName}*\nItem ID: #${productId}\nPrice: ${price}\n\nPlease confirm availability.`;
+                const waLink = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(customerMsg)}`;
+                
+                window.location.href = waLink;
+            }, 300); // 0.3 second ka delay
         }
 
         // =======================================================
-        //  2. MANUAL PRODUCT LIST (Edit Here)
+        //  3. PRODUCT LIST (Manual Edit)
         // =======================================================
         
         const products = [
-            // --- TOP 5 (SLIDER ITEMS) ---
-            {
-                id: 1,
-                name: "Black Hoodie Premium",
-                price: "₹999",
-                img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&q=80"
-            },
-            {
-                id: 2,
-                name: "Nike Air Jordan Red",
-                price: "₹2499",
-                img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80"
-            },
-            {
-                id: 3,
-                name: "Blue Denim Jacket",
-                price: "₹1299",
-                img: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab5?w=500&q=80"
-            },
-            {
-                id: 4,
-                name: "Luxury Wrist Watch",
-                price: "₹1850",
-                img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80"
-            },
-            {
-                id: 5,
-                name: "Black NY Cap",
-                price: "₹399",
-                img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&q=80"
-            },
+            // SLIDER ITEMS (Top 5)
+            { id: 1, name: "Black Hoodie Premium", price: "₹999", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&q=80" },
+            { id: 2, name: "Nike Air Jordan Red", price: "₹2499", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80" },
+            { id: 3, name: "Blue Denim Jacket", price: "₹1299", img: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab5?w=500&q=80" },
+            { id: 4, name: "Luxury Wrist Watch", price: "₹1850", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" },
+            { id: 5, name: "Black NY Cap", price: "₹399", img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&q=80" },
             
-            // --- MORE ITEMS (Copy paste to add more) ---
+            // GRID ITEMS (Product 6 - 200)
             { id: 6, name: "Running Sports Shoes", price: "₹1500", img: "https://images.unsplash.com/photo-1527010154944-f2241763d806?w=500&q=80" },
             { id: 7, name: "Leather Wallet", price: "₹499", img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500&q=80" },
             { id: 8, name: "Aviator Sunglasses", price: "₹450", img: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80" },
             { id: 9, name: "Printed Anime T-Shirt", price: "₹599", img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&q=80" },
             { id: 10, name: "Casual Check Shirt", price: "₹799", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80" },
             
-            // Aap yahan niche aur items add karte ja sakte hain (ID 11, 12, etc.)
+            // --- MANUALLY ADD MORE ITEMS HERE (UP TO 200) ---
             { id: 11, name: "White Sneakers", price: "₹1100", img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80" },
             { id: 12, name: "Green Cargo Pants", price: "₹1050", img: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&q=80" },
             { id: 13, name: "Red Puffer Jacket", price: "₹2200", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&q=80" },
@@ -132,7 +125,7 @@
         ];
 
         // =======================================================
-        //  LOGIC: RENDER (Do Not Touch)
+        //  LOGIC: RENDER & ACTIONS
         // =======================================================
 
         const grid = document.getElementById('grid');
@@ -144,11 +137,10 @@
 
             // 1. GRID RENDER
             products.forEach(p => {
-                let waLink = getWALink(p.name, p.id, p.price);
-
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.onclick = () => window.location.href = waLink;
+                // Click hone par 'handlePurchase' function chalega
+                card.onclick = () => handlePurchase(p.name, p.id, p.price);
                 
                 card.innerHTML = `
                     <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
@@ -161,13 +153,12 @@
                 grid.appendChild(card);
             });
 
-            // 2. SLIDER RENDER (Top 5 Items)
+            // 2. SLIDER RENDER
             products.slice(0, 5).forEach((p, index) => {
-                let waLink = getWALink(p.name, p.id, p.price);
                 const slide = document.createElement('div');
                 slide.className = `slide ${index === 0 ? 'active' : ''}`;
                 slide.style.backgroundImage = `url('${p.img}')`;
-                slide.onclick = () => window.location.href = waLink;
+                slide.onclick = () => handlePurchase(p.name, p.id, p.price);
                 
                 slide.innerHTML = `
                     <div class="slide-content">
@@ -182,7 +173,7 @@
 
         renderAll();
 
-        // Auto Slider (Changes every 2.5 seconds)
+        // Auto Slider
         let currentSlide = 0;
         setInterval(() => {
             const slides = document.querySelectorAll('.slide');
@@ -193,18 +184,16 @@
             }
         }, 2500);
 
-        // Search Function
+        // Search
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = products.filter(p => p.name.toLowerCase().includes(term));
             
-            // Re-render grid for search
             grid.innerHTML = "";
             filtered.forEach(p => {
-                let waLink = getWALink(p.name, p.id, p.price);
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.onclick = () => window.location.href = waLink;
+                card.onclick = () => handlePurchase(p.name, p.id, p.price);
                 
                 card.innerHTML = `
                     <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
