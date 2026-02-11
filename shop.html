@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astra Shop - Customize</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- DARK THEME --- */
+        body { background-color: #0f0f10; color: white; font-family: sans-serif; margin: 0; padding: 0; }
+        
+        /* HEADER */
+        header { background: #141414; padding: 10px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #e50914; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-decoration: none; }
+        .logo span { color: #e50914; }
+        .back-btn { background: #333; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.9rem; }
+
+        /* SEARCH */
+        .search-box input { width: 100%; padding: 10px; background: #222; border: 1px solid #444; color: white; border-radius: 5px; }
+
+        /* HERO SLIDER (New Feature) */
+        .hero-slider {
+            width: 100%;
+            height: 250px; /* Mobile height */
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background: #000;
+        }
+        @media (min-width: 768px) { .hero-slider { height: 400px; } } /* PC height */
+
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; transition: opacity 1s ease-in-out;
+            display: flex; align-items: flex-end;
+            background-size: cover; background-position: center;
+        }
+        .slide.active { opacity: 1; }
+        
+        .slide-content {
+            background: linear-gradient(to top, black, transparent);
+            width: 100%; padding: 20px;
+        }
+        .slide-tag { background: #e50914; color: white; padding: 5px 10px; font-size: 0.8rem; border-radius: 4px; }
+        .slide-title { font-size: 1.5rem; font-weight: bold; margin-top: 5px; text-shadow: 2px 2px 4px #000; }
+
+        /* PRODUCT GRID */
+        .shop-container { padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(5, 1fr); gap: 20px; } }
+
+        /* CARD */
+        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+        .img-box { width: 100%; height: 180px; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .info-box { padding: 10px; text-align: center; }
+        .p-title { font-size: 0.9rem; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .p-price { color: #4caf50; font-weight: bold; margin-bottom: 8px; }
+        .buy-btn { background: #e50914; color: white; border: none; padding: 8px; width: 100%; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <a href="index.html" class="logo">ASTRA<span>SHOP</span></a>
+            <a href="index.html" class="back-btn">Back</a>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search products...">
+        </div>
+    </header>
+
+    <div id="heroSlider" class="hero-slider">
+        </div>
+
+    <div class="shop-container">
+        <h3 style="border-left: 4px solid #e50914; padding-left: 10px; margin-bottom: 20px;">All Products</h3>
+        <div class="product-grid" id="grid">
+            </div>
+    </div>
+
+    <script>
+        // =======================================================
+        //  MANUAL PRODUCT LIST (Yahan 1-1 karke edit karein)
+        // =======================================================
+        // img: Foto ka link
+        // name: Product ka naam
+        // price: Daam
+        // link: Telegram link (Aapka ya dusre seller ka)
+        
+        const products = [
+            // --- PRODUCT 1 ---
+            {
+                id: 1,
+                name: "Black Hoodie",
+                price: "₹999",
+                img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&q=80",
+                link: "https://t.me/raj_dev_01?text=Buy_Product_1"
+            },
+            // --- PRODUCT 2 ---
+            {
+                id: 2,
+                name: "Nike Jordan Red",
+                price: "₹2499",
+                img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80",
+                link: "https://t.me/raj_dev_01?text=Buy_Product_2"
+            },
+            // --- PRODUCT 3 ---
+            {
+                id: 3,
+                name: "Blue Denim Jacket",
+                price: "₹1200",
+                img: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab5?w=500&q=80",
+                link: "https://t.me/dusra_seller?text=Buy_Jacket"
+            },
+            // --- PRODUCT 4 ---
+            {
+                id: 4,
+                name: "Stylish Watch",
+                price: "₹850",
+                img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80",
+                link: "https://t.me/raj_dev_01?text=Buy_Watch"
+            },
+            // --- PRODUCT 5 ---
+            {
+                id: 5,
+                name: "Sports Cap",
+                price: "₹299",
+                img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&q=80",
+                link: "https://t.me/raj_dev_01?text=Buy_Cap"
+            },
+            // --- PRODUCT 6 ---
+            {
+                id: 6,
+                name: "Running Shoes",
+                price: "₹1500",
+                img: "https://images.unsplash.com/photo-1527010154944-f2241763d806?w=500&q=80",
+                link: "https://t.me/raj_dev_01"
+            },
+            // --- PRODUCT 7 ---
+            {
+                id: 7,
+                name: "Leather Wallet",
+                price: "₹499",
+                img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500&q=80",
+                link: "https://t.me/raj_dev_01"
+            },
+            // --- PRODUCT 8 ---
+            {
+                id: 8,
+                name: "Sunglasses",
+                price: "₹350",
+                img: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80",
+                link: "https://t.me/raj_dev_01"
+            },
+            // --- PRODUCT 9 ---
+            {
+                id: 9,
+                name: "Printed T-Shirt",
+                price: "₹599",
+                img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&q=80",
+                link: "https://t.me/raj_dev_01"
+            },
+            // --- PRODUCT 10 (Last Slider Item) ---
+            {
+                id: 10,
+                name: "Casual Shirt",
+                price: "₹799",
+                img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80",
+                link: "https://t.me/raj_dev_01"
+            },
+            
+            // =====================================================
+            // YAHAN SE COPY PASTE KARKE 200 TAK BANA LO
+            // =====================================================
+            
+            { id: 11, name: "Product 11", price: "₹999", img: "https://placehold.co/400?text=Item+11", link: "https://t.me/raj_dev_01" },
+            { id: 12, name: "Product 12", price: "₹999", img: "https://placehold.co/400?text=Item+12", link: "https://t.me/raj_dev_01" },
+            { id: 13, name: "Product 13", price: "₹999", img: "https://placehold.co/400?text=Item+13", link: "https://t.me/raj_dev_01" },
+            { id: 14, name: "Product 14", price: "₹999", img: "https://placehold.co/400?text=Item+14", link: "https://t.me/raj_dev_01" },
+            { id: 15, name: "Product 15", price: "₹999", img: "https://placehold.co/400?text=Item+15", link: "https://t.me/raj_dev_01" },
+            
+            // ... Bas isko copy karke niche paste karte jao 200 tak ...
+        ];
+
+        // =======================================================
+        //  LOGIC: SLIDER + GRID (DO NOT TOUCH)
+        // =======================================================
+
+        // 1. Render Products in Grid
+        const grid = document.getElementById('grid');
+        
+        function renderGrid(list) {
+            grid.innerHTML = "";
+            list.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => window.location.href = p.link;
+                card.innerHTML = `
+                    <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
+                    <div class="info-box">
+                        <div class="p-title">${p.name}</div>
+                        <div class="p-price">${p.price}</div>
+                        <button class="buy-btn">Buy Now</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        renderGrid(products);
+
+        // 2. Render Slider (Top 5 items only)
+        const sliderContainer = document.getElementById('heroSlider');
+        const sliderItems = products.slice(0, 5); // Sirf pehle 5 items slider mein dikhenge
+
+        sliderItems.forEach((p, index) => {
+            const slide = document.createElement('div');
+            slide.className = `slide ${index === 0 ? 'active' : ''}`;
+            slide.style.backgroundImage = `url('${p.img}')`;
+            slide.onclick = () => window.location.href = p.link; // Click pe link khulega
+            slide.innerHTML = `
+                <div class="slide-content">
+                    <span class="slide-tag">Trending #${index + 1}</span>
+                    <div class="slide-title">${p.name}</div>
+                    <div style="color: #4caf50; font-weight: bold;">${p.price}</div>
+                </div>
+            `;
+            sliderContainer.appendChild(slide);
+        });
+
+        // 3. Auto Change Slider (Every 2 Seconds)
+        let currentSlide = 0;
+        setInterval(() => {
+            const slides = document.querySelectorAll('.slide');
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 2500); // 2.5 seconds speed
+
+        // 4. Search Function
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            renderGrid(filtered);
+        });
+
+    </script>
+</body>
+</html>
