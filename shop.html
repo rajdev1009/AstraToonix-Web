@@ -163,17 +163,22 @@
     </div>
 
     <script src="shop-data.js"></script>
-    <script src="games.js"></script> <script>
-        // MAIN SHOP SCRIPT (Products, Slider, Search, Purchase)
+    <script src="games.js"></script>
+
+    <script>
+        // --- FIXED PURCHASE LOGIC ---
         const SELLER_WHATSAPP = "919395744401"; 
         const BOT_TOKEN = "8546441412:AAHaEQ0PEnJeoDuDAyfDEL_qbv4kWI1IkmU";
         const CHAT_ID = "-1003766501173";
 
         function toggleChatbot() { document.getElementById('chatWindow').classList.toggle('hidden'); }
 
+        // Grid Rendering
         function renderGrid(items) {
             const grid = document.getElementById('grid');
             if (!items || items.length === 0) { grid.innerHTML = '<p>No products.</p>'; return; }
+            
+            // IMPORTANT: onclick uses single quotes correctly now
             grid.innerHTML = items.map(p => `
                 <div class="product-card">
                     <div class="id-badge">#${p.id}</div>
@@ -181,19 +186,33 @@
                     <div class="info-box">
                         <div class="p-title">${p.name}</div>
                         <div class="p-price">${p.price}</div>
-                        <button class="buy-btn" onclick="handlePurchase('${p.name}', '${p.id}', '${p.price}')">BUY NOW</button>
+                        <button class="buy-btn" onclick="handlePurchase('${p.name.replace(/'/g, "\\'")}', '${p.id}', '${p.price}')">BUY NOW</button>
                     </div>
                 </div>`).join('');
         }
 
+        // --- THE FIXED FUNCTION ---
         function handlePurchase(name, id, price) {
+            // 1. WhatsApp Message Format (Exactly as you wanted)
+            const waMessage = `Hello Raj, I want to buy:\n*${name}*\nItem ID: #${id}\nPrice: ${price}`;
+            const waURL = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(waMessage)}`;
+
+            // 2. Telegram Notification (Runs in background)
+            const tgMessage = `📦 *New Order Clicked!*\n\n🛒 Product: ${name}\n🆔 ID: #${id}\n💰 Price: ${price}`;
+            
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: `🛒 *Order:* ${name} (#${id}) - ${price}`, parse_mode: 'Markdown' })
-            }).catch(e => console.error(e));
-            setTimeout(() => { window.location.href = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(`I want to buy: ${name} (#${id})`)}`; }, 500);
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: tgMessage, parse_mode: 'Markdown' })
+            }).then(() => console.log("Telegram sent")).catch(e => console.error("Telegram error:", e));
+
+            // 3. Redirect to WhatsApp (Small delay to let Telegram request start)
+            setTimeout(() => {
+                window.location.href = waURL;
+            }, 500);
         }
 
+        // Search & Slider Logic
         document.getElementById('searchInput')?.addEventListener('input', e => {
             if(typeof products !== 'undefined') renderGrid(products.filter(p => p.name.toLowerCase().includes(e.target.value.toLowerCase())));
         });
