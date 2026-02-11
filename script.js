@@ -125,6 +125,7 @@ const searchInput = document.getElementById('searchInput');
 const searchBar = document.getElementById('searchBar');
 const mainApp = document.getElementById('main-app');
 const loadingScreen = document.getElementById('loadingScreen');
+const loadingText = document.getElementById('loadingText'); // Added for updating text
 const progressBar = document.getElementById('progressBar');
 const chatWindow = document.getElementById('chatWindow');
 const devModal = document.getElementById('devModal');
@@ -207,30 +208,43 @@ searchInput.addEventListener('input', (e) => {
     renderGrid(filtered);
 });
 
-// 5. REDIRECT WITH TELEGRAM AUTO-FILL TEXT (FIXED)
+// ============================================
+// 5. REDIRECT WITH "COPY & JOIN" LOGIC (BEST)
+// ============================================
 function startRedirect(movieName) {
+    // 1. Copy Movie Name to Clipboard
+    const textToCopy = `Search: ${movieName}`;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            console.log('Text copied to clipboard');
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    }
+
+    // 2. Show Loading Screen with Instruction
     mainApp.classList.add('hidden');
     loadingScreen.classList.remove('hidden');
     window.scrollTo(0, 0);
-
-    // Using 'Share URL' Scheme to force text pre-fill
-    // User will select the group, and text will appear automatically
-    const textToFill = `Search: ${movieName}`;
     
-    // NOTE: 'url' parameter is required by Telegram share logic, 
-    // so we pass the group link itself as the URL to share, 
-    // and the Movie Name as the 'text' caption.
-    const finalURL = `https://t.me/share/url?url=${encodeURIComponent(TELEGRAM_LINK)}&text=${encodeURIComponent(textToFill)}`;
+    // Update loading text to guide user
+    if(loadingText) {
+        loadingText.innerHTML = "Name Copied! <br>Join & Paste in Group";
+        loadingText.style.color = "#2ecc71"; // Green color
+    }
 
+    // 3. Redirect to Group Join Link
     let width = 0;
     const interval = setInterval(() => {
         width += 2; 
         progressBar.style.width = width + '%';
         if (width >= 100) { 
             clearInterval(interval); 
-            window.location.href = finalURL; 
+            // Opens the JOIN Link (Works for everyone)
+            window.location.href = TELEGRAM_LINK; 
         }
-    }, 40);
+    }, 40); // Slightly slower to let them read the text
 }
 
 // 6. TOGGLES
@@ -265,4 +279,3 @@ if(floatBtn) {
 renderSlider();
 renderTrending();
 renderGrid(moviesDB);
-     
