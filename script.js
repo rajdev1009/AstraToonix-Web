@@ -213,7 +213,7 @@ searchInput.addEventListener('input', (e) => {
 // ============================================
 function startRedirect(movieName) {
     // 1. Copy Movie Name to Clipboard
-    const textToCopy = `Search: ${movieName}`;
+    const textToCopy = movieName; // UPDATED: Sirf movie ka naam copy hoga
     
     if (navigator.clipboard) {
         navigator.clipboard.writeText(textToCopy).then(() => {
@@ -278,4 +278,3 @@ if(floatBtn) {
 renderSlider();
 renderTrending();
 renderGrid(moviesDB);
-            
