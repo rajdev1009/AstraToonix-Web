@@ -2,12 +2,12 @@
 const TELEGRAM_LINK = "https://t.me/+u4cmm3JmIrFlNzZl"; 
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
-// === FINAL 100 MOVIES DATABASE ===
+// === FINAL 100 MOVIES DATABASE (OFFICIAL FULL NAMES) ===
 const moviesDB = [
-    // --- 1 to 10: SLIDER ---
+    // --- 1 to 10: SLIDER (Top Hits) ---
     { id: 1, title: "Avengers: Endgame", img: `${IMG_BASE}/or06FN3Dka5tukK1e9sl16pB3iy.jpg` },
-    { id: 2, title: "Avatar: Way of Water", img: `${IMG_BASE}/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg` },
-    { id: 3, title: "Spider-Man: NWH", img: `${IMG_BASE}/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg` },
+    { id: 2, title: "Avatar: The Way of Water", img: `${IMG_BASE}/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg` },
+    { id: 3, title: "Spider-Man: No Way Home", img: `${IMG_BASE}/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg` }, // Fixed Name
     { id: 4, title: "The Batman", img: `${IMG_BASE}/74xTEgt7R36Fpooo50r9T25onhq.jpg` },
     { id: 5, title: "Oppenheimer", img: `${IMG_BASE}/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg` },
     { id: 6, title: "Interstellar", img: `${IMG_BASE}/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg` },
@@ -21,9 +21,9 @@ const moviesDB = [
     { id: 12, title: "Stree 2", img: `${IMG_BASE}/dN51c6c5.jpg` }, 
     { id: 13, title: "Animal", img: `${IMG_BASE}/hr9rjR3J0xBBKCt8WMnDWJ7l6yV.jpg` },
     { id: 14, title: "Jawan", img: `${IMG_BASE}/jcdqxDqN40A4k5d5e5f5.jpg` },
-    { id: 15, title: "Salaar", img: `${IMG_BASE}/m1b9bqTqQO9.jpg` },
+    { id: 15, title: "Salaar: Part 1 – Ceasefire", img: `${IMG_BASE}/m1b9bqTqQO9.jpg` }, // Full Name
     { id: 16, title: "Leo", img: `${IMG_BASE}/pD6sL4vntUOXHmuvJPPZAgvyfd9.jpg` },
-    { id: 17, title: "KGF Chapter 2", img: `${IMG_BASE}/5DpBa36J183.jpg` },
+    { id: 17, title: "K.G.F: Chapter 2", img: `${IMG_BASE}/5DpBa36J183.jpg` }, // Full Name
     { id: 18, title: "RRR", img: `${IMG_BASE}/nEufeZlyAOLqO2brrs0yeF1kM9s.jpg` },
     { id: 19, title: "Pushpa: The Rise", img: `${IMG_BASE}/r8dtDFY2GZE8aAUnWJzSF5P2eM5.jpg` },
     { id: 20, title: "Pathaan", img: `${IMG_BASE}/m1b9bqTqQO9.jpg` },
@@ -33,28 +33,28 @@ const moviesDB = [
     { id: 22, title: "Doctor Strange", img: `${IMG_BASE}/uGBVj3bEbCoZbDjjl9wTxcygko1.jpg` },
     { id: 23, title: "Venom", img: `${IMG_BASE}/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg` },
     { id: 24, title: "The Dark Knight", img: `${IMG_BASE}/qJ2tW6WMUDux911r6m7haRef0WH.jpg` },
-    { id: 25, title: "John Wick 4", img: `${IMG_BASE}/vZloFAK7NmvMGKE7VkF5UPurDq.jpg` },
+    { id: 25, title: "John Wick: Chapter 4", img: `${IMG_BASE}/vZloFAK7NmvMGKE7VkF5UPurDq.jpg` }, // Full Name
     { id: 26, title: "Deadpool", img: `${IMG_BASE}/yGSxMiF0cYuAiyGuPr8iPExtbIF.jpg` },
     { id: 27, title: "Aquaman", img: `${IMG_BASE}/xLPffWMhNb1E14BvfG09s0ulJDZ.jpg` },
     { id: 28, title: "Justice League", img: `${IMG_BASE}/eifGNCSDuxJeS1loAXil5bIGzhC.jpg` },
     { id: 29, title: "Man of Steel", img: `${IMG_BASE}/7rIPjn5TUK04O25ZkMyHrGNPgKL.jpg` },
     { id: 30, title: "Fast X", img: `${IMG_BASE}/fiVW06jE7z9YnO4trhaMEdcl4Cn.jpg` },
-    { id: 31, title: "Mission Impossible 7", img: `${IMG_BASE}/AkJQpZp9WoNdj7pEIN9dWB7QLZo.jpg` },
+    { id: 31, title: "Mission: Impossible - Dead Reckoning Part One", img: `${IMG_BASE}/AkJQpZp9WoNdj7pEIN9dWB7QLZo.jpg` }, // Full Name
     { id: 32, title: "Top Gun: Maverick", img: `${IMG_BASE}/62HCnUTziyWcpDaBO2i1DX17dbH.jpg` },
     { id: 33, title: "Transformers", img: `${IMG_BASE}/62JbYvE2zJgZ0z3c4P3y3j3j3j.jpg` },
-    { id: 34, title: "Godzilla vs Kong", img: `${IMG_BASE}/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg` },
+    { id: 34, title: "Godzilla vs. Kong", img: `${IMG_BASE}/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg` },
     { id: 35, title: "Jurassic World", img: `${IMG_BASE}/rHR4y9tqJJ1NGjC6XN3c0OQ45.jpg` },
-    { id: 36, title: "Pirates of Caribbean", img: `${IMG_BASE}/z8onk7LV9Mmw6zKz4hT6pzzvmvl.jpg` },
-    { id: 37, title: "Harry Potter 1", img: `${IMG_BASE}/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg` },
-    { id: 38, title: "Lord of the Rings", img: `${IMG_BASE}/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg` },
-    { id: 39, title: "Matrix", img: `${IMG_BASE}/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg` },
+    { id: 36, title: "Pirates of the Caribbean: The Curse of the Black Pearl", img: `${IMG_BASE}/z8onk7LV9Mmw6zKz4hT6pzzvmvl.jpg` }, // Full Name
+    { id: 37, title: "Harry Potter and the Sorcerer's Stone", img: `${IMG_BASE}/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg` }, // Full Name
+    { id: 38, title: "The Lord of the Rings: The Fellowship of the Ring", img: `${IMG_BASE}/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg` }, // Full Name
+    { id: 39, title: "The Matrix", img: `${IMG_BASE}/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg` },
     { id: 40, title: "Gladiator", img: `${IMG_BASE}/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg` },
 
     // --- 41 to 60: BOLLYWOOD HITS ---
     { id: 41, title: "Tiger 3", img: `${IMG_BASE}/7I6VvfcY4acOSAdLTjWWJqJ7a0.jpg` },
     { id: 42, title: "Dunki", img: `${IMG_BASE}/abWM2MqCs1H9UFXxEhfCKBJ1Zmc.jpg` },
     { id: 43, title: "Gadar 2", img: `${IMG_BASE}/ipoJc.jpg` },
-    { id: 44, title: "Brahmastra", img: `${IMG_BASE}/iavXFb0GEmVmvK8qgbqgzbbGN2n.jpg` },
+    { id: 44, title: "Brahmāstra: Part One – Shiva", img: `${IMG_BASE}/iavXFb0GEmVmvK8qgbqgzbbGN2n.jpg` }, // Full Name
     { id: 45, title: "War", img: `${IMG_BASE}/7JeHrXHj.jpg` },
     { id: 46, title: "Kabir Singh", img: `${IMG_BASE}/d3EqMOJT4m3ou6NnmNGUX8dGyEh.jpg` },
     { id: 47, title: "Bhool Bhulaiyaa 2", img: `${IMG_BASE}/fwGD1j5.jpg` },
@@ -73,12 +73,12 @@ const moviesDB = [
     { id: 60, title: "Kick", img: `${IMG_BASE}/e34234.jpg` },
 
     // --- 61 to 80: SOUTH BLOCKBUSTERS ---
-    { id: 61, title: "Baahubali 2", img: `${IMG_BASE}/2CAL2433ZeIihfX1Hb2139CX0pW.jpg` },
+    { id: 61, title: "Baahubali 2: The Conclusion", img: `${IMG_BASE}/2CAL2433ZeIihfX1Hb2139CX0pW.jpg` }, // Full Name
     { id: 62, title: "Kantara", img: `${IMG_BASE}/a3bkcZrVavWCVg92ZTL2jXzw1cM.jpg` },
     { id: 63, title: "Vikram", img: `${IMG_BASE}/bKptfUu72D3h8p8l8T8j5q5v5.jpg` },
     { id: 64, title: "Jailer", img: `${IMG_BASE}/4j0PNYTbV5yJ3j3j3j3j.jpg` }, 
-    { id: 65, title: "Ponniyin Selvan 1", img: `${IMG_BASE}/b342.jpg` },
-    { id: 66, title: "Ponniyin Selvan 2", img: `${IMG_BASE}/c542.jpg` },
+    { id: 65, title: "Ponniyin Selvan: I", img: `${IMG_BASE}/b342.jpg` }, // Full Name
+    { id: 66, title: "Ponniyin Selvan: II", img: `${IMG_BASE}/c542.jpg` }, // Full Name
     { id: 67, title: "Varisu", img: `${IMG_BASE}/d642.jpg` },
     { id: 68, title: "Thunivu", img: `${IMG_BASE}/e742.jpg` },
     { id: 69, title: "Beast", img: `${IMG_BASE}/f842.jpg` },
@@ -95,7 +95,7 @@ const moviesDB = [
     { id: 80, title: "Guntur Kaaram", img: `${IMG_BASE}/q942.jpg` },
 
     // --- 81 to 100: ANIMATION & CLASSICS ---
-    { id: 81, title: "Frozen 2", img: `${IMG_BASE}/mINJaa34MtknCYl5A45XP7cNOAP.jpg` },
+    { id: 81, title: "Frozen II", img: `${IMG_BASE}/mINJaa34MtknCYl5A45XP7cNOAP.jpg` }, // Full Name
     { id: 82, title: "Moana", img: `${IMG_BASE}/4JeejGugONWskkbn452248.jpg` },
     { id: 83, title: "Coco", img: `${IMG_BASE}/eKi8dIrr8voB6sYz2DjPEPb9f20.jpg` },
     { id: 84, title: "Zootopia", img: `${IMG_BASE}/sM33xM7awVP0AZ14wO2XI4H7T6L.jpg` },
@@ -106,14 +106,14 @@ const moviesDB = [
     { id: 89, title: "Tumbbad", img: `${IMG_BASE}/4B2Yv855UM38fyaHqqiBsYdpmoe.jpg` },
     { id: 90, title: "Gangs of Wasseypur", img: `${IMG_BASE}/asb4x3.jpg` },
     { id: 91, title: "Sholay", img: `${IMG_BASE}/lzLz3k2.jpg` },
-    { id: 92, title: "Dilwale Dulhania...", img: `${IMG_BASE}/2CAL2433ZeIihfX1Hb2139CX0pW.jpg` },
+    { id: 92, title: "Dilwale Dulhania Le Jayenge", img: `${IMG_BASE}/2CAL2433ZeIihfX1Hb2139CX0pW.jpg` }, // Full Name
     { id: 93, title: "Kuch Kuch Hota Hai", img: `${IMG_BASE}/c24234.jpg` },
     { id: 94, title: "Lagaan", img: `${IMG_BASE}/p24234.jpg` },
     { id: 95, title: "Swades", img: `${IMG_BASE}/r24234.jpg` },
-    { id: 96, title: "Chak De India", img: `${IMG_BASE}/s24234.jpg` },
+    { id: 96, title: "Chak De! India", img: `${IMG_BASE}/s24234.jpg` }, // Full Name
     { id: 97, title: "Don", img: `${IMG_BASE}/t24234.jpg` },
     { id: 98, title: "Dhoom 3", img: `${IMG_BASE}/u24234.jpg` },
-    { id: 99, title: "Koi Mil Gaya", img: `${IMG_BASE}/v24234.jpg` },
+    { id: 99, title: "Koi... Mil Gaya", img: `${IMG_BASE}/v24234.jpg` }, // Full Name
     { id: 100, title: "Krrish", img: `${IMG_BASE}/w24234.jpg` }
 ];
 
@@ -125,7 +125,7 @@ const searchInput = document.getElementById('searchInput');
 const searchBar = document.getElementById('searchBar');
 const mainApp = document.getElementById('main-app');
 const loadingScreen = document.getElementById('loadingScreen');
-const loadingText = document.getElementById('loadingText'); // Added for updating text
+const loadingText = document.getElementById('loadingText'); 
 const progressBar = document.getElementById('progressBar');
 const chatWindow = document.getElementById('chatWindow');
 const devModal = document.getElementById('devModal');
@@ -230,8 +230,7 @@ function startRedirect(movieName) {
     
     // Update loading text to guide user
     if(loadingText) {
-        loadingText.innerHTML = "Name Copied! <br>Join & Paste in Group";
-        loadingText.style.color = "#2ecc71"; // Green color
+        loadingText.innerHTML = `Searching: <span style="color:#2ecc71">${movieName}</span><br><br><span style="font-size:0.9rem; color:#aaa;">Name Copied! Paste in Group</span>`;
     }
 
     // 3. Redirect to Group Join Link
@@ -244,7 +243,7 @@ function startRedirect(movieName) {
             // Opens the JOIN Link (Works for everyone)
             window.location.href = TELEGRAM_LINK; 
         }
-    }, 40); // Slightly slower to let them read the text
+    }, 40);
 }
 
 // 6. TOGGLES
@@ -279,3 +278,4 @@ if(floatBtn) {
 renderSlider();
 renderTrending();
 renderGrid(moviesDB);
+            
