@@ -64,17 +64,26 @@
         .chat-header { background: #25D366; color: #000; padding: 12px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
         .chat-window iframe { flex: 1; width: 100%; border: none; background: #fff; }
         
-        /* GAME MODAL CSS */
-        .game-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 300; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .game-content { background: #1a1a1a; width: 95%; max-width: 400px; border-radius: 15px; border: 2px solid #8e44ad; overflow: hidden; max-height: 90vh; overflow-y: auto; }
-        .game-header { background: #8e44ad; padding: 15px; display: flex; justify-content: space-between; align-items: center; color: white; font-weight: bold; font-size: 1.2rem; }
-        .game-body { padding: 20px; text-align: center; }
-        
+        /* GAME & ORDER MODAL CSS */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 300; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .modal-content { background: #1a1a1a; width: 95%; max-width: 400px; border-radius: 15px; border: 2px solid #25D366; overflow: hidden; max-height: 90vh; overflow-y: auto; }
+        .modal-header { background: #25D366; padding: 15px; display: flex; justify-content: space-between; align-items: center; color: #000; font-weight: bold; font-size: 1.2rem; }
+        .modal-body { padding: 20px; text-align: center; }
+
+        /* FORM STYLES */
+        .order-form input, .order-form textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: #333; border: 1px solid #555; border-radius: 8px; color: white; font-size: 1rem; }
+        .order-form textarea { height: 80px; resize: none; }
+        .confirm-btn { background: #25D366; color: #000; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .confirm-btn:hover { background: #1ebc57; }
+
+        /* Game Specific Overrides */
+        .game-header { background: #8e44ad !important; color: white; border-bottom: 2px solid #fff; }
+        .game-content { border-color: #8e44ad; }
         .game-selector button { width: 100%; padding: 15px; margin: 5px 0; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; color: white; }
         .btn-ttt { background: #e74c3c; } 
         .btn-chess { background: #3498db; }
         .btn-back { background: #444; margin-top: 10px; }
-
+        
         /* GAME BOARDS */
         .ttt-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 20px auto; width: 250px; }
         .cell { width: 80px; height: 80px; background: #333; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; cursor: pointer; color: white; border-radius: 5px; }
@@ -132,13 +141,33 @@
         <iframe src="https://high-rhinoceros-dminemraj-83bdb398.koyeb.app/" title="Chatbot"></iframe>
     </div>
 
-    <div id="gameModal" class="game-modal hidden">
-        <div class="game-content">
-            <div class="game-header">
+    <div id="orderModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span><i class="fas fa-shopping-cart"></i> Enter Delivery Details</span>
+                <i class="fas fa-times" onclick="closeOrderModal()" style="cursor:pointer;"></i>
+            </div>
+            <div class="modal-body">
+                <p style="color:#aaa; margin-bottom:15px; font-size:0.9rem;">Complete your details to proceed to WhatsApp.</p>
+                <div class="order-form">
+                    <input type="text" id="custName" placeholder="Enter Your Name" required>
+                    <textarea id="custAddress" placeholder="Enter Full Address (House No, Street, City, Pin)" required></textarea>
+                    
+                    <button class="confirm-btn" onclick="confirmOrder()">
+                        <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameModal" class="modal-overlay hidden">
+        <div class="modal-content game-content">
+            <div class="modal-header game-header">
                 <span><i class="fas fa-gamepad"></i> Game Zone</span>
                 <i class="fas fa-times" onclick="toggleGameModal()" style="cursor:pointer;"></i>
             </div>
-            <div class="game-body">
+            <div class="modal-body">
                 <div id="gameMenu">
                     <p>Choose a game to play against AI:</p>
                     <div class="game-selector">
@@ -166,19 +195,59 @@
     <script src="games.js"></script>
 
     <script>
-        // --- FIXED PURCHASE LOGIC ---
+        // CONFIG
         const SELLER_WHATSAPP = "919395744401"; 
         const BOT_TOKEN = "8546441412:AAHaEQ0PEnJeoDuDAyfDEL_qbv4kWI1IkmU";
         const CHAT_ID = "-1003766501173";
 
+        // Toggles
         function toggleChatbot() { document.getElementById('chatWindow').classList.toggle('hidden'); }
+        function toggleGameModal() { document.getElementById('gameModal').classList.toggle('hidden'); showGameMenu(); }
+        
+        // --- ORDER MODAL LOGIC (NEW) ---
+        let currentProduct = {}; // To store temp product data
 
-        // Grid Rendering
+        function openOrderModal(name, id, price) {
+            currentProduct = { name, id, price };
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+        }
+
+        function confirmOrder() {
+            const name = document.getElementById('custName').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            if (!name || !address) {
+                alert("Please enter Name and Address first!");
+                return;
+            }
+
+            // 1. WhatsApp Message (Formatted with User Details)
+            const waMessage = `*New Order Request*\n\n👤 *Name:* ${name}\n🏠 *Address:* ${address}\n\n🛒 *Product:* ${currentProduct.name}\n🆔 *ID:* #${currentProduct.id}\n💰 *Price:* ${currentProduct.price}\n\n-----------------\nPlease confirm my order.`;
+            const waURL = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(waMessage)}`;
+
+            // 2. Telegram Log (Background)
+            const tgMessage = `📦 *New Order Placed!*\n\n👤 Name: ${name}\n🏠 Address: ${address}\n\n🛒 Product: ${currentProduct.name}\n🆔 ID: #${currentProduct.id}\n💰 Price: ${currentProduct.price}`;
+            
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: tgMessage, parse_mode: 'Markdown' })
+            }).catch(e => console.error(e));
+
+            // 3. Redirect to WhatsApp
+            closeOrderModal();
+            window.location.href = waURL;
+        }
+
+        // --- RENDER GRID (Updated onclick) ---
         function renderGrid(items) {
             const grid = document.getElementById('grid');
             if (!items || items.length === 0) { grid.innerHTML = '<p>No products.</p>'; return; }
             
-            // IMPORTANT: onclick uses single quotes correctly now
             grid.innerHTML = items.map(p => `
                 <div class="product-card">
                     <div class="id-badge">#${p.id}</div>
@@ -186,33 +255,12 @@
                     <div class="info-box">
                         <div class="p-title">${p.name}</div>
                         <div class="p-price">${p.price}</div>
-                        <button class="buy-btn" onclick="handlePurchase('${p.name.replace(/'/g, "\\'")}', '${p.id}', '${p.price}')">BUY NOW</button>
+                        <button class="buy-btn" onclick="openOrderModal('${p.name.replace(/'/g, "\\'")}', '${p.id}', '${p.price}')">BUY NOW</button>
                     </div>
                 </div>`).join('');
         }
 
-        // --- THE FIXED FUNCTION ---
-        function handlePurchase(name, id, price) {
-            // 1. WhatsApp Message Format (Exactly as you wanted)
-            const waMessage = `Hello Raj, I want to buy:\n*${name}*\nItem ID: #${id}\nPrice: ${price}`;
-            const waURL = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(waMessage)}`;
-
-            // 2. Telegram Notification (Runs in background)
-            const tgMessage = `📦 *New Order Clicked!*\n\n🛒 Product: ${name}\n🆔 ID: #${id}\n💰 Price: ${price}`;
-            
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: tgMessage, parse_mode: 'Markdown' })
-            }).then(() => console.log("Telegram sent")).catch(e => console.error("Telegram error:", e));
-
-            // 3. Redirect to WhatsApp (Small delay to let Telegram request start)
-            setTimeout(() => {
-                window.location.href = waURL;
-            }, 500);
-        }
-
-        // Search & Slider Logic
+        // Search & Slider
         document.getElementById('searchInput')?.addEventListener('input', e => {
             if(typeof products !== 'undefined') renderGrid(products.filter(p => p.name.toLowerCase().includes(e.target.value.toLowerCase())));
         });
