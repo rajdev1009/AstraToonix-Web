@@ -2,109 +2,220 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AstraToonix - Exclusive Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AstraToonix - Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* --- DARK THEME & STYLING --- */
-        body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        header { background: #141414; padding: 10px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #25D366; }
+        /* --- DARK THEME & BASE STYLES --- */
+        body { 
+            background-color: #0f0f10; 
+            color: white; 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            padding-bottom: 80px; /* Space for footer/float btn */
+        }
         
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        
-        /* UPDATED HEADER STYLES */
-        .nav-left { display: flex; align-items: center; gap: 15px; }
-        .back-home-btn { color: #fff; text-decoration: none; font-size: 1.2rem; display: flex; align-items: center; transition: 0.3s; }
-        .back-home-btn:hover { color: #25D366; }
-        
-        .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-decoration: none; }
-        .logo span { color: #25D366; }
-        
-        .search-box input { width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 8px; outline: none; box-sizing: border-box; }
-
-        .hero-slider { width: 100%; height: 250px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; }
-        @media (min-width: 768px) { .hero-slider { height: 400px; } }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s; display: flex; align-items: flex-end; background-size: cover; background-position: center; }
-        .slide.active { opacity: 1; }
-        .slide-content { background: linear-gradient(to top, black, transparent); width: 100%; padding: 20px; }
-        .slide-title { font-size: 1.4rem; font-weight: bold; }
-
-        .shop-container { padding: 15px; max-width: 1200px; margin: 0 auto; }
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(5, 1fr); } }
-
-        /* UPDATED PRODUCT CARD STYLE (Relative for absolute badge) */
-        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; transition: 0.3s; position: relative; }
-        
-        /* NEW BADGE STYLE */
-        .id-badge {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #25D366;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 10;
-            border: 1px solid #25D366;
+        /* --- HEADER STYLES --- */
+        header { 
+            background: #141414; 
+            padding: 10px 15px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            border-bottom: 2px solid #25D366; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        .img-box { width: 100%; height: 160px; overflow: hidden; }
+        .header-top { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 15px; 
+        }
+
+        /* BACK BUTTON */
+        .back-home-btn { 
+            color: #fff; 
+            text-decoration: none; 
+            font-size: 1.1rem; 
+            display: flex; 
+            align-items: center; 
+            background: #333;
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #444;
+            transition: 0.3s;
+        }
+        .back-home-btn i { margin-right: 8px; }
+        .back-home-btn:hover { background: #25D366; color: #000; border-color: #25D366; }
+
+        /* SOCIAL ICONS CONTAINER */
+        .social-bar {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* GENUINE BRAND ICONS STYLING */
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .social-icon:active { transform: scale(0.9); }
+
+        /* Instagram Gradient (Real Look) */
+        .social-icon.insta {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+        
+        /* Facebook Blue (Real Look) */
+        .social-icon.fb {
+            background: #1877F2;
+        }
+
+        /* YouTube Red (Real Look) */
+        .social-icon.yt {
+            background: #FF0000;
+        }
+
+        /* SEARCH BOX */
+        .search-box input { 
+            width: 100%; 
+            padding: 12px 15px; 
+            background: #222; 
+            border: 1px solid #444; 
+            color: white; 
+            border-radius: 25px; 
+            outline: none; 
+            font-size: 1rem;
+        }
+        .search-box input:focus { border-color: #25D366; }
+
+        /* --- SLIDER & GRID --- */
+        .hero-slider { width: 100%; height: 220px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; }
+        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s; background-size: cover; background-position: center; }
+        .slide.active { opacity: 1; }
+        .slide-content { position: absolute; bottom: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 20px; }
+        .slide-title { font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 3px black; }
+
+        .shop-container { padding: 0 10px; max-width: 1200px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media (min-width: 600px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        /* PRODUCT CARD */
+        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; position: relative; }
+        
+        /* ID TAG (Top Left) */
+        .id-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #25D366;
+            color: #000;
+            padding: 4px 8px;
+            border-bottom-right-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .img-box { width: 100%; height: 150px; overflow: hidden; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .info-box { padding: 12px; text-align: center; }
-        .p-title { font-size: 0.9rem; margin-bottom: 8px; height: 35px; overflow: hidden; }
-        .p-price { color: #25D366; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
-        .buy-btn { background: #25D366; color: black; border: none; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .info-box { padding: 10px; text-align: center; }
+        .p-title { font-size: 0.85rem; margin-bottom: 5px; height: 32px; overflow: hidden; line-height: 1.2; }
+        .p-price { color: #25D366; font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
+        .buy-btn { background: #25D366; color: black; border: none; padding: 8px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+
+        /* --- CHATBOT STYLES (Copied for Shop Page) --- */
+        .chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 3px solid #25D366; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4); z-index: 200; background: #000; cursor: pointer; }
+        .chat-float-btn img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .chat-window { position: fixed; bottom: 90px; right: 20px; width: 320px; height: 450px; background: #1a1a1a; border-radius: 12px; z-index: 201; display: flex; flex-direction: column; border: 1px solid #333; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .chat-header { background: #25D366; color: #000; padding: 12px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .chat-window iframe { flex: 1; width: 100%; border: none; background: #fff; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-top">
-            <div class="nav-left">
-                <a href="index.html" class="back-home-btn" title="Go to Home">
-                    <i class="fas fa-arrow-left"></i>
+            <a href="index.html" class="back-home-btn">
+                <i class="fas fa-arrow-left"></i> Home
+            </a>
+
+            <div class="social-bar">
+                <a href="https://youtube.com/@astratoonix?si=KBw-c3A1Y9y5TbdN" target="_blank" class="social-icon yt">
+                    <i class="fab fa-youtube"></i>
                 </a>
-                <a href="#" class="logo">ASTRA<span>TOONIX</span></a>
+                <a href="https://www.instagram.com/itz_dminem_official43?utm_source=qr&igsh=MTZpNGMwOGwwMWl5dA==" target="_blank" class="social-icon insta">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/share/1Db4mRv1pj/" target="_blank" class="social-icon fb">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
             </div>
-            </div>
+        </div>
+
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search 100+ products...">
+            <input type="text" id="searchInput" placeholder="Search products...">
         </div>
     </header>
 
     <div id="heroSlider" class="hero-slider"></div>
 
     <div class="shop-container">
-        <h3 style="border-left: 4px solid #25D366; padding-left: 10px;">Premium Collection</h3>
+        <h3 style="border-left: 4px solid #25D366; padding-left: 10px; margin-top: 20px;">Premium Collection</h3>
         <div class="product-grid" id="grid"></div>
+    </div>
+
+    <div class="chat-float-btn" onclick="toggleChatbot()">
+        <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AI Chat">
+    </div>
+
+    <div class="chat-window hidden" id="chatWindow">
+        <div class="chat-header">
+            <span>🤖 AstraToonix Assistant</span>
+            <i class="fas fa-times" onclick="toggleChatbot()" style="cursor:pointer;"></i>
+        </div>
+        <iframe src="https://high-rhinoceros-dminemraj-83bdb398.koyeb.app/" title="Chatbot"></iframe>
     </div>
 
     <script src="shop-data.js"></script>
 
     <script>
-        // --- 1. CONFIGURATION (TOKENS & IDS) ---
+        // CONFIG
         const SELLER_WHATSAPP = "919395744401"; 
         const BOT_TOKEN = "8546441412:AAHaEQ0PEnJeoDuDAyfDEL_qbv4kWI1IkmU";
         const CHAT_ID = "-1003766501173";
 
-        // (NOTE: 'products' array is now loaded from shop-data.js)
+        // CHATBOT TOGGLE
+        function toggleChatbot() {
+            const win = document.getElementById('chatWindow');
+            win.classList.toggle('hidden');
+        }
 
-        // --- 2. RENDER FUNCTIONS (UPDATED FOR #TAGS) ---
+        // RENDER PRODUCTS
         function renderGrid(items) {
             const grid = document.getElementById('grid');
-            
             if (!items || items.length === 0) {
                 grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">No products found.</p>';
                 return;
             }
-
             grid.innerHTML = items.map(p => `
                 <div class="product-card">
                     <div class="id-badge">#${p.id}</div>
-                    
                     <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
                     <div class="info-box">
                         <div class="p-title">${p.name}</div>
@@ -115,43 +226,38 @@
             `).join('');
         }
 
-        // --- 3. PURCHASE & TELEGRAM LOGIC ---
+        // PURCHASE LOGIC
         function handlePurchase(name, id, price) {
             const logMessage = `📦 *New Order Clicked!*\n\n🛒 Product: ${name}\n🆔 ID: #${id}\n💰 Price: ${price}`;
             
-            // Send to Telegram
+            // Telegram Log
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: logMessage,
-                    parse_mode: 'Markdown'
-                })
-            }).then(() => console.log("Telegram Notified!")).catch(e => console.error(e));
+                body: JSON.stringify({ chat_id: CHAT_ID, text: logMessage, parse_mode: 'Markdown' })
+            }).catch(e => console.error(e));
 
-            // Redirect to WhatsApp
+            // WhatsApp Redirect
             setTimeout(() => {
                 const customerMsg = `Hello Raj, I want to buy:\n*${name}*\nItem ID: #${id}\nPrice: ${price}`;
                 window.location.href = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(customerMsg)}`;
             }, 500);
         }
 
-        // --- 4. SEARCH & SLIDER LOGIC ---
+        // SEARCH & SLIDER
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 const term = e.target.value.toLowerCase();
-                // Ensure 'products' exists from shop-data.js
                 if(typeof products !== 'undefined') {
                     renderGrid(products.filter(p => p.name.toLowerCase().includes(term)));
                 }
             });
         }
 
-        // Setup Slider
         const slider = document.getElementById('heroSlider');
         if(typeof products !== 'undefined' && slider) {
+            // Pick random 5 or first 5
             slider.innerHTML = products.slice(0, 5).map((p, i) => `
                 <div class="slide ${i === 0 ? 'active' : ''}" style="background-image: url('${p.img}')">
                     <div class="slide-content">
@@ -160,20 +266,17 @@
                 </div>
             `).join('');
 
-            let currentSlide = 0;
+            let c = 0;
             setInterval(() => {
                 const slides = document.querySelectorAll('.slide');
-                if(slides.length > 0) {
-                    slides[currentSlide].classList.remove('active');
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].classList.add('active');
+                if(slides.length) {
+                    slides[c].classList.remove('active');
+                    c = (c + 1) % slides.length;
+                    slides[c].classList.add('active');
                 }
             }, 3000);
-
-            // --- INITIAL RENDER ---
+            
             renderGrid(products);
-        } else {
-            console.error("Products data not loaded. Check shop-data.js");
         }
     </script>
 </body>
