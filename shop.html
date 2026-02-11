@@ -7,31 +7,47 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* --- DARK THEME & STYLING --- */
-        body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        
+        /* HEADER */
         header { background: #141414; padding: 10px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #25D366; }
         .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-decoration: none; }
         .logo span { color: #25D366; }
         .search-box input { width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 8px; outline: none; box-sizing: border-box; }
 
+        /* HERO SLIDER */
         .hero-slider { width: 100%; height: 250px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; }
         @media (min-width: 768px) { .hero-slider { height: 400px; } }
         .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s; display: flex; align-items: flex-end; background-size: cover; background-position: center; }
         .slide.active { opacity: 1; }
         .slide-content { background: linear-gradient(to top, black, transparent); width: 100%; padding: 20px; }
-        .slide-title { font-size: 1.4rem; font-weight: bold; }
+        .slide-title { font-size: 1.5rem; font-weight: bold; text-shadow: 2px 2px 4px #000; }
 
+        /* PRODUCT GRID */
         .shop-container { padding: 15px; max-width: 1200px; margin: 0 auto; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(5, 1fr); } }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(5, 1fr); gap: 20px; } }
 
-        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; transition: 0.3s; }
-        .img-box { width: 100%; height: 160px; overflow: hidden; }
+        /* PRODUCT CARD & HASHTAG BADGE */
+        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; position: relative; }
+        .product-card:hover { transform: translateY(-5px); border-color: #25D366; }
+        
+        .id-badge { position: absolute; top: 10px; left: 10px; background: #25D366; color: black; padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; z-index: 5; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+        .img-box { width: 100%; height: 180px; overflow: hidden; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
         .info-box { padding: 12px; text-align: center; }
-        .p-title { font-size: 0.9rem; margin-bottom: 8px; height: 35px; overflow: hidden; }
+        .p-title { font-size: 0.85rem; margin-bottom: 8px; height: 35px; overflow: hidden; color: #ddd; font-weight: 500; }
         .p-price { color: #25D366; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
-        .buy-btn { background: #25D366; color: black; border: none; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .buy-btn { background: #25D366; color: black; border: none; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+
+        /* FOOTER */
+        footer { background: #141414; padding: 40px 20px; border-top: 2px solid #25D366; margin-top: 50px; text-align: center; }
+        .social-links a { font-size: 2.2rem; margin: 0 15px; text-decoration: none; transition: 0.3s; display: inline-block; }
+        .social-links a:hover { transform: scale(1.2); }
+        .about-box { background: #222; padding: 25px; border-radius: 10px; max-width: 800px; margin: 20px auto; color: #bbb; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -41,24 +57,40 @@
             <a href="#" class="logo">ASTRA<span>TOONIX</span></a>
         </div>
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search 100+ products...">
+            <input type="text" id="searchInput" placeholder="Search products by name or #ID...">
         </div>
     </header>
 
     <div id="heroSlider" class="hero-slider"></div>
 
     <div class="shop-container">
-        <h3 style="border-left: 4px solid #25D366; padding-left: 10px;">Premium Collection</h3>
+        <h3 style="border-left: 4px solid #25D366; padding-left: 10px; margin-bottom: 20px; letter-spacing: 1px;">PREMIUM COLLECTION</h3>
         <div class="product-grid" id="grid"></div>
     </div>
 
+    <footer>
+        <h2 style="margin-bottom: 15px;">ASTRA<span style="color: #25D366;">TOONIX</span></h2>
+        
+        <div class="social-links">
+            <a href="https://www.instagram.com/itz_dminem_official43?utm_source=qr" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i></a>
+            <a href="https://youtube.com/@astratoonix" target="_blank" style="color: #FF0000;"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/share/1Db4mRv1pj/" target="_blank" style="color: #1877F2;"><i class="fab fa-facebook"></i></a>
+        </div>
+
+        <div class="about-box">
+            <h4 style="color: white; margin-top: 0; font-size: 1.2rem;">About Us</h4>
+            नमस्ते! मैं राजदेव हूँ। AstraToonix Exclusive Shop में आपका स्वागत है। यहाँ आपको #1 से लेकर #100 तक के बेहतरीन प्रोडक्ट्स मिलेंगे। हमारा लक्ष्य आपको बेस्ट क्वालिटी और तेज़ डिलीवरी देना है। आप किसी भी प्रोडक्ट का #ID बताकर हमसे सीधा संपर्क कर सकते हैं।
+        </div>
+        <p style="color: #555; font-size: 0.8rem;">&copy; 2026 AstraToonix Store. All Rights Reserved.</p>
+    </footer>
+
     <script>
-        // --- 1. CONFIGURATION (TOKENS & IDS) ---
+        // --- 1. CONFIGURATION ---
         const SELLER_WHATSAPP = "919395744401"; 
         const BOT_TOKEN = "8546441412:AAHaEQ0PEnJeoDuDAyfDEL_qbv4kWI1IkmU";
         const CHAT_ID = "-1003766501173";
 
-        // --- 2. COMPLETE PRODUCT LIST (ID 1 TO 100) ---
+        // --- 2. FULL 100 PRODUCTS DATA ---
         const products = [
             { id: 1, name: "Premium Black Hoodie", price: "₹999", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500" },
             { id: 2, name: "Nike Air Jordan Red", price: "₹2499", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" },
@@ -104,7 +136,7 @@
             { id: 42, name: "Formal Trousers", price: "₹1400", img: "https://images.unsplash.com/photo-1594932224828-b4b059b6fe68?w=500" },
             { id: 43, name: "Windbreaker Jacket", price: "₹1850", img: "https://images.unsplash.com/photo-1504191467541-25110380bad5?w=500" },
             { id: 44, name: "Pocket Diary", price: "₹199", img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=500" },
-            { id: 45, name: "Card Holder", price: "₹450", img: "https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=500" },
+            { id: 45, name: "Leather Card Holder", price: "₹450", img: "https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=500" },
             { id: 46, name: "Overcoat", price: "₹5000", img: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500" },
             { id: 47, name: "Silk Tie", price: "₹699", img: "https://images.unsplash.com/photo-1589756823851-41a561b28017?w=500" },
             { id: 48, name: "Reading Glasses", price: "₹850", img: "https://images.unsplash.com/photo-1577803645773-f96470509666?w=500" },
@@ -155,77 +187,21 @@
             { id: 93, name: "Passport Holder", price: "₹450", img: "https://images.unsplash.com/photo-1563806951231-f2f281e3a473?w=500" },
             { id: 94, name: "Luggage Tags", price: "₹150", img: "https://images.unsplash.com/photo-1581553670339-0154cc9bd91d?w=500" },
             { id: 95, name: "Suitcase Cover", price: "₹650", img: "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?w=500" },
-            { id: 96, name: "Sports Tote", price: "₹350", img: "https://images.unsplash.com/photo-1544816153-12ad5d7132a1?w=500" },
-            { id: 97, name: "Denim Jeans", price: "₹1450", img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500" },
-            { id: 98, name: "Leather Jacket", price: "₹4500", img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500" },
-            { id: 99, name: "Cardigan", price: "₹1200", img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500" },
-            { id: 100, name: "Bomber Jacket", price: "₹2100", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" }
+            { id: 96, name: "Yonex Badminton Racket", price: "₹1850", img: "https://images.unsplash.com/photo-1626225453014-4927a5bc3d61?w=500" },
+            { id: 97, name: "Mikasa Official Volleyball", price: "₹999", img: "https://images.unsplash.com/photo-1592656094267-764a45160876?w=500" },
+            { id: 98, name: "Adidas Football", price: "₹1299", img: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500" },
+            { id: 99, name: "Lays Classic Chips", price: "₹20", img: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=500" },
+            { id: 100, name: "Doritos Nacho Cheese", price: "₹50", img: "https://images.unsplash.com/photo-1600952841320-db931384f0b6?w=500" }
         ];
 
-        // --- 3. RENDER FUNCTIONS ---
+        // RENDER GRID
         function renderGrid(items) {
             const grid = document.getElementById('grid');
             grid.innerHTML = items.map(p => `
                 <div class="product-card">
+                    <div class="id-badge">#${p.id}</div>
                     <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
                     <div class="info-box">
-                        <div class="p-title">${p.name}</div>
+                        <div class="p-title">#${p.id} - ${p.name}</div>
                         <div class="p-price">${p.price}</div>
-                        <button class="buy-btn" onclick="handlePurchase('${p.name}', '${p.id}', '${p.price}')">BUY NOW</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // --- 4. PURCHASE & TELEGRAM LOGIC ---
-        function handlePurchase(name, id, price) {
-            const logMessage = `📦 *New Order Clicked!*\n\n🛒 Product: ${name}\n🆔 ID: #${id}\n💰 Price: ${price}`;
-            
-            // Send to Telegram
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: logMessage,
-                    parse_mode: 'Markdown'
-                })
-            }).then(() => console.log("Telegram Notified!"));
-
-            // Redirect to WhatsApp
-            setTimeout(() => {
-                const customerMsg = `Hello Raj, I want to buy:\n*${name}*\nItem ID: #${id}\nPrice: ${price}`;
-                window.location.href = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(customerMsg)}`;
-            }, 500);
-        }
-
-        // --- 5. SEARCH & SLIDER LOGIC ---
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            renderGrid(products.filter(p => p.name.toLowerCase().includes(term)));
-        });
-
-        const slider = document.getElementById('heroSlider');
-        slider.innerHTML = products.slice(0, 5).map((p, i) => `
-            <div class="slide ${i === 0 ? 'active' : ''}" style="background-image: url('${p.img}')">
-                <div class="slide-content">
-                    <div class="slide-title">${p.name}</div>
-                </div>
-            </div>
-        `).join('');
-
-        let currentSlide = 0;
-        setInterval(() => {
-            const slides = document.querySelectorAll('.slide');
-            if(slides.length > 0) {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }
-        }, 3000);
-
-        // --- INITIAL RENDER ---
-        renderGrid(products);
-    </script>
-</body>
-</html>
+                        <button class="buy-
