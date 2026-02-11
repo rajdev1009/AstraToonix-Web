@@ -139,7 +139,6 @@ function renderSlider() {
         slide.className = `slide ${index === 0 ? 'active' : ''}`;
         slide.style.backgroundImage = `url('${movie.img}')`;
         slide.innerHTML = `<div class="slide-overlay"><div class="slide-title">${movie.title}</div></div>`;
-        // Pass movie title to startRedirect
         slide.onclick = () => startRedirect(movie.title);
         heroSlider.appendChild(slide);
     });
@@ -167,7 +166,6 @@ function renderTrending() {
                  onerror="this.src='https://placehold.co/130x195?text=${encodeURIComponent(movie.title)}'">
             <div class="rank-number">${index + 1}</div>
         `;
-        // Pass movie title to startRedirect
         card.onclick = () => startRedirect(movie.title);
         trendingList.appendChild(card);
     });
@@ -191,7 +189,6 @@ function renderGrid(list) {
                 </div>
                 <div class="movie-title-text">${movie.title}</div>
             `;
-            // Pass movie title to startRedirect
             card.onclick = () => startRedirect(movie.title);
             movieGrid.appendChild(card);
         });
@@ -210,15 +207,20 @@ searchInput.addEventListener('input', (e) => {
     renderGrid(filtered);
 });
 
-// 5. REDIRECT WITH AUTOMATIC SEARCH TEXT
+// 5. REDIRECT WITH TELEGRAM AUTO-FILL TEXT (FIXED)
 function startRedirect(movieName) {
     mainApp.classList.add('hidden');
     loadingScreen.classList.remove('hidden');
     window.scrollTo(0, 0);
 
-    // Ye logic Telegram me automatic movie name type kar dega
-    const encodedText = encodeURIComponent(movieName);
-    const finalURL = `${TELEGRAM_LINK}?text=${encodedText}`;
+    // Using 'Share URL' Scheme to force text pre-fill
+    // User will select the group, and text will appear automatically
+    const textToFill = `Search: ${movieName}`;
+    
+    // NOTE: 'url' parameter is required by Telegram share logic, 
+    // so we pass the group link itself as the URL to share, 
+    // and the Movie Name as the 'text' caption.
+    const finalURL = `https://t.me/share/url?url=${encodeURIComponent(TELEGRAM_LINK)}&text=${encodeURIComponent(textToFill)}`;
 
     let width = 0;
     const interval = setInterval(() => {
@@ -226,7 +228,6 @@ function startRedirect(movieName) {
         progressBar.style.width = width + '%';
         if (width >= 100) { 
             clearInterval(interval); 
-            // Ab ye redirect hote hi movie ka naam telegram box me paste kar dega
             window.location.href = finalURL; 
         }
     }, 40);
@@ -264,3 +265,4 @@ if(floatBtn) {
 renderSlider();
 renderTrending();
 renderGrid(moviesDB);
+     
