@@ -12,49 +12,85 @@ function toggleTheme() {
     icon.classList.toggle('fa-moon'); icon.classList.toggle('fa-sun');
 }
 
-// 10-PIECE SLIDER
+// SLIDER LOGIC (Better Images)
 function initSlider() {
     const slider = document.getElementById('heroSlider');
     if(!slider || !products || products.length === 0) return;
     const items = products.slice(0, 10);
-    slider.innerHTML = items.map((p, i) => `<div class="slide ${i===0?'active':''}" style="background-image:url('${p.img}')"></div>`).join('');
+    // Use high res background images
+    slider.innerHTML = items.map((p, i) => 
+        `<div class="slide ${i===0?'active':''}" style="background-image:linear-gradient(to top, #000, transparent), url('${p.img}')"></div>`
+    ).join('');
+    
     let cur = 0; const slides = document.querySelectorAll('.slide');
     setInterval(() => {
         if(!slides.length) return;
         slides[cur].classList.remove('active');
         cur = (cur + 1) % slides.length;
         slides[cur].classList.add('active');
-    }, 3000);
+    }, 4000);
 }
 
-// Render Grid (Buy Button Fix)
+// RENDER PRODUCTS (Updated with Image Click)
 function renderGrid(items) {
     const grid = document.getElementById('grid');
     if(!grid) return;
-    grid.innerHTML = items.map(p => `
+    grid.innerHTML = items.map(p => {
+        // Safe string escape for onclick
+        const safeName = p.name.replace(/'/g, "\\'");
+        return `
         <div class="product-card">
-            <div class="img-box"><img src="${p.img}"></div>
+            <div class="img-box" onclick="openImageModal('${p.img}', '${safeName}', '${p.id}', '${p.price}')">
+                <img src="${p.img}" alt="${p.name}">
+            </div>
             <div class="info-box">
                 <div class="p-title">${p.name}</div>
                 <div class="p-price">${p.price}</div>
-                <button class="buy-btn" onclick="openOrderModal('${p.name.replace(/'/g, "\\'")}', '${p.id}', '${p.price}')">BUY NOW</button>
+                <button class="buy-btn" onclick="openOrderModal('${safeName}', '${p.id}', '${p.price}')">BUY NOW</button>
             </div>
-        </div>`).join('');
+        </div>`;
+    }).join('');
 }
 
-// Notifications
+// NEW: IMAGE PREVIEW MODAL
+function openImageModal(img, name, id, price) {
+    const modal = document.getElementById('imageModal');
+    document.getElementById('previewImage').src = img;
+    document.getElementById('previewTitle').innerText = name;
+    
+    // Set up the button inside the preview to trigger order
+    const btn = document.getElementById('previewBuyBtn');
+    btn.onclick = function() {
+        closeImageModal();
+        openOrderModal(name, id, price);
+    };
+    
+    modal.classList.remove('hidden');
+}
+function closeImageModal() {
+    document.getElementById('imageModal').classList.add('hidden');
+}
+
+// SEARCH FUNCTION
+function searchProducts() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+    renderGrid(filtered);
+}
+
+// NOTIFICATIONS
 function showNotification() {
     const notif = document.getElementById('notificationPopup');
     if(!notif || !products.length) return;
     const p = products[Math.floor(Math.random()*products.length)];
-    const names = ["Rahul", "Amit", "Priya", "Sneha", "Vikram"];
+    const names = ["Aman", "Rahul", "Priya", "Rohit", "Vikram", "Sneha"];
     document.getElementById('notifImg').src = p.img;
-    document.getElementById('notifText').innerHTML = `<strong>${names[Math.floor(Math.random()*5)]}</strong> just ordered ${p.name}!`;
+    document.getElementById('notifText').innerHTML = `<strong>${names[Math.floor(Math.random()*names.length)]}</strong> ordered <br>${p.name}`;
     notif.style.left = "20px";
     setTimeout(() => { notif.style.left = "-350px"; }, 4000);
 }
 
-// Order Logic
+// ORDER LOGIC
 let currentProduct = {}; let currentQty = 1;
 function openOrderModal(name, id, price) {
     currentProduct = { name, id, price }; currentQty = 1;
@@ -69,20 +105,24 @@ function updateQty(v) { currentQty = Math.max(1, currentQty + v); document.getEl
 function confirmOrder() {
     const name = document.getElementById('custName').value.trim();
     const addr = document.getElementById('custAddress').value.trim();
-    if(!name || !addr) return alert("Fill details Rajdev bhai!");
-
-    const msg = `*🆕 NEW ORDER ALERT*\n👤 *Name:* ${name}\n🏠 *Address:* ${addr}\n🛒 *Item:* ${currentProduct.name}\n🔢 *Qty:* ${currentQty}\n💰 *Price:* ${currentProduct.price}`;
+    const size = document.getElementById('prodSize').value;
+    const color = document.getElementById('prodColor').value;
     
-    // Telegram Professional Message
+    if(!name || !addr) return alert("Please fill Name and Address!");
+
+    const msg = `*🆕 NEW ASTRATOONIX ORDER*\n----------------------\n👤 *Name:* ${name}\n🏠 *Address:* ${addr}\n🛒 *Item:* ${currentProduct.name}\n📏 *Size:* ${size}\n🎨 *Color:* ${color}\n🔢 *Qty:* ${currentQty}\n💰 *Price:* ${currentProduct.price}\n----------------------`;
+    
+    // Telegram API
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({chat_id: CHAT_ID, text: msg, parse_mode: 'Markdown'})
     });
 
+    // WhatsApp Redirect
     window.location.href = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
 window.onload = () => {
     if(typeof products !== 'undefined') { renderGrid(products); initSlider(); }
-    setInterval(showNotification, 15000);
+    setInterval(showNotification, 10000);
 };
