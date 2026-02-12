@@ -7,117 +7,25 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <link rel="stylesheet" href="shop-style.css">
+    
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
-
-    <style>
-        /* --- DARK THEME & BASE STYLES --- */
-        body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; padding-bottom: 80px; }
-        
-        /* HEADER */
-        header { background: #141414; padding: 10px 15px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #25D366; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-
-        .back-home-btn { color: #fff; text-decoration: none; font-size: 1.1rem; display: flex; align-items: center; background: #333; padding: 8px 12px; border-radius: 20px; border: 1px solid #444; transition: 0.3s; }
-        .back-home-btn i { margin-right: 8px; }
-        .back-home-btn:hover { background: #25D366; color: #000; border-color: #25D366; }
-
-        .social-bar { display: flex; gap: 12px; align-items: center; }
-        .social-icon { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; color: white; font-size: 1.2rem; transition: transform 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        .social-icon:active { transform: scale(0.9); }
-        .social-icon.insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
-        .social-icon.fb { background: #1877F2; }
-        .social-icon.yt { background: #FF0000; }
-        .social-icon.game { background: #8e44ad; border: 2px solid #fff; animation: glow 2s infinite alternate; }
-        @keyframes glow { from { box-shadow: 0 0 5px #8e44ad; } to { box-shadow: 0 0 15px #9b59b6; } }
-
-        .search-box input { width: 100%; padding: 12px 15px; background: #222; border: 1px solid #444; color: white; border-radius: 25px; outline: none; font-size: 1rem; }
-        .search-box input:focus { border-color: #25D366; }
-
-        /* SLIDER */
-        .hero-slider { width: 100%; height: 220px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s; background-size: 100% 100%; background-position: center; background-repeat: no-repeat; }
-        .slide.active { opacity: 1; }
-        .slide-content { position: absolute; bottom: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 20px; }
-        .slide-title { font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 3px black; }
-
-        /* GRID */
-        .shop-container { padding: 0 10px; max-width: 1200px; margin: 0 auto; }
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        @media (min-width: 600px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
-
-        .product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; position: relative; }
-        .id-badge { position: absolute; top: 0; left: 0; background: #25D366; color: #000; padding: 4px 8px; border-bottom-right-radius: 10px; font-size: 0.75rem; font-weight: bold; z-index: 10; }
-        .img-box { width: 100%; height: 150px; overflow: hidden; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .info-box { padding: 10px; text-align: center; }
-        .p-title { font-size: 0.85rem; margin-bottom: 5px; height: 32px; overflow: hidden; line-height: 1.2; }
-        .p-price { color: #25D366; font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
-        .buy-btn { background: #25D366; color: black; border: none; padding: 8px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
-
-        /* CHATBOT */
-        .chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 3px solid #25D366; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4); z-index: 200; background: #000; cursor: pointer; }
-        .chat-float-btn img { width: 100%; height: 100%; object-fit: cover; }
-        .chat-window { position: fixed; bottom: 90px; right: 20px; width: 320px; height: 450px; background: #1a1a1a; border-radius: 12px; z-index: 201; display: flex; flex-direction: column; border: 1px solid #333; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .chat-header { background: #25D366; color: #000; padding: 12px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
-        .chat-window iframe { flex: 1; width: 100%; border: none; background: #fff; }
-        
-        /* GAME & ORDER MODAL CSS */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 300; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .modal-content { background: #1a1a1a; width: 95%; max-width: 400px; border-radius: 15px; border: 2px solid #25D366; overflow: hidden; max-height: 90vh; overflow-y: auto; }
-        .modal-header { background: #25D366; padding: 15px; display: flex; justify-content: space-between; align-items: center; color: #000; font-weight: bold; font-size: 1.2rem; }
-        .modal-body { padding: 20px; text-align: center; }
-
-        /* FORM STYLES */
-        .order-form input, .order-form textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: #333; border: 1px solid #555; border-radius: 8px; color: white; font-size: 1rem; }
-        .order-form textarea { height: 80px; resize: none; }
-        .confirm-btn { background: #25D366; color: #000; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .confirm-btn:hover { background: #1ebc57; }
-
-        /* Game Specific Overrides */
-        .game-header { background: #8e44ad !important; color: white; border-bottom: 2px solid #fff; }
-        .game-content { border-color: #8e44ad; }
-        .game-selector button { width: 100%; padding: 15px; margin: 5px 0; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; color: white; }
-        .btn-ttt { background: #e74c3c; } 
-        .btn-chess { background: #3498db; }
-        .btn-back { background: #444; margin-top: 10px; }
-        
-        /* GAME BOARDS */
-        .ttt-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 20px auto; width: 250px; }
-        .cell { width: 80px; height: 80px; background: #333; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; cursor: pointer; color: white; border-radius: 5px; }
-        .cell.x { color: #2ecc71; }
-        .cell.o { color: #e74c3c; }
-        #myBoard { width: 100%; margin: 0 auto; }
-        
-        .hidden { display: none !important; }
-    </style>
 </head>
 <body>
 
     <header>
         <div class="header-top">
-            <a href="index.html" class="back-home-btn">
-                <i class="fas fa-arrow-left"></i> Home
-            </a>
-
+            <a href="index.html" class="back-home-btn"><i class="fas fa-arrow-left"></i> Home</a>
             <div class="social-bar">
-                <a href="#" onclick="toggleGameModal()" class="social-icon game" title="Play Games">
-                    <i class="fas fa-gamepad"></i>
-                </a>
-                <a href="https://youtube.com/@astratoonix?si=KBw-c3A1Y9y5TbdN" target="_blank" class="social-icon yt">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="https://www.instagram.com/itz_dminem_official43" target="_blank" class="social-icon insta">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.facebook.com/share/1Db4mRv1pj/" target="_blank" class="social-icon fb">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
+                <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
+                <a href="https://youtube.com/@astratoonix?si=KBw-c3A1Y9y5TbdN" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/itz_dminem_official43" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/1Db4mRv1pj/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
             </div>
         </div>
-
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search products...">
         </div>
@@ -144,17 +52,48 @@
     <div id="orderModal" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <span><i class="fas fa-shopping-cart"></i> Enter Delivery Details</span>
+                <span><i class="fas fa-clipboard-check"></i> Order Details</span>
                 <i class="fas fa-times" onclick="closeOrderModal()" style="cursor:pointer;"></i>
             </div>
             <div class="modal-body">
-                <p style="color:#aaa; margin-bottom:15px; font-size:0.9rem;">Complete your details to proceed to WhatsApp.</p>
                 <div class="order-form">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h4 id="modalProductName" style="color:#25D366; margin:0;">Product Name</h4>
+                        <span id="modalProductPrice" style="color:#aaa; font-size:0.9rem;"></span>
+                    </div>
+
+                    <div class="variant-row">
+                        <select id="prodSize">
+                            <option value="Free Size">Size: Free Size</option>
+                            <option value="S">Size: S</option>
+                            <option value="M">Size: M</option>
+                            <option value="L">Size: L</option>
+                            <option value="XL">Size: XL</option>
+                            <option value="XXL">Size: XXL</option>
+                        </select>
+                        <select id="prodColor">
+                            <option value="As Shown">Color: As Shown</option>
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                            <option value="Red">Red</option>
+                            <option value="Blue">Blue</option>
+                        </select>
+                    </div>
+
+                    <div class="qty-box">
+                        <span style="color:#ccc;">Quantity:</span>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                            <span id="qtyDisplay" class="qty-val">1</span>
+                            <button class="qty-btn" onclick="updateQty(1)">+</button>
+                        </div>
+                    </div>
+
                     <input type="text" id="custName" placeholder="Enter Your Name" required>
                     <textarea id="custAddress" placeholder="Enter Full Address (House No, Street, City, Pin)" required></textarea>
                     
                     <button class="confirm-btn" onclick="confirmOrder()">
-                        <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                        Confirm Order <i class="fab fa-whatsapp"></i>
                     </button>
                 </div>
             </div>
@@ -194,85 +133,7 @@
     <script src="shop-data.js"></script>
     <script src="games.js"></script>
 
-    <script>
-        // CONFIG
-        const SELLER_WHATSAPP = "919395744401"; 
-        const BOT_TOKEN = "8546441412:AAHaEQ0PEnJeoDuDAyfDEL_qbv4kWI1IkmU";
-        const CHAT_ID = "-1003766501173";
+    <script src="shop-script.js"></script>
 
-        // Toggles
-        function toggleChatbot() { document.getElementById('chatWindow').classList.toggle('hidden'); }
-        function toggleGameModal() { document.getElementById('gameModal').classList.toggle('hidden'); showGameMenu(); }
-        
-        // --- ORDER MODAL LOGIC (NEW) ---
-        let currentProduct = {}; // To store temp product data
-
-        function openOrderModal(name, id, price) {
-            currentProduct = { name, id, price };
-            document.getElementById('orderModal').classList.remove('hidden');
-        }
-
-        function closeOrderModal() {
-            document.getElementById('orderModal').classList.add('hidden');
-        }
-
-        function confirmOrder() {
-            const name = document.getElementById('custName').value.trim();
-            const address = document.getElementById('custAddress').value.trim();
-
-            if (!name || !address) {
-                alert("Please enter Name and Address first!");
-                return;
-            }
-
-            // 1. WhatsApp Message (Formatted with User Details)
-            const waMessage = `*New Order Request*\n\n👤 *Name:* ${name}\n🏠 *Address:* ${address}\n\n🛒 *Product:* ${currentProduct.name}\n🆔 *ID:* #${currentProduct.id}\n💰 *Price:* ${currentProduct.price}\n\n-----------------\nPlease confirm my order.`;
-            const waURL = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(waMessage)}`;
-
-            // 2. Telegram Log (Background)
-            const tgMessage = `📦 *New Order Placed!*\n\n👤 Name: ${name}\n🏠 Address: ${address}\n\n🛒 Product: ${currentProduct.name}\n🆔 ID: #${currentProduct.id}\n💰 Price: ${currentProduct.price}`;
-            
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: tgMessage, parse_mode: 'Markdown' })
-            }).catch(e => console.error(e));
-
-            // 3. Redirect to WhatsApp
-            closeOrderModal();
-            window.location.href = waURL;
-        }
-
-        // --- RENDER GRID (Updated onclick) ---
-        function renderGrid(items) {
-            const grid = document.getElementById('grid');
-            if (!items || items.length === 0) { grid.innerHTML = '<p>No products.</p>'; return; }
-            
-            grid.innerHTML = items.map(p => `
-                <div class="product-card">
-                    <div class="id-badge">#${p.id}</div>
-                    <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
-                    <div class="info-box">
-                        <div class="p-title">${p.name}</div>
-                        <div class="p-price">${p.price}</div>
-                        <button class="buy-btn" onclick="openOrderModal('${p.name.replace(/'/g, "\\'")}', '${p.id}', '${p.price}')">BUY NOW</button>
-                    </div>
-                </div>`).join('');
-        }
-
-        // Search & Slider
-        document.getElementById('searchInput')?.addEventListener('input', e => {
-            if(typeof products !== 'undefined') renderGrid(products.filter(p => p.name.toLowerCase().includes(e.target.value.toLowerCase())));
-        });
-
-        if(typeof products !== 'undefined') {
-            const slider = document.getElementById('heroSlider');
-            if(slider) {
-                slider.innerHTML = products.slice(0, 5).map((p, i) => `<div class="slide ${i===0?'active':''}" style="background-image:url('${p.img}')"><div class="slide-content"><div class="slide-title">${p.name}</div></div></div>`).join('');
-                let c = 0; setInterval(() => { const s = document.querySelectorAll('.slide'); if(s.length){ s[c].classList.remove('active'); c=(c+1)%s.length; s[c].classList.add('active'); } }, 3000);
-                renderGrid(products);
-            }
-        }
-    </script>
 </body>
 </html>
