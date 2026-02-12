@@ -1,13 +1,4 @@
-/* ================= GAME LOGIC FILE (FIXED) ================= */
-
-// --- 1. MODAL & MENU LOGIC ---
-function toggleGameModal() {
-    const modal = document.getElementById('gameModal');
-    modal.classList.toggle('hidden');
-    if (!modal.classList.contains('hidden')) {
-        showGameMenu();
-    }
-}
+/* ================= GAME LOGIC (FIXED) ================= */
 
 function showGameMenu() {
     document.getElementById('gameMenu').classList.remove('hidden');
@@ -17,165 +8,73 @@ function showGameMenu() {
 
 function startGame(gameType) {
     document.getElementById('gameMenu').classList.add('hidden');
-    
     if(gameType === 'ttt') {
         document.getElementById('tttGame').classList.remove('hidden');
         initTTT();
-    } else if(gameType === 'chess') {
+    } else {
         document.getElementById('chessGame').classList.remove('hidden');
-        // Slight delay to ensure board renders correctly
         setTimeout(initChess, 100);
     }
 }
 
-// --- 2. TIC TAC TOE ENGINE ---
+// Tic Tac Toe Engine
 let tttBoard = ['', '', '', '', '', '', '', '', ''];
 let gameActive = true;
 
 function initTTT() {
-    tttBoard = ['', '', '', '', '', '', '', '', ''];
-    gameActive = true;
-    const status = document.getElementById('tttStatus');
-    if(status) status.innerText = "Your Turn (X)";
+    tttBoard = ['', '', '', '', '', '', '', '', '']; gameActive = true;
+    document.getElementById('tttStatus').innerText = "Your Turn (X)";
     renderTTT();
 }
 
 function renderTTT() {
     const boardDiv = document.getElementById('tttBoard');
-    if(!boardDiv) return;
-    
-    boardDiv.innerHTML = '';
-    tttBoard.forEach((cell, index) => {
-        const cellDiv = document.createElement('div');
-        cellDiv.className = `cell ${cell === 'X' ? 'x' : 'o'}`;
-        cellDiv.innerText = cell;
-        cellDiv.onclick = () => playerMove(index);
-        boardDiv.appendChild(cellDiv);
-    });
+    boardDiv.innerHTML = tttBoard.map((cell, i) => `<div class="cell" onclick="playerMove(${i})">${cell}</div>`).join('');
 }
 
-function playerMove(index) {
-    if(tttBoard[index] !== '' || !gameActive) return;
-    
-    tttBoard[index] = 'X';
-    renderTTT();
-    
+function playerMove(i) {
+    if(tttBoard[i] !== '' || !gameActive) return;
+    tttBoard[i] = 'X'; renderTTT();
     if(checkWin('X')) { endTTT("You Won! 🎉"); return; }
-    if(!tttBoard.includes('')) { endTTT("Draw! 🤝"); return; }
-    
-    document.getElementById('tttStatus').innerText = "Computer Thinking...";
+    document.getElementById('tttStatus').innerText = "Thinking...";
     setTimeout(computerMove, 600);
 }
 
 function computerMove() {
-    if(!gameActive) return;
-    
-    // Logic: Find empty spots and pick one randomly
-    let emptyIndices = [];
-    tttBoard.forEach((val, idx) => {
-        if(val === '') emptyIndices.push(idx);
-    });
-
-    if(emptyIndices.length > 0) {
-        let randomIdx = Math.floor(Math.random() * emptyIndices.length);
-        let move = emptyIndices[randomIdx];
-        
-        tttBoard[move] = 'O';
+    let empty = tttBoard.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+    if(empty.length > 0) {
+        tttBoard[empty[Math.floor(Math.random() * empty.length)]] = 'O';
         renderTTT();
-        
-        if(checkWin('O')) { endTTT("Computer Won! 🤖"); }
-        else if(!tttBoard.includes('')) { endTTT("Draw! 🤝"); }
-        else { document.getElementById('tttStatus').innerText = "Your Turn (X)"; }
+        if(checkWin('O')) endTTT("Computer Won! 🤖");
+        else document.getElementById('tttStatus').innerText = "Your Turn (X)";
     }
 }
 
-function checkWin(player) {
-    const wins = [
-        [0,1,2], [3,4,5], [6,7,8], // Rows
-        [0,3,6], [1,4,7], [2,5,8], // Cols
-        [0,4,8], [2,4,6]           // Diagonals
-    ];
-    return wins.some(c => tttBoard[c[0]] === player && tttBoard[c[1]] === player && tttBoard[c[2]] === player);
+function checkWin(p) {
+    const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    return wins.some(c => tttBoard[c[0]] === p && tttBoard[c[1]] === p && tttBoard[c[2]] === p);
 }
 
-function endTTT(msg) {
-    gameActive = false;
-    document.getElementById('tttStatus').innerText = msg;
-}
+function endTTT(msg) { gameActive = false; document.getElementById('tttStatus').innerText = msg; }
 
-// --- 3. CHESS ENGINE (FIXED IMAGES) ---
-var board = null;
-var game = new Chess();
-
-function onDragStart (source, piece, position, orientation) {
-    // Do not pick up pieces if the game is over
-    if (game.game_over()) return false;
-
-    // Only allow user to move White pieces
-    if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-        (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-        return false;
-    }
-}
-
-function makeRandomMove () {
-    var possibleMoves = game.moves();
-
-    // Game over?
-    if (possibleMoves.length === 0) return;
-
-    var randomIdx = Math.floor(Math.random() * possibleMoves.length);
-    game.move(possibleMoves[randomIdx]);
-    board.position(game.fen());
-}
-
-function onDrop (source, target) {
-    // see if the move is legal
-    var move = game.move({
-        from: source,
-        to: target,
-        promotion: 'q' // NOTE: always promote to a queen
-    });
-
-    // illegal move
-    if (move === null) return 'snapback';
-
-    // make random legal move for black
-    window.setTimeout(makeRandomMove, 250);
-}
-
-function onSnapEnd () {
-    board.position(game.fen());
-}
-
+// Chess Engine Fix
+var board = null; var game = new Chess();
 function initChess() {
-    // Reset game logic
     game = new Chess();
-    
     var config = {
-        draggable: true,
-        position: 'start',
-        
-        // --- YE WALI LINE MISSING THI ---
-        // Ab ye internet se images uthayega
+        draggable: true, position: 'start',
         pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png',
-        
-        onDragStart: onDragStart,
-        onDrop: onDrop,
-        onSnapEnd: onSnapEnd,
-        showNotation: false 
-    }
-    
-    // Destroy old board instance if exists to prevent errors
-    if(board && typeof board.destroy === 'function') {
-        // board.destroy() might not exist in all versions
-    }
-    
+        onDrop: (source, target) => {
+            var move = game.move({ from: source, to: target, promotion: 'q' });
+            if (move === null) return 'snapback';
+            window.setTimeout(() => {
+                var moves = game.moves();
+                if (moves.length > 0) {
+                    game.move(moves[Math.floor(Math.random() * moves.length)]);
+                    board.position(game.fen());
+                }
+            }, 250);
+        }
+    };
     board = Chessboard('myBoard', config);
-    
-    // Mobile Resize Fix
-    setTimeout(() => { 
-        window.dispatchEvent(new Event('resize'));
-        board.resize();
-    }, 200);
 }
