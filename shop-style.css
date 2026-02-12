@@ -1,148 +1,102 @@
 /* --- BASE VARIABLES --- */
-:root {
-    --bg-color: #050505;
-    --card-bg: #121212;
-    --text-color: #ffffff;
-    --accent-color: #25D366;
-    --border-color: #333;
+:root { --bg-color: #050505; --card-bg: #121212; --text-color: #fff; --accent-color: #25D366; }
+body { background: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; }
+
+/* HEADER & CART ICON */
+header { background: rgba(0,0,0,0.95); padding: 10px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--accent-color); }
+.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.brand-title { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; }
+.rgb-text { animation: textRGB 4s infinite; }
+@keyframes textRGB { 0% {color:#25D366;} 50% {color:#00ffea;} 100% {color:#25D366;} }
+
+.cart-icon-box {
+    position: relative; font-size: 1.5rem; color: white; margin-right: 15px; cursor: pointer;
+}
+#cartCount {
+    position: absolute; top: -8px; right: -10px; background: red; color: white;
+    font-size: 0.8rem; padding: 2px 6px; border-radius: 50%; font-weight: bold;
 }
 
-body.light-mode {
-    --bg-color: #f0f0f0;
-    --card-bg: #ffffff;
-    --text-color: #000000;
+/* FLASH SALE TIMER STRIP */
+.flash-sale-strip {
+    background: linear-gradient(90deg, #ff0000, #990000);
+    color: white; text-align: center; padding: 8px; font-weight: bold;
+    font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba(255,0,0,0.5);
 }
 
-body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; transition: 0.3s; }
+/* SLIDER & GRID */
+.hero-slider { width: 100%; height: 50vh; overflow: hidden; position: relative; }
+.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 1s; background-size: cover; background-position: center; }
+.slide.active { opacity: 1; transform: scale(1.05); transition: 5s; }
 
-/* HEADER */
-header { background: rgba(0,0,0,0.95); padding: 12px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--accent-color); }
-.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-
-.nav-home-btn {
-    background: #222; color: var(--accent-color); padding: 8px 15px; border-radius: 20px;
-    text-decoration: none; font-weight: bold; border: 1px solid var(--accent-color);
-    font-size: 0.9rem; display: flex; align-items: center; gap: 5px;
-}
-
-.brand-title { font-size: 1.4rem; font-weight: 900; color: white; text-transform: uppercase; letter-spacing: 1px; }
-
-/* RGB TEXT ANIMATION */
-.rgb-text { animation: textRGB 4s infinite alternate; }
-@keyframes textRGB {
-    0% { color: #25D366; text-shadow: 0 0 10px #25D366; }
-    50% { color: #00ffea; text-shadow: 0 0 10px #00ffea; }
-    100% { color: #25D366; text-shadow: 0 0 10px #25D366; }
-}
-
-.social-bar { display: flex; gap: 8px; }
-.social-icon { width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; text-decoration: none; font-size: 1.1rem; background: #222; transition: 0.3s; }
-.social-icon.fb { background: #1877F2; }
-.social-icon.insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
-.social-icon.yt { background: #FF0000; }
-.social-icon.game { background: purple; border: 1px solid white; }
-
-.search-box { position: relative; }
-.search-box input { width: 90%; padding: 12px 15px; background: #1a1a1a; border: 1px solid #444; border-radius: 25px; color: white; outline: none; padding-right: 40px; }
-.search-icon { position: absolute; right: 25px; top: 50%; transform: translateY(-50%); color: #888; }
-
-/* SLIDER */
-.hero-slider { width: 100%; height: 55vh; min-height: 400px; position: relative; overflow: hidden; margin-bottom: 20px; border-bottom: 3px solid var(--accent-color); }
-.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 1s ease-in-out; background-size: cover; background-position: center; }
-.slide.active { opacity: 1; transform: scale(1.05); transition: 5s ease; }
-
-/* GRID */
-.shop-container { padding: 0 10px; max-width: 1200px; margin: 0 auto; }
-.section-title h3 { margin: 0; color: var(--accent-color); display: flex; align-items: center; gap: 10px; }
+.shop-container { padding: 10px; max-width: 1200px; margin: 0 auto; }
 .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
 @media (min-width: 600px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
 
-.product-card { background: var(--card-bg); border: 1px solid #333; border-radius: 12px; overflow: hidden; position: relative; transition: 0.2s; }
-.img-box { width: 100%; height: 170px; overflow: hidden; }
+/* PRODUCT CARD PRO FEATURES */
+.product-card { background: var(--card-bg); border: 1px solid #333; border-radius: 12px; overflow: hidden; position: relative; }
+.img-box { height: 180px; overflow: hidden; position: relative; }
 .img-box img { width: 100%; height: 100%; object-fit: cover; }
-.info-box { padding: 10px; text-align: center; }
-.p-title { font-size: 0.85rem; height: 32px; overflow: hidden; color: #ddd; }
-.p-price { color: var(--accent-color); font-weight: bold; font-size: 1rem; margin: 5px 0; }
-.buy-btn { width: 100%; background: transparent; border: 2px solid var(--accent-color); color: var(--accent-color); padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
 
-/* ADVANCED MODAL & CALCULATOR */
-.glass-modal {
-    background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px);
-    width: 95%; max-width: 450px; border-radius: 20px;
-    border: 2px solid var(--accent-color);
-    box-shadow: 0 0 30px rgba(37, 211, 102, 0.3); overflow: hidden;
+/* Action Icons on Image (Heart & Share) */
+.card-actions {
+    position: absolute; top: 10px; right: 10px; display: flex; flex-direction: column; gap: 8px; z-index: 20;
 }
-.modal-header-fancy {
-    background: linear-gradient(90deg, #000, #111); padding: 20px;
-    text-align: center; color: var(--accent-color); font-size: 1.5rem;
-    font-weight: 900; border-bottom: 1px solid #333; position: relative; letter-spacing: 2px;
+.action-btn {
+    width: 32px; height: 32px; background: rgba(0,0,0,0.7); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; color: white; cursor: pointer;
+    transition: 0.3s; backdrop-filter: blur(5px);
 }
-.close-btn { position: absolute; right: 15px; top: 20px; font-size: 1.5rem; color: #fff; cursor: pointer; }
-.modal-body { padding: 20px; }
+.action-btn:hover { transform: scale(1.2); }
+.action-btn.heart.active { color: red; animation: popHeart 0.3s; }
+.action-btn.share { color: #00ffea; }
+@keyframes popHeart { 0%{transform:scale(1);} 50%{transform:scale(1.4);} 100%{transform:scale(1);} }
 
-/* PRICE BREAKDOWN STYLES */
-.price-breakdown {
-    background: rgba(255,255,255,0.05); padding: 10px;
-    border-radius: 8px; margin-bottom: 15px; border: 1px dashed #444;
+/* Discount & ID */
+.discount-badge {
+    position: absolute; top: 10px; left: 10px; background: red; color: white;
+    padding: 3px 8px; font-size: 0.7rem; font-weight: bold; border-radius: 4px; z-index: 20;
 }
-.price-row { display: flex; justify-content: space-between; font-size: 0.9rem; color: #aaa; margin-bottom: 5px; }
-.price-row.total-row {
-    margin-top: 8px; padding-top: 8px; border-top: 1px solid #333;
-    font-size: 1.2rem; font-weight: bold; color: white; align-items: center;
-}
-.glowing-price { color: var(--accent-color); font-size: 1.5rem; text-shadow: 0 0 10px rgba(37, 211, 102, 0.6); }
-
-.form-group label { color: #888; display: block; margin-bottom: 5px; font-size: 0.9rem; }
-.neon-input {
-    width: 100%; padding: 12px; margin-bottom: 12px;
-    background: #000; border: 1px solid #444; color: white;
-    border-radius: 8px; font-size: 1rem; box-sizing: border-box; transition: 0.3s;
-}
-.neon-input:focus { border-color: var(--accent-color); box-shadow: 0 0 10px rgba(37,211,102,0.2); outline: none; }
-
-.qty-control-panel {
-    display: flex; justify-content: space-between; align-items: center;
-    background: #000; padding: 10px 15px; border-radius: 8px;
-    border: 1px solid #333; margin-bottom: 15px;
-}
-.qty-btn-group { display: flex; align-items: center; gap: 15px; }
-.qty-btn-group button {
-    width: 35px; height: 35px; border-radius: 5px;
-    border: 1px solid var(--accent-color); background: transparent;
-    color: var(--accent-color); font-size: 1.2rem; cursor: pointer;
-}
-.qty-btn-group button:hover { background: var(--accent-color); color: black; }
-.qty-btn-group span { font-size: 1.4rem; font-weight: bold; color: white; }
-
-/* MEGA BUTTON */
-.mega-confirm-btn {
-    width: 100%; padding: 18px;
-    background: linear-gradient(45deg, #25D366, #128C7E);
-    border: none; color: white; font-size: 1.1rem; font-weight: 900;
-    border-radius: 12px; cursor: pointer; text-transform: uppercase;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    animation: heartbeat 1.5s infinite; box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
-}
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(37, 211, 102, 0.6); }
-    100% { transform: scale(1); }
+.id-badge {
+    position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.8);
+    color: var(--accent-color); padding: 2px 6px; font-size: 0.7rem; border-radius: 4px;
 }
 
-/* UTILS & CHAT */
-.chat-window { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; height: 600px; background: #000; border: 2px solid var(--accent-color); z-index: 1000; border-radius: 15px; box-shadow: 0 0 50px rgba(0,0,0,0.8); display: flex; flex-direction: column; overflow: hidden; }
-.chat-header { background: var(--accent-color); padding: 15px; color: black; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
-.chat-window iframe { width: 100%; height: 100%; border: none; }
-.chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--accent-color); z-index: 200; cursor: pointer; overflow: hidden; animation: rgbGlow 3s infinite; }
-.chat-float-btn img { width: 100%; height: 100%; }
+.info-box { padding: 10px; }
+.rating-box { color: gold; font-size: 0.7rem; margin-bottom: 5px; }
+.p-title { font-size: 0.85rem; height: 35px; overflow: hidden; color: #ddd; }
+.p-price { color: var(--accent-color); font-weight: bold; font-size: 1.1rem; }
 
-.notification-popup { position: fixed; bottom: 20px; left: -350px; background: #222; border-left: 4px solid var(--accent-color); padding: 12px; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: 0.5s; z-index: 250; display: flex; align-items: center; gap: 10px; width: 260px; }
-.notification-popup img { width: 45px; height: 45px; border-radius: 4px; object-fit: cover; }
-.notify-text { font-size: 0.9rem; color: white; display: block; }
+/* Buttons */
+.btn-group { display: flex; gap: 5px; margin-top: 8px; }
+.cart-btn { flex: 1; background: #333; border: 1px solid #555; color: white; border-radius: 5px; cursor: pointer; }
+.buy-btn { flex: 2; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 8px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+
+/* MODALS & CART */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 300; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+.glass-modal { background: rgba(20,20,20,0.95); width: 95%; max-width: 450px; border-radius: 15px; border: 1px solid var(--accent-color); box-shadow: 0 0 20px rgba(37,211,102,0.2); }
+.modal-header-fancy { background: #000; padding: 15px; color: var(--accent-color); font-weight: bold; display: flex; justify-content: space-between; border-bottom: 1px solid #333; }
+.modal-body { padding: 15px; }
+
+/* Cart List Items */
+.cart-list-container { max-height: 300px; overflow-y: auto; margin-bottom: 15px; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 8px; margin-bottom: 5px; border-radius: 5px; }
+.cart-total-section { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; color: white; border-top: 1px solid #444; padding-top: 10px; }
+
+.mega-confirm-btn { width: 100%; padding: 15px; background: linear-gradient(45deg, #25D366, #128C7E); border: none; color: white; font-weight: bold; font-size: 1.1rem; border-radius: 10px; margin-top: 10px; cursor: pointer; animation: pulseBtn 2s infinite; }
+@keyframes pulseBtn { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.7);} 70%{box-shadow:0 0 0 10px rgba(37,211,102,0);} 100%{box-shadow:0 0 0 0 rgba(37,211,102,0);} }
+
+.neon-input { width: 100%; padding: 10px; margin-bottom: 10px; background: #000; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
+.qty-control-panel { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
+.qty-control-panel button { width: 35px; height: 35px; background: var(--accent-color); border: none; font-weight: bold; font-size: 1.2rem; border-radius: 5px; }
+.qty-control-panel span { font-size: 1.5rem; color: white; }
 
 .hidden { display: none !important; }
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 300; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-.modal-content { background: #111; width: 90%; max-width: 350px; border-radius: 15px; border: 1px solid var(--accent-color); position: relative; }
-/* Game Board Fix */
-.ttt-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 300px; margin: 0 auto; background: var(--accent-color); padding: 5px; border-radius: 10px; }
-.cell { background: #000; height: 90px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white; font-weight: bold; cursor: pointer; }
+/* Utils */
+.search-box input { width: 90%; padding: 10px; background: #222; border: 1px solid #444; color: white; border-radius: 20px; }
+.search-icon { position: absolute; right: 25px; top: 12px; color: #888; }
+.chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--accent-color); overflow: hidden; z-index: 200; }
+.chat-float-btn img { width: 100%; height: 100%; }
+.notification-popup { position: fixed; bottom: 20px; left: -350px; background: #222; border-left: 4px solid var(--accent-color); padding: 10px; display: flex; gap: 10px; width: 250px; transition: 0.5s; z-index: 250; }
+.notification-popup img { width: 40px; height: 40px; }
