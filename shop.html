@@ -6,7 +6,6 @@
     <title>AstraToonix - Final Store</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="shop-style.css">
     
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -24,17 +23,14 @@
                 <div class="brand-title rgb-text">AstraToonix</div>
                 <div class="social-bar">
                     <div class="cart-icon-box" onclick="toggleCartModal()">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cartCount">0</span>
+                        <i class="fas fa-shopping-cart"></i><span id="cartCount">0</span>
                     </div>
-                    <a href="https://www.facebook.com/share/188TWR8ZdD/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
-                    <a href="https://youtube.com/@astratoonix" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/share/188TWR8ZdD/" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" class="social-icon insta"><i class="fab fa-instagram"></i></a>
                     <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
                     <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
                 </div>
             </div>
-            
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
                 <i class="fas fa-search search-icon"></i>
@@ -42,16 +38,12 @@
         </header>
 
         <div id="heroSlider" class="hero-slider"></div>
-
-        <div class="flash-sale-strip">
-            <span>⚡ FLASH SALE ENDS IN: <span id="countdownTimer">02:45:30</span></span>
-        </div>
-
+        <div class="flash-sale-strip"><span>⚡ FLASH SALE ENDS IN: <span id="countdownTimer">02:45:30</span></span></div>
+        
         <div class="shop-container">
             <div class="section-title"><h3><i class="fas fa-fire"></i> Trending Deals</h3><div class="line"></div></div>
             <div class="product-grid" id="grid"></div>
         </div>
-
     </div>
 
     <div id="productViewPage" class="full-page-view hidden">
@@ -62,50 +54,25 @@
                 <i class="fas fa-shopping-cart"></i><span id="pPageCartCount">0</span>
             </div>
         </div>
-
         <div class="p-view-body">
             <div class="p-gallery">
                 <div class="discount-badge-large">50% OFF</div>
                 <img id="mainImg" src="" alt="Product">
                 <div class="id-badge-large" id="pPageId">ID: #12</div>
             </div>
-
             <div class="p-details-box">
                 <div class="p-brand">AstraToonix Certified</div>
                 <h1 id="pPageName">Product Name</h1>
-                
                 <div class="p-pricing-row">
                     <span id="pPagePrice" class="real-price-large">₹999</span>
                     <span id="pPageOldPrice" class="cut-price-large">₹1999</span>
                 </div>
-
-                <div class="rating-box-large">
-                    <span class="rating-pill">4.5 <i class="fas fa-star"></i></span>
-                    <span style="color:#888;">(2,450 Reviews)</span>
-                </div>
-
-                <div class="selector-box">
-                    <h4>Select Size</h4>
-                    <div class="chips-container" id="sizeChips">
-                        <div class="chip" onclick="selectSize(this, 'S')">S</div>
-                        <div class="chip" onclick="selectSize(this, 'M')">M</div>
-                        <div class="chip" onclick="selectSize(this, 'L')">L</div>
-                        <div class="chip" onclick="selectSize(this, 'XL')">XL</div>
-                    </div>
-                </div>
-
-                <div class="selector-box">
-                    <h4>Select Color</h4>
-                    <div class="chips-container" id="colorChips">
-                        <div class="chip selected" onclick="selectColor(this, 'Default')">Default</div>
-                        <div class="chip" onclick="selectColor(this, 'Black')">Black</div>
-                        <div class="chip" onclick="selectColor(this, 'White')">White</div>
-                    </div>
-                </div>
-
-                <div style="height: 100px;"></div> </div>
+                <div class="rating-box-large"><span class="rating-pill">4.5 <i class="fas fa-star"></i></span> (2,450 Reviews)</div>
+                <div class="selector-box"><h4>Select Size</h4><div class="chips-container" id="sizeChips"><div class="chip" onclick="selectSize(this,'S')">S</div><div class="chip" onclick="selectSize(this,'M')">M</div><div class="chip" onclick="selectSize(this,'L')">L</div><div class="chip" onclick="selectSize(this,'XL')">XL</div></div></div>
+                <div class="selector-box"><h4>Select Color</h4><div class="chips-container" id="colorChips"><div class="chip selected" onclick="selectColor(this,'Default')">Default</div><div class="chip" onclick="selectColor(this,'Black')">Black</div><div class="chip" onclick="selectColor(this,'White')">White</div></div></div>
+                <div style="height: 100px;"></div>
+            </div>
         </div>
-
         <div class="sticky-footer">
             <button class="footer-btn cart-action" onclick="addToCartFromPage()">ADD TO CART</button>
             <button class="footer-btn buy-action" onclick="openFinalCheckout()">BUY NOW</button>
@@ -114,41 +81,24 @@
 
     <div id="checkoutModal" class="modal-overlay hidden">
         <div class="modal-content glass-modal">
-            <div class="modal-header-fancy">
-                <span>CONFIRM ORDER</span>
-                <i class="fas fa-times-circle close-btn" onclick="closeCheckoutModal()"></i>
-            </div>
+            <div class="modal-header-fancy"><span>CONFIRM ORDER</span><i class="fas fa-times-circle close-btn" onclick="closeCheckoutModal()"></i></div>
             <div class="modal-body">
-                <div class="product-summary">
-                    <h2 id="checkoutPName" style="color:#25D366;">Product Name</h2>
-                    <p id="checkoutDetails" style="color:#aaa;">Size: M | Color: Black</p>
-                    <div class="price-row total-row">
-                        <span>TOTAL PAY:</span> <span id="checkoutTotal" class="glowing-price">₹999</span>
-                    </div>
-                </div>
-                <div class="qty-control-panel">
-                    <button onclick="updatePageQty(-1)">-</button>
-                    <span id="checkoutQty">1</span>
-                    <button onclick="updatePageQty(1)">+</button>
-                </div>
+                <div class="product-summary"><h2 id="checkoutPName" style="color:#25D366;">Product</h2><p id="checkoutDetails" style="color:#aaa;">Details</p><div class="price-row total-row"><span>PAYABLE:</span> <span id="checkoutTotal" class="glowing-price">₹0</span></div></div>
+                <div class="qty-control-panel"><button onclick="updatePageQty(-1)">-</button><span id="checkoutQty">1</span><button onclick="updatePageQty(1)">+</button></div>
                 
                 <div class="form-group">
                     <input type="text" id="custName" class="neon-input" placeholder="Full Name" required>
-                    
                     <div style="margin-bottom:10px; color:white; font-size:0.9rem;">
                         Gender: 
                         <label style="margin-right:10px;"><input type="radio" name="genderSingle" value="Male" checked> Male</label>
                         <label><input type="radio" name="genderSingle" value="Female"> Female</label>
                     </div>
-
-                    <div style="display: flex; gap: 10px;">
+                    <div style="display:flex; gap:10px;">
                         <input type="text" id="custCity" class="neon-input" placeholder="City" style="width:50%">
                         <input type="number" id="custPincode" class="neon-input" placeholder="Pincode" style="width:50%">
                     </div>
-
                     <textarea id="custAddress" class="neon-input" rows="2" placeholder="Full Address" required></textarea>
                 </div>
-
                 <button class="mega-confirm-btn" onclick="confirmOrder()">CONFIRM ORDER <i class="fab fa-whatsapp"></i></button>
             </div>
         </div>
@@ -163,38 +113,24 @@
                 
                 <div class="form-group" style="margin-top:10px;">
                     <input type="text" id="cartName" class="neon-input" placeholder="Name">
-                    
                     <div style="margin-bottom:10px; color:white; font-size:0.9rem;">
                         Gender: 
                         <label style="margin-right:10px;"><input type="radio" name="genderCart" value="Male" checked> Male</label>
                         <label><input type="radio" name="genderCart" value="Female"> Female</label>
                     </div>
-
-                    <div style="display: flex; gap: 10px;">
+                    <div style="display:flex; gap:10px;">
                         <input type="text" id="cartCity" class="neon-input" placeholder="City" style="width:50%">
                         <input type="number" id="cartPincode" class="neon-input" placeholder="Pincode" style="width:50%">
                     </div>
-
                     <textarea id="cartAddr" class="neon-input" placeholder="Address"></textarea>
                 </div>
-
                 <button class="mega-confirm-btn" onclick="checkoutCart()">ORDER ALL NOW</button>
             </div>
         </div>
     </div>
 
-    <div id="gameModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header"><span>Game Zone</span><i class="fas fa-times" onclick="toggleGameModal()"></i></div>
-            <div class="modal-body" style="text-align:center;">
-                <button class="buy-btn" onclick="startGame('ttt')">Tic Tac Toe</button>
-                <button class="buy-btn" onclick="startGame('chess')">Chess</button>
-                <div id="tttGame" class="hidden"><div class="ttt-board" id="tttBoard"></div><div id="tttStatus" style="color:green;"></div><button onclick="showGameMenu()" class="buy-btn">Back</button></div>
-                <div id="chessGame" class="hidden"><div id="myBoard" style="width:100%"></div><button onclick="showGameMenu()" class="buy-btn">Back</button></div>
-            </div>
-        </div>
-    </div>
-
+    <div id="imageModal" class="modal-overlay hidden" style="z-index: 4000;"><div class="modal-content" style="background:transparent; border:none; text-align:center;"><i class="fas fa-times" onclick="closeImageModal()" style="position:absolute; top:20px; right:20px; color:white; font-size:2rem; cursor:pointer;"></i><img id="previewImage" src="" style="width:100%; max-height:60vh;"></div></div>
+    <div id="gameModal" class="modal-overlay hidden"><div class="modal-content"><div class="modal-header"><span>Game Zone</span><i class="fas fa-times" onclick="toggleGameModal()"></i></div><div class="modal-body" style="text-align:center;"><button class="buy-btn" onclick="startGame('ttt')">Tic Tac Toe</button><button class="buy-btn" onclick="startGame('chess')">Chess</button><div id="tttGame" class="hidden"><div class="ttt-board" id="tttBoard"></div><div id="tttStatus" style="color:green;"></div><button onclick="showGameMenu()" class="buy-btn">Back</button></div><div id="chessGame" class="hidden"><div id="myBoard" style="width:100%"></div><button onclick="showGameMenu()" class="buy-btn">Back</button></div></div></div></div>
     <div id="notificationPopup" class="notification-popup"><img id="notifImg" src=""><span id="notifText"></span></div>
     <div class="chat-float-btn" onclick="toggleChatbot()"><img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg"></div>
     <div class="chat-window hidden" id="chatWindow"><div class="chat-header"><span>Assistant</span><i class="fas fa-times" onclick="toggleChatbot()"></i></div><iframe src="https://high-rhinoceros-dminemraj-83bdb398.koyeb.app/"></iframe></div>
