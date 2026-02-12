@@ -1,4 +1,4 @@
-/* ================= GAME LOGIC (FIXED) ================= */
+/* ================= GAME LOGIC ================= */
 
 function showGameMenu() {
     document.getElementById('gameMenu').classList.remove('hidden');
@@ -30,7 +30,6 @@ function initTTT() {
 
 function renderTTT() {
     const boardDiv = document.getElementById('tttBoard');
-    // CSS class 'cell' ab shop-style.css mein defined hai
     boardDiv.innerHTML = tttBoard.map((cell, i) => 
         `<div class="cell" onclick="playerMove(${i})" style="color: ${cell === 'X' ? '#25D366' : '#FF0000'}">${cell}</div>`
     ).join('');
@@ -51,7 +50,6 @@ function computerMove() {
     if(!gameActive) return;
     let empty = tttBoard.map((v, i) => v === '' ? i : null).filter(v => v !== null);
     if(empty.length > 0) {
-        // Simple AI: Random Move
         let move = empty[Math.floor(Math.random() * empty.length)];
         tttBoard[move] = 'O';
         renderTTT();
