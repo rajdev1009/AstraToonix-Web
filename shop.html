@@ -3,197 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AstraToonix - Ultimate Store</title>
+    <title>AstraToonix - Pro Store</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="shop-style.css">
-    
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
 </head>
 <body>
 
-    <div id="mainAppContainer">
-        
-        <header>
-            <div class="header-top">
-                <a href="index.html" class="nav-home-btn">
-                    <i class="fas fa-home"></i> <span>HOME</span>
-                </a>
+    <header>
+        <div class="header-top">
+            <a href="index.html" class="nav-home-btn">
+                <i class="fas fa-home"></i> HOME
+            </a>
 
-                <div class="brand-title rgb-text">AstraToonix</div>
-                
-                <div class="social-bar">
-                    <div class="cart-icon-box" onclick="toggleCartModal()">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cartCount">0</span>
-                    </div>
-
-                    <a href="https://www.facebook.com/share/188TWR8ZdD/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
-                    <a href="https://youtube.com/@astratoonix" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
-                    
-                    <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
-                    
-                    <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
-                </div>
-            </div>
+            <div class="brand-title rgb-text">AstraToonix</div>
             
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search products, brands or #ID..." onkeyup="searchProducts()">
-                <i class="fas fa-search search-icon"></i>
-            </div>
-        </header>
+            <div class="social-bar">
+                <div class="cart-icon-box" onclick="toggleCartModal()" style="margin-right: 10px; position: relative; cursor: pointer;">
+                    <i class="fas fa-shopping-cart" style="color: white; font-size: 1.4rem;"></i>
+                    <span id="cartCount" style="position: absolute; top: -8px; right: -8px; background: red; color: white; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%; font-weight: bold;">0</span>
+                </div>
 
-        <div id="heroSlider" class="hero-slider"></div>
-
-        <div class="flash-sale-strip">
-            <span>⚡ FLASH SALE ENDS IN: <span id="countdownTimer">02:45:30</span></span>
-        </div>
-
-        <div class="shop-container">
-            <div class="section-title">
-                <h3><i class="fas fa-fire"></i> Trending Deals</h3>
-                <div class="line"></div>
-            </div>
-            <div class="product-grid" id="grid"></div>
-        </div>
-
-    </div> 
-    <div id="productViewPage" class="full-page-view hidden">
-        
-        <div class="p-view-header">
-            <i class="fas fa-arrow-left" onclick="closeProductPage()" style="cursor:pointer; font-size:1.2rem;"></i>
-            <span>Product Details</span>
-            <div class="cart-icon-box" onclick="toggleCartModal()">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="pPageCartCount">0</span>
-            </div>
-        </div>
-
-        <div class="p-view-body">
-            <div class="p-gallery">
-                <div class="discount-badge-large" id="pPageDiscount">50% OFF</div>
-                <div class="id-badge-large" id="pPageId">ID: #12</div>
-                <img id="mainImg" src="" alt="Product Image">
-            </div>
-
-            <div class="p-details-box">
-                <div class="p-brand">AstraToonix Certified</div>
-                <h1 id="pPageName">Product Name</h1>
+                <a href="https://www.facebook.com/share/188TWR8ZdD/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
                 
-                <div class="p-pricing-row">
-                    <span id="pPagePrice" class="real-price-large">₹999</span>
-                    <span id="pPageOldPrice" class="cut-price-large">₹1999</span>
-                </div>
-
-                <div class="rating-box-large">
-                    <span class="rating-pill">4.5 <i class="fas fa-star"></i></span>
-                    <span style="color:#888; font-size:0.9rem;">(2,450 Reviews)</span>
-                </div>
-
-                <div class="selector-box">
-                    <h4>Select Size</h4>
-                    <div class="chips-container" id="sizeChips">
-                        <div class="chip" onclick="selectSize(this, 'S')">S</div>
-                        <div class="chip" onclick="selectSize(this, 'M')">M</div>
-                        <div class="chip" onclick="selectSize(this, 'L')">L</div>
-                        <div class="chip" onclick="selectSize(this, 'XL')">XL</div>
-                        <div class="chip" onclick="selectSize(this, 'XXL')">XXL</div>
-                    </div>
-                </div>
-
-                <div class="selector-box">
-                    <h4>Select Color</h4>
-                    <div class="chips-container" id="colorChips">
-                        <div class="chip selected" onclick="selectColor(this, 'Default')">Default</div>
-                        <div class="chip" onclick="selectColor(this, 'Black')">Black</div>
-                        <div class="chip" onclick="selectColor(this, 'White')">White</div>
-                        <div class="chip" onclick="selectColor(this, 'Blue')">Blue</div>
-                    </div>
-                </div>
-
-                <div class="features-list">
-                    <p><i class="fas fa-truck"></i> Free Delivery by Tomorrow</p>
-                    <p><i class="fas fa-undo"></i> 7 Days Replacement Policy</p>
-                    <p><i class="fas fa-check-circle"></i> Cash on Delivery Available</p>
-                </div>
-
-                <div style="height: 100px;"></div> </div>
+                <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
+                
+                <a href="https://youtube.com/@astratoonix" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
+                
+                <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
+                
+                <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
+            </div>
         </div>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search products or #ID..." onkeyup="searchProducts()">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+    </header>
 
-        <div class="sticky-footer">
-            <button class="footer-btn cart-action" onclick="addToCartFromPage()">
-                ADD TO CART
-            </button>
-            <button class="footer-btn buy-action" onclick="openFinalCheckout()">
-                BUY NOW
-            </button>
+    <div id="heroSlider" class="hero-slider"></div>
+
+    <div class="flash-sale-strip" style="background: linear-gradient(90deg, #d32f2f, #b71c1c); color: white; text-align: center; padding: 8px; font-weight: bold; letter-spacing: 1px;">
+        <span>⚡ FLASH SALE ENDS IN: </span>
+        <span id="countdownTimer">02:45:30</span>
+    </div>
+
+    <div class="shop-container">
+        <div class="section-title">
+            <h3><i class="fas fa-fire"></i> Trending Deals</h3>
+            <div class="line"></div>
+        </div>
+        <div class="product-grid" id="grid"></div>
+    </div>
+
+    <div id="notificationPopup" class="notification-popup">
+        <img id="notifImg" src="" alt="Product">
+        <div>
+            <span id="notifText" class="notify-text"></span>
+            <span class="notify-time">Just now</span>
         </div>
     </div>
 
+    <div class="chat-float-btn" onclick="toggleChatbot()">
+        <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AI Chat">
+    </div>
 
-    <div id="checkoutModal" class="modal-overlay hidden">
-        <div class="modal-content glass-modal">
+    <div class="chat-window hidden" id="chatWindow">
+        <div class="chat-header">
+            <span>🤖 Assistant</span>
+            <i class="fas fa-times" onclick="toggleChatbot()" style="cursor:pointer;"></i>
+        </div>
+        <iframe src="https://high-rhinoceros-dminemraj-83bdb398.koyeb.app/" title="Chatbot"></iframe>
+    </div>
+
+    <div id="cartModal" class="modal-overlay hidden">
+        <div class="modal-content glass-modal large-modal">
             <div class="modal-header-fancy">
-                <span>CONFIRM ORDER</span>
-                <i class="fas fa-times-circle close-btn" onclick="closeCheckoutModal()"></i>
+                <span>MY CART (<span id="cartItemCount">0</span>)</span>
+                <i class="fas fa-times-circle close-btn" onclick="toggleCartModal()"></i>
             </div>
+            
             <div class="modal-body">
-                <div class="product-summary">
-                    <h2 id="checkoutPName" style="color:var(--accent-color); margin-top:0;">Product Name</h2>
-                    <p id="checkoutDetails" style="color:#aaa; font-size:0.9rem;">Size: M | Color: Black</p>
-                    
-                    <div class="price-row total-row">
-                        <span>TOTAL PAY:</span>
-                        <span id="checkoutTotal" class="glowing-price">₹999</span>
-                    </div>
+                <div id="cartItemsList" class="cart-list-container" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;">
+                    <p style="text-align:center; color:#888;">Your cart is empty.</p>
                 </div>
                 
-                <div class="qty-control-panel">
-                    <button onclick="updatePageQty(-1)">-</button>
-                    <span id="checkoutQty">1</span>
-                    <button onclick="updatePageQty(1)">+</button>
+                <div class="price-breakdown">
+                    <div class="price-row total-row">
+                        <span>Grand Total:</span>
+                        <span id="cartTotalDisplay" class="glowing-price">₹0</span>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" id="custName" class="neon-input" placeholder="Full Name" required>
-                    <textarea id="custAddress" class="neon-input" rows="2" placeholder="Full Address with Pincode" required></textarea>
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="text" id="cartName" class="neon-input" placeholder="Your Full Name" required>
+                    <textarea id="cartAddress" class="neon-input" rows="2" placeholder="Full Delivery Address" required></textarea>
                 </div>
 
-                <button class="mega-confirm-btn" onclick="confirmFinalOrder()">
-                    CONFIRM ORDER <i class="fab fa-whatsapp"></i>
+                <button class="mega-confirm-btn" onclick="checkoutCart()">
+                    ORDER ALL NOW <i class="fab fa-whatsapp"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="cartModal" class="modal-overlay hidden">
+    <div id="orderModal" class="modal-overlay hidden">
         <div class="modal-content glass-modal">
             <div class="modal-header-fancy">
-                <span>MY CART</span>
-                <i class="fas fa-times-circle close-btn" onclick="toggleCartModal()"></i>
+                <span>CONFIRM ORDER</span>
+                <i class="fas fa-times-circle close-btn" onclick="closeOrderModal()"></i>
             </div>
+            
             <div class="modal-body">
-                <div id="cartItemsList" class="cart-list-container" style="max-height:200px; overflow-y:auto;">
-                    <p style="text-align:center; color:#888;">Your cart is empty.</p>
-                </div>
-                
-                <div class="price-row total-row">
-                    <span>Grand Total:</span>
-                    <span id="cartTotalDisplay" class="glowing-price">₹0</span>
+                <div class="product-summary">
+                    <div class="modal-id-badge" id="modalProdId">ID: #00</div>
+                    <h2 id="modalProductName">PRODUCT NAME</h2>
+                    
+                    <div class="price-breakdown">
+                        <div class="price-row total-row">
+                            <span>TOTAL PAYABLE:</span>
+                            <span id="totalPriceDisplay" class="glowing-price">₹0</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group" style="margin-top:10px;">
-                    <input type="text" id="cartName" class="neon-input" placeholder="Your Name">
-                    <textarea id="cartAddr" class="neon-input" rows="2" placeholder="Delivery Address"></textarea>
+                <div class="form-group">
+                    <div class="qty-control-panel">
+                        <button onclick="updateQty(-1)">-</button>
+                        <span id="qtyDisplay">1</span>
+                        <button onclick="updateQty(1)">+</button>
+                    </div>
                 </div>
-                
-                <button class="mega-confirm-btn" onclick="checkoutCart()">
-                    ORDER ALL NOW <i class="fab fa-whatsapp"></i>
+
+                <div class="form-group">
+                    <input type="text" id="custName" class="neon-input" placeholder="Full Name" required>
+                    <textarea id="custAddress" class="neon-input" rows="2" placeholder="Full Address" required></textarea>
+                </div>
+
+                <button class="mega-confirm-btn" onclick="confirmOrder()">
+                    <span id="btnText">CONFIRM</span>
+                    <i class="fab fa-whatsapp"></i>
                 </button>
             </div>
         </div>
@@ -229,26 +184,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="notificationPopup" class="notification-popup">
-        <img id="notifImg" src="" alt="Product">
-        <div>
-            <span id="notifText" class="notify-text"></span>
-            <span class="notify-time">Just now</span>
-        </div>
-    </div>
-
-    <div class="chat-float-btn" onclick="toggleChatbot()">
-        <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AI Chat">
-    </div>
-
-    <div class="chat-window hidden" id="chatWindow">
-        <div class="chat-header">
-            <span>🤖 Assistant</span>
-            <i class="fas fa-times" onclick="toggleChatbot()" style="cursor:pointer;"></i>
-        </div>
-        <iframe src="https://high-rhinoceros-dminemraj-83bdb398.koyeb.app/" title="Chatbot"></iframe>
     </div>
 
     <script src="shop-data.js"></script>
