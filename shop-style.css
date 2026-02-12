@@ -1,0 +1,132 @@
+/* --- DARK THEME & BASE STYLES --- */
+body { background-color: #0f0f10; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; padding-bottom: 80px; }
+
+/* HEADER */
+header { background: #141414; padding: 10px 15px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #25D366; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+
+.back-home-btn { color: #fff; text-decoration: none; font-size: 1.1rem; display: flex; align-items: center; background: #333; padding: 8px 12px; border-radius: 20px; border: 1px solid #444; transition: 0.3s; }
+.back-home-btn i { margin-right: 8px; }
+.back-home-btn:hover { background: #25D366; color: #000; border-color: #25D366; }
+
+.social-bar { display: flex; gap: 12px; align-items: center; }
+.social-icon { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; color: white; font-size: 1.2rem; transition: transform 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+.social-icon:active { transform: scale(0.9); }
+.social-icon.insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+.social-icon.fb { background: #1877F2; }
+.social-icon.yt { background: #FF0000; }
+.social-icon.game { background: #8e44ad; border: 2px solid #fff; animation: glow 2s infinite alternate; }
+@keyframes glow { from { box-shadow: 0 0 5px #8e44ad; } to { box-shadow: 0 0 15px #9b59b6; } }
+
+.search-box input { width: 100%; padding: 12px 15px; background: #222; border: 1px solid #444; color: white; border-radius: 25px; outline: none; font-size: 1rem; }
+.search-box input:focus { border-color: #25D366; }
+
+/* SLIDER */
+.hero-slider { width: 100%; height: 220px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; }
+.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s; background-size: 100% 100%; background-position: center; background-repeat: no-repeat; }
+.slide.active { opacity: 1; }
+.slide-content { position: absolute; bottom: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 20px; }
+.slide-title { font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 3px black; }
+
+/* GRID */
+.shop-container { padding: 0 10px; max-width: 1200px; margin: 0 auto; }
+.product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (min-width: 600px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.product-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; overflow: hidden; position: relative; }
+.id-badge { position: absolute; top: 0; left: 0; background: #25D366; color: #000; padding: 4px 8px; border-bottom-right-radius: 10px; font-size: 0.75rem; font-weight: bold; z-index: 10; }
+.img-box { width: 100%; height: 150px; overflow: hidden; }
+.img-box img { width: 100%; height: 100%; object-fit: cover; }
+.info-box { padding: 10px; text-align: center; }
+.p-title { font-size: 0.85rem; margin-bottom: 5px; height: 32px; overflow: hidden; line-height: 1.2; }
+.p-price { color: #25D366; font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
+.buy-btn { background: #25D366; color: black; border: none; padding: 8px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+
+/* CHATBOT */
+.chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 3px solid #25D366; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4); z-index: 200; background: #000; cursor: pointer; }
+.chat-float-btn img { width: 100%; height: 100%; object-fit: cover; }
+.chat-window { position: fixed; bottom: 90px; right: 20px; width: 320px; height: 450px; background: #1a1a1a; border-radius: 12px; z-index: 201; display: flex; flex-direction: column; border: 1px solid #333; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+.chat-header { background: #25D366; color: #000; padding: 12px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+.chat-window iframe { flex: 1; width: 100%; border: none; background: #fff; }
+
+/* MODAL OVERLAY */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 300; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.modal-content { background: #1a1a1a; width: 95%; max-width: 400px; border-radius: 15px; border: 2px solid #25D366; overflow: hidden; max-height: 90vh; overflow-y: auto; }
+.modal-header { background: #25D366; padding: 15px; display: flex; justify-content: space-between; align-items: center; color: #000; font-weight: bold; font-size: 1.2rem; }
+.modal-body { padding: 20px; }
+
+/* --- ORDER FORM STYLES --- */
+.order-form input, .order-form textarea, .order-form select { 
+    width: 100%; 
+    padding: 12px; 
+    margin-bottom: 12px; 
+    background: #333; 
+    border: 1px solid #555; 
+    border-radius: 8px; 
+    color: white; 
+    font-size: 0.95rem; 
+    outline: none;
+    box-sizing: border-box;
+}
+.order-form textarea { height: 70px; resize: none; }
+
+.variant-row { display: flex; gap: 10px; margin-bottom: 5px; }
+.variant-row select { flex: 1; cursor: pointer; }
+
+.qty-box { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    background: #252525; 
+    border: 1px solid #444; 
+    border-radius: 8px; 
+    padding: 8px 15px; 
+    margin-bottom: 15px;
+}
+.qty-controls { display: flex; align-items: center; gap: 15px; }
+.qty-btn { 
+    background: #25D366; 
+    color: #000; 
+    border: none; 
+    width: 32px; 
+    height: 32px; 
+    border-radius: 50%; 
+    font-weight: bold; 
+    font-size: 1.2rem; 
+    cursor: pointer; 
+    display: flex; align-items: center; justify-content: center;
+}
+.qty-val { font-weight: bold; font-size: 1.2rem; min-width: 25px; text-align: center; }
+
+.confirm-btn { 
+    background: #25D366; 
+    color: #000; 
+    border: none; 
+    padding: 14px; 
+    width: 100%; 
+    border-radius: 8px; 
+    font-weight: bold; 
+    font-size: 1.1rem; 
+    cursor: pointer; 
+    display: flex; align-items: center; justify-content: center; gap: 10px; 
+    margin-top: 10px;
+}
+.confirm-btn:hover { background: #1ebc57; }
+
+/* Game Specific Overrides */
+.game-header { background: #8e44ad !important; color: white; border-bottom: 2px solid #fff; }
+.game-content { border-color: #8e44ad; }
+.game-selector button { width: 100%; padding: 15px; margin: 5px 0; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; color: white; }
+.btn-ttt { background: #e74c3c; } 
+.btn-chess { background: #3498db; }
+.btn-back { background: #444; margin-top: 10px; }
+
+/* GAME BOARDS */
+.ttt-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 20px auto; width: 250px; }
+.cell { width: 80px; height: 80px; background: #333; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; cursor: pointer; color: white; border-radius: 5px; }
+.cell.x { color: #2ecc71; }
+.cell.o { color: #e74c3c; }
+#myBoard { width: 100%; margin: 0 auto; }
+
+.hidden { display: none !important; }
+              
