@@ -20,12 +20,17 @@
         <div class="header-top">
             <a href="index.html" class="back-home-btn"><i class="fas fa-arrow-left"></i> Home</a>
             <div class="social-bar">
-                <a href="#" class="social-icon" style="background:#333; border:1px solid #555;"><i class="fas fa-shopping-cart"></i></a>
-                
+                <a href="#" class="social-icon" style="background:#333;"><i class="fas fa-shopping-cart"></i></a>
                 <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
+                
+                <div class="game-wrapper" onclick="toggleGameModal()">
+                    <div class="social-icon game"><i class="fas fa-gamepad"></i></div>
+                    <div class="discount-badge">Get Discount!</div>
+                </div>
 
-                <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
                 <a href="https://youtube.com/@astratoonix?si=KBw-c3A1Y9y5TbdN" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/itz_dminem_official43" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/1Db4mRv1pj/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
             </div>
         </div>
         <div class="search-box">
@@ -41,7 +46,6 @@
             <span class="filter-btn" onclick="filterProducts('watch')">Watches</span>
             <span class="filter-btn" onclick="filterProducts('shoe')">Shoes</span>
             <span class="filter-btn" onclick="filterProducts('shirt')">Clothes</span>
-            <span class="filter-btn" onclick="filterProducts('gadget')">Gadgets</span>
         </div>
         
         <h3 style="border-left: 4px solid #25D366; padding-left: 10px; margin-top: 15px;">Premium Collection</h3>
@@ -50,10 +54,7 @@
 
     <div id="notificationPopup" class="notification-popup">
         <img id="notifImg" src="" alt="Product">
-        <div style="flex:1;">
-            <span id="notifText" class="notify-text"></span>
-            <span class="notify-time">Just now</span>
-        </div>
+        <div><span id="notifText" class="notify-text"></span><br><small style="color:#aaa;">Just now</small></div>
     </div>
 
     <div class="chat-float-btn" onclick="toggleChatbot()">
@@ -61,7 +62,7 @@
     </div>
     <div class="chat-window hidden" id="chatWindow">
         <div class="chat-header">
-            <span>🤖 AstraToonix Assistant</span>
+            <span>🤖 AstraToonix Bot</span>
             <i class="fas fa-times" onclick="toggleChatbot()" style="cursor:pointer;"></i>
         </div>
         <iframe src="https://high-rhinoceros-dminemraj-83bdb398.koyeb.app/" title="Chatbot"></iframe>
@@ -70,88 +71,71 @@
     <div id="orderModal" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <span><i class="fas fa-clipboard-check"></i> Order Details</span>
+                <span><i class="fas fa-clipboard-check"></i> Order</span>
                 <i class="fas fa-times" onclick="closeOrderModal()" style="cursor:pointer;"></i>
             </div>
             <div class="modal-body">
                 <div class="order-form">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <h4 id="modalProductName" style="color:#25D366; margin:0;">Product Name</h4>
-                        <span id="modalProductPrice" style="color:#aaa; font-size:0.9rem;"></span>
+                    <h4 id="modalProductName" style="color:#25D366; margin:0 0 10px 0;">Product</h4>
+                    <div style="display:flex; gap:10px;">
+                        <select id="prodSize"><option>Free Size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+                        <select id="prodColor"><option>As Shown</option><option>Black</option><option>White</option><option>Red</option><option>Blue</option></select>
                     </div>
-
-                    <div class="variant-row">
-                        <select id="prodSize">
-                            <option value="Free Size">Size: Free Size</option>
-                            <option value="S">Size: S</option>
-                            <option value="M">Size: M</option>
-                            <option value="L">Size: L</option>
-                            <option value="XL">Size: XL</option>
-                        </select>
-                        <select id="prodColor">
-                            <option value="As Shown">Color: As Shown</option>
-                            <option value="Black">Black</option>
-                            <option value="White">White</option>
-                            <option value="Red">Red</option>
-                            <option value="Blue">Blue</option>
-                        </select>
-                    </div>
-
                     <div class="qty-box">
-                        <span style="color:#888;">Quantity:</span>
-                        <div class="qty-controls" style="display:flex; gap:10px; align-items:center;">
+                        <span>Quantity:</span>
+                        <div style="display:flex; gap:10px; align-items:center;">
                             <button class="qty-btn" onclick="updateQty(-1)">-</button>
-                            <span id="qtyDisplay" class="qty-val">1</span>
+                            <span id="qtyDisplay">1</span>
                             <button class="qty-btn" onclick="updateQty(1)">+</button>
                         </div>
                     </div>
-
-                    <input type="text" id="custName" placeholder="Enter Your Name" required>
-                    <textarea id="custAddress" placeholder="Enter Full Address (House No, Street, City, Pin)" required></textarea>
-                    
-                    <button class="confirm-btn" onclick="confirmOrder()">
-                        Confirm Order <i class="fab fa-whatsapp"></i>
-                    </button>
+                    <input type="text" id="custName" placeholder="Name" required>
+                    <textarea id="custAddress" placeholder="Full Address" required></textarea>
+                    <button class="confirm-btn" onclick="confirmOrder()">Confirm Order <i class="fab fa-whatsapp"></i></button>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="gameModal" class="modal-overlay hidden">
-        <div class="modal-content game-content">
-            <div class="modal-header game-header">
+        <div class="modal-content" style="border-color: #8e44ad;">
+            <div class="modal-header" style="background:#8e44ad; color:white;">
                 <span><i class="fas fa-gamepad"></i> Game Zone</span>
                 <i class="fas fa-times" onclick="toggleGameModal()" style="cursor:pointer;"></i>
             </div>
             <div class="modal-body">
                 <div id="gameMenu">
-                    <p>Choose a game to play against AI:</p>
+                    <p>Play & Win Discounts!</p>
                     <div class="game-selector">
+                        <button class="btn-spin" onclick="startGame('spin')"><i class="fas fa-dharmachakra"></i> Spin & Win</button>
                         <button class="btn-ttt" onclick="startGame('ttt')"><i class="fas fa-times"></i> Tic Tac Toe</button>
-                        <button class="btn-chess" onclick="startGame('chess')"><i class="fas fa-chess-knight"></i> Chess (Beta)</button>
+                        <button class="btn-chess" onclick="startGame('chess')"><i class="fas fa-chess-knight"></i> Chess</button>
                     </div>
                 </div>
+                <div id="spinGame" class="hidden">
+                    <h3>🎡 Spin for Discount</h3>
+                    <div class="wheel-container"><div class="wheel-marker"></div><div class="wheel" id="theWheel"></div></div>
+                    <div id="spinResult" style="font-weight:bold; color:#25D366; margin:10px 0;"></div>
+                    <button class="confirm-btn" onclick="spinTheWheel()" id="spinBtn">SPIN</button>
+                    <button class="btn-back" onclick="showGameMenu()">Back</button>
+                </div>
                 <div id="tttGame" class="hidden">
-                    <h3>You (X) vs Computer (O)</h3>
+                    <h3>You (X) vs AI (O)</h3>
                     <div class="ttt-board" id="tttBoard"></div>
-                    <div id="tttStatus" style="margin-bottom:10px; font-weight:bold; color:#25D366;">Your Turn!</div>
-                    <button class="btn-back" onclick="showGameMenu()">Back to Menu</button>
+                    <div id="tttStatus" style="color:#25D366;">Your Turn</div>
+                    <button class="btn-back" onclick="showGameMenu()">Back</button>
                 </div>
                 <div id="chessGame" class="hidden">
-                    <h3>Chess (Random AI)</h3>
+                    <h3>Chess (Beta)</h3>
                     <div id="myBoard"></div>
-                    <p style="font-size:0.8rem; color:#aaa; margin-top:5px;">Play White. Computer plays Black.</p>
-                    <button class="btn-back" onclick="showGameMenu()">Back to Menu</button>
+                    <button class="btn-back" onclick="showGameMenu()">Back</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="shop-data.js"></script>
-    <script src="games.js"></script>
-
     <script src="shop-script.js"></script>
 
 </body>
-    </html>
-    
+            </html>
+            
