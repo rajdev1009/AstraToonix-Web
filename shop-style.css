@@ -7,15 +7,6 @@
     --text-color: #ffffff;     /* White Text */
     --accent-color: #25D366;   /* WhatsApp Green */
     --border-color: #333;      /* Dark Border */
-    --flipkart-yellow: #ff9f00;
-    --flipkart-orange: #fb641b;
-}
-
-body.light-mode {
-    --bg-color: #f1f3f6;
-    --card-bg: #ffffff;
-    --text-color: #000000;
-    --border-color: #ddd;
 }
 
 body {
@@ -24,12 +15,11 @@ body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
     padding-bottom: 80px; /* Footer space */
-    transition: 0.3s;
     overflow-x: hidden;
 }
 
 /* =========================================
-   2. HEADER & NAVIGATION (Mobile Fix Added)
+   2. HEADER (Mobile Fixed Layout)
    ========================================= */
 header {
     background: rgba(0,0,0,0.95);
@@ -65,7 +55,7 @@ header {
     white-space: nowrap;
 }
 
-/* Brand Name (Animated) */
+/* Brand Name */
 .brand-title {
     font-size: 1.2rem;
     font-weight: 900;
@@ -78,6 +68,7 @@ header {
     text-overflow: ellipsis;
 }
 
+/* RGB Animation */
 .rgb-text { animation: textRGB 4s infinite alternate; }
 @keyframes textRGB {
     0% { color: #25D366; text-shadow: 0 0 10px #25D366; }
@@ -85,7 +76,7 @@ header {
     100% { color: #25D366; text-shadow: 0 0 10px #25D366; }
 }
 
-/* Social Icons Area */
+/* Icons Bar */
 .social-bar {
     display: flex;
     gap: 6px;
@@ -94,17 +85,11 @@ header {
 }
 
 .social-icon {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
     border-radius: 50%;
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    background: #222;
-    border: 1px solid #444;
+    color: white; text-decoration: none; font-size: 1rem;
+    background: #222; border: 1px solid #444;
     transition: 0.3s;
 }
 
@@ -113,7 +98,6 @@ header {
 .social-icon.insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
 .social-icon.yt { background: #FF0000; }
 .social-icon.game { background: purple; border: 1px solid white; }
-.social-icon:hover { transform: scale(1.1); }
 
 /* Cart Icon */
 .cart-icon-box {
@@ -131,9 +115,9 @@ header {
     border: 1px solid white;
 }
 
-/* MOBILE FIX: Screen chhota hone par adjust karega */
+/* Mobile Adjustments */
 @media (max-width: 480px) {
-    .nav-home-btn span { display: none; } /* Text hide */
+    .nav-home-btn span { display: none; }
     .nav-home-btn { padding: 8px; }
     .brand-title { font-size: 1rem; text-align: left; margin-left: 5px; }
     .social-bar { gap: 4px; }
@@ -143,14 +127,13 @@ header {
 /* =========================================
    3. SEARCH, SLIDER & TIMER
    ========================================= */
-.search-box { position: relative; margin-top: 5px; }
 .search-box input {
     width: 90%; padding: 10px 15px;
     background: #1a1a1a; border: 1px solid #444;
     color: white; border-radius: 20px; outline: none;
-    display: block; margin: 0 auto;
+    display: block; margin: 5px auto;
 }
-.search-icon { position: absolute; right: 25px; top: 10px; color: #888; }
+.search-icon { position: absolute; right: 25px; top: 15px; color: #888; }
 
 .flash-sale-strip {
     background: linear-gradient(90deg, #d32f2f, #b71c1c);
@@ -171,7 +154,7 @@ header {
 .slide.active { opacity: 1; transform: scale(1.05); transition: 5s ease; }
 
 /* =========================================
-   4. HOME PAGE GRID & CARDS
+   4. HOME PAGE GRID (With Heart & Share)
    ========================================= */
 .shop-container { padding: 10px; max-width: 1200px; margin: 0 auto; }
 .section-title h3 { margin: 0; color: var(--accent-color); display: flex; align-items: center; gap: 10px; }
@@ -186,13 +169,12 @@ header {
     border-radius: 12px;
     overflow: hidden;
     position: relative;
-    transition: 0.2s;
 }
 
 .img-box { height: 180px; overflow: hidden; position: relative; }
 .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Badges on Card */
+/* Badges */
 .discount-badge {
     position: absolute; top: 5px; left: 5px;
     background: red; color: white; padding: 2px 6px;
@@ -202,8 +184,26 @@ header {
     position: absolute; bottom: 5px; right: 5px;
     background: rgba(0,0,0,0.8); color: var(--accent-color);
     padding: 2px 6px; font-size: 0.7rem; border-radius: 4px;
-    border: 1px solid var(--accent-color);
+    border: 1px solid var(--accent-color); z-index: 10;
 }
+
+/* ACTION ICONS (Heart & Share) */
+.card-actions {
+    position: absolute; top: 5px; right: 5px;
+    display: flex; flex-direction: column; gap: 8px;
+    z-index: 20; /* High Z-index to ensure click */
+}
+.action-btn {
+    width: 32px; height: 32px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; cursor: pointer;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.action-btn.heart.active { color: red; background: white; }
+.action-btn.share { color: #00ffea; }
 
 .info-box { padding: 8px; }
 .rating-box { color: gold; font-size: 0.7rem; margin-bottom: 5px; }
@@ -217,12 +217,10 @@ header {
     color: var(--accent-color); padding: 6px;
     border-radius: 5px; font-weight: bold;
     cursor: pointer; margin-top: 5px;
-    font-size: 0.8rem;
 }
-.buy-btn:hover { background: var(--accent-color); color: black; }
 
 /* =========================================
-   5. NEW: FLIPKART STYLE PRODUCT PAGE
+   5. FLIPKART STYLE PRODUCT PAGE
    ========================================= */
 .full-page-view {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -230,7 +228,6 @@ header {
     overflow-y: auto; display: flex; flex-direction: column;
 }
 
-/* Sticky Header inside Product Page */
 .p-view-header {
     background: #000; padding: 12px; color: white;
     font-weight: bold; display: flex;
@@ -241,13 +238,12 @@ header {
 
 .p-view-body { flex: 1; overflow-y: auto; padding-bottom: 70px; }
 
-/* Gallery Section */
 .p-gallery {
     background: #111; padding: 20px; text-align: center;
     position: relative; border-bottom: 1px solid #333;
 }
 #mainImg {
-    width: 100%; height: 320px; object-fit: contain;
+    width: 100%; height: 300px; object-fit: contain;
     border-radius: 10px; border: 1px solid #333;
 }
 .discount-badge-large {
@@ -262,7 +258,6 @@ header {
     font-weight: bold; border-radius: 5px;
 }
 
-/* Details Section */
 .p-details-box { padding: 15px; background: var(--card-bg); }
 .p-brand { color: #888; font-size: 0.9rem; font-weight: bold; }
 #pPageName { font-size: 1.3rem; margin: 5px 0; color: white; }
@@ -278,31 +273,29 @@ header {
     font-weight: bold; margin-right: 10px;
 }
 
-/* CHIPS (Size/Color Buttons) */
+/* SELECTION CHIPS (Buttons) */
 .selector-box { margin-bottom: 20px; border-top: 1px solid #333; padding-top: 10px; }
 .selector-box h4 { margin: 0 0 10px 0; color: #ccc; font-size: 0.9rem; }
 .chips-container { display: flex; gap: 10px; flex-wrap: wrap; }
+
 .chip {
-    padding: 10px 15px; border: 1px solid #444;
+    padding: 10px 18px; border: 1px solid #444;
     border-radius: 6px; color: white; background: #222;
     cursor: pointer; transition: 0.2s; font-weight: bold;
     min-width: 40px; text-align: center;
 }
+/* Active/Selected Chip Style */
 .chip.selected {
-    border-color: var(--accent-color);
+    border: 2px solid var(--accent-color); /* Green Border */
     background: rgba(37,211,102,0.1);
     color: var(--accent-color);
-    box-shadow: 0 0 8px rgba(37,211,102,0.3);
+    box-shadow: 0 0 10px rgba(37,211,102,0.3);
 }
 
-/* Features List */
-.features-list p {
-    margin: 8px 0; color: #bbb;
-    display: flex; align-items: center; gap: 10px; font-size: 0.9rem;
-}
+.features-list p { margin: 8px 0; color: #bbb; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
 .features-list i { color: var(--accent-color); }
 
-/* STICKY FOOTER BUTTONS */
+/* STICKY FOOTER */
 .sticky-footer {
     position: fixed; bottom: 0; left: 0; width: 100%;
     display: flex; z-index: 200;
@@ -317,7 +310,7 @@ header {
 .buy-action { background: var(--accent-color); color: black; }
 
 /* =========================================
-   6. MODALS (Checkout, Cart, Games)
+   6. MODALS
    ========================================= */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -330,7 +323,6 @@ header {
     width: 95%; max-width: 450px;
     border-radius: 15px; border: 2px solid var(--accent-color);
     box-shadow: 0 0 20px rgba(37, 211, 102, 0.2);
-    overflow: hidden;
 }
 .modal-header-fancy {
     background: #000; padding: 15px;
@@ -340,7 +332,6 @@ header {
 }
 .modal-body { padding: 20px; }
 
-/* Price Breakdown in Modal */
 .price-row.total-row {
     display: flex; justify-content: space-between;
     font-size: 1.2rem; font-weight: bold; color: white;
@@ -348,12 +339,12 @@ header {
 }
 .glowing-price { color: var(--accent-color); text-shadow: 0 0 10px rgba(37,211,102,0.6); }
 
-/* Inputs & Buttons */
 .neon-input {
     width: 100%; padding: 12px; margin-bottom: 10px;
     background: #000; border: 1px solid #444; color: white;
     border-radius: 5px; box-sizing: border-box;
 }
+
 .mega-confirm-btn {
     width: 100%; padding: 15px;
     background: linear-gradient(45deg, #25D366, #128C7E);
@@ -364,34 +355,18 @@ header {
 @keyframes pulseBtn { 0%{transform:scale(1);} 50%{transform:scale(1.02);} 100%{transform:scale(1);} }
 
 .qty-control-panel {
-    display: flex; justify-content: center; gap: 20px; margin: 15px 0; align-items: center;
+    display: flex; justify-content: center; gap: 20px;
+    margin: 15px 0; align-items: center;
 }
 .qty-control-panel button {
     width: 40px; height: 40px; background: #222;
     border: 1px solid var(--accent-color); color: var(--accent-color);
     font-size: 1.5rem; border-radius: 8px; cursor: pointer;
 }
+.qty-control-panel span { font-size: 1.5rem; font-weight: bold; }
 
 /* UTILS */
 .hidden { display: none !important; }
-
-/* Chat Window */
-.chat-window {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 90%; max-width: 400px; height: 600px;
-    background: #000; border: 2px solid var(--accent-color);
-    z-index: 1000; display: flex; flex-direction: column;
-}
-.chat-header { background: var(--accent-color); padding: 15px; font-weight: bold; color: black; display: flex; justify-content: space-between; }
-.chat-window iframe { flex: 1; border: none; }
-.chat-float-btn {
-    position: fixed; bottom: 20px; right: 20px;
-    width: 60px; height: 60px; border-radius: 50%;
-    border: 3px solid white; overflow: hidden; z-index: 200; cursor: pointer;
-}
-.chat-float-btn img { width: 100%; height: 100%; }
-
-/* Notification */
 .notification-popup {
     position: fixed; bottom: 20px; left: -350px;
     background: #222; border-left: 4px solid var(--accent-color);
@@ -399,6 +374,22 @@ header {
     transition: 0.5s; z-index: 250; align-items: center;
 }
 .notification-popup img { width: 40px; height: 40px; border-radius: 5px; }
+
+.chat-float-btn {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 60px; height: 60px; border-radius: 50%;
+    border: 3px solid white; overflow: hidden; z-index: 200; cursor: pointer;
+}
+.chat-float-btn img { width: 100%; height: 100%; }
+
+.chat-window {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 90%; max-width: 400px; height: 600px;
+    background: #000; border: 2px solid var(--accent-color);
+    z-index: 1000; display: flex; flex-direction: column;
+}
+.chat-window iframe { flex: 1; border: none; }
+.chat-header { background: var(--accent-color); padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
 
 /* Game Board */
 .ttt-board {
