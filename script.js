@@ -33,15 +33,15 @@ const moviesDB = [
 
     // --- 11 to 20: TRENDING INDIA ---
     { id: 11, title: "Kalki 2898 AD", img: "https://i.ibb.co/jk6f1mHZ/Kalki-2898-AD.jpg" },
-    { id: 12, title: "Stree 2", img: "/dN51c6c5.jpg" }, 
-    { id: 13, title: "Animal", img: "/hr9rjR3J0xBBKCt8WMnDWJ7l6yV.jpg" },
-    { id: 14, title: "Jawan", img: "/jcdqxDqN40A4k5d5e5f5.jpg" },
-    { id: 15, title: "Salaar: Part 1 – Ceasefire", img: "/m1b9bqTqQO9.jpg" }, 
+    { id: 12, title: "Stree 2", img: "https://i.ibb.co/JFbwfpQ5/images-1.jpg" }, 
+    { id: 13, title: "Animal", img: "https://i.ibb.co/Cp9VRNQC/Animal-2023-film-poster.jpg" },
+    { id: 14, title: "Jawan", img: "https://i.ibb.co/sdFxpW6z/images-2.jpg" },
+    { id: 15, title: "Salaar: Part 1 – Ceasefire", img: "https://ibb.co/0VGfCnPQ" }, 
     { id: 16, title: "Leo", img: "/pD6sL4vntUOXHmuvJPPZAgvyfd9.jpg" },
-    { id: 17, title: "K.G.F: Chapter 2", img: "/5DpBa36J183.jpg" }, 
-    { id: 18, title: "RRR", img: "/nEufeZlyAOLqO2brrs0yeF1kM9s.jpg" },
-    { id: 19, title: "Pushpa: The Rise", img: "/r8dtDFY2GZE8aAUnWJzSF5P2eM5.jpg" },
-    { id: 20, title: "Pathaan", img: "/m1b9bqTqQO9.jpg" },
+    { id: 17, title: "K.G.F: Chapter 2", img: "https://ibb.co/LDDMgbN1" }, 
+    { id: 18, title: "RRR", img: "https://ibb.co/cSwqzqwc" },
+    { id: 19, title: "Pushpa 2: The Rule", img: "https://ibb.co/4gsLX3Hh" },
+    { id: 20, title: "Pathaan", img: "https://ibb.co/dswM1MCN" },
 
     // --- 21 to 40: HOLLYWOOD ACTION ---
     { id: 21, title: "Black Panther", img: "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg" },
