@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AstraToonix - Pro Store</title>
+    <title>AstraToonix - Final Store</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -23,13 +23,13 @@
                 <a href="index.html" class="nav-home-btn"><i class="fas fa-home"></i> HOME</a>
                 <div class="brand-title rgb-text">AstraToonix</div>
                 <div class="social-bar">
-                    <div class="cart-icon-box" onclick="openUniversalModal('cart')">
+                    <div class="cart-icon-box" onclick="toggleCartModal()">
                         <i class="fas fa-shopping-cart"></i>
                         <span id="cartCount">0</span>
                     </div>
-                    <a href="https://www.facebook.com/share/188TWR8ZdD/" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" class="social-icon insta"><i class="fab fa-instagram"></i></a>
-                    <a href="https://youtube.com/@astratoonix" class="social-icon yt"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/share/188TWR8ZdD/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@astratoonix" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
                     <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
                     <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
                 </div>
@@ -58,7 +58,7 @@
         <div class="p-view-header">
             <i class="fas fa-arrow-left" onclick="closeProductPage()"></i>
             <span>Product Details</span>
-            <div class="cart-icon-box" onclick="openUniversalModal('cart')">
+            <div class="cart-icon-box" onclick="toggleCartModal()">
                 <i class="fas fa-shopping-cart"></i><span id="pPageCartCount">0</span>
             </div>
         </div>
@@ -108,45 +108,78 @@
 
         <div class="sticky-footer">
             <button class="footer-btn cart-action" onclick="addToCartFromPage()">ADD TO CART</button>
-            <button class="footer-btn buy-action" onclick="openUniversalModal('single')">BUY NOW</button>
+            <button class="footer-btn buy-action" onclick="openFinalCheckout()">BUY NOW</button>
         </div>
     </div>
 
-    <div id="universalModal" class="modal-overlay hidden">
-        <div class="modal-content glass-modal large-modal">
+    <div id="checkoutModal" class="modal-overlay hidden">
+        <div class="modal-content glass-modal">
             <div class="modal-header-fancy">
-                <span>📦 ORDER SUMMARY</span>
-                <i class="fas fa-times-circle close-btn" onclick="closeModal()"></i>
+                <span>CONFIRM ORDER</span>
+                <i class="fas fa-times-circle close-btn" onclick="closeCheckoutModal()"></i>
             </div>
-            
             <div class="modal-body">
-                <div id="orderContent">
-                    </div>
-
-                <div class="price-breakdown">
+                <div class="product-summary">
+                    <h2 id="checkoutPName" style="color:#25D366;">Product Name</h2>
+                    <p id="checkoutDetails" style="color:#aaa;">Size: M | Color: Black</p>
                     <div class="price-row total-row">
-                        <span>TOTAL PAYABLE:</span>
-                        <span id="finalTotalDisplay" class="glowing-price">₹0</span>
+                        <span>TOTAL PAY:</span> <span id="checkoutTotal" class="glowing-price">₹999</span>
                     </div>
                 </div>
+                <div class="qty-control-panel">
+                    <button onclick="updatePageQty(-1)">-</button>
+                    <span id="checkoutQty">1</span>
+                    <button onclick="updatePageQty(1)">+</button>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" id="custName" class="neon-input" placeholder="Full Name" required>
+                    
+                    <div style="margin-bottom:10px; color:white; font-size:0.9rem;">
+                        Gender: 
+                        <label style="margin-right:10px;"><input type="radio" name="genderSingle" value="Male" checked> Male</label>
+                        <label><input type="radio" name="genderSingle" value="Female"> Female</label>
+                    </div>
 
-                <div class="form-group" style="margin-top:15px;">
-                    <label style="color:#aaa; font-size:0.9rem;"><i class="fas fa-user"></i> Customer Details</label>
-                    <input type="text" id="custName" class="neon-input" placeholder="Enter Your Full Name" required>
-                    <textarea id="custAddress" class="neon-input" rows="3" placeholder="Enter Full Delivery Address (House No, Street, Pincode)" required></textarea>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="custCity" class="neon-input" placeholder="City" style="width:50%">
+                        <input type="number" id="custPincode" class="neon-input" placeholder="Pincode" style="width:50%">
+                    </div>
+
+                    <textarea id="custAddress" class="neon-input" rows="2" placeholder="Full Address" required></textarea>
                 </div>
 
-                <button class="mega-confirm-btn" onclick="confirmUnifiedOrder()">
-                    CONFIRM ORDER <i class="fab fa-whatsapp"></i>
-                </button>
+                <button class="mega-confirm-btn" onclick="confirmOrder()">CONFIRM ORDER <i class="fab fa-whatsapp"></i></button>
             </div>
         </div>
     </div>
 
-    <div id="imageModal" class="modal-overlay hidden" style="z-index: 400;">
-        <div class="modal-content" style="background:transparent; border:none; box-shadow:none; text-align:center;">
-            <i class="fas fa-times" onclick="closeImageModal()" style="position:absolute; top:20px; right:20px; color:white; font-size:2rem; cursor:pointer;"></i>
-            <img id="previewImage" src="" style="width:100%; max-height:60vh; object-fit:contain; border-radius:10px; border: 2px solid #25D366; box-shadow: 0 0 20px #25D366;">
+    <div id="cartModal" class="modal-overlay hidden">
+        <div class="modal-content glass-modal large-modal">
+            <div class="modal-header-fancy"><span>MY CART</span><i class="fas fa-times" onclick="toggleCartModal()"></i></div>
+            <div class="modal-body">
+                <div id="cartItemsList" class="cart-list-container"><p style="text-align:center;">Empty</p></div>
+                <div class="price-row total-row"><span>Grand Total:</span><span id="cartTotalDisplay">₹0</span></div>
+                
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="text" id="cartName" class="neon-input" placeholder="Name">
+                    
+                    <div style="margin-bottom:10px; color:white; font-size:0.9rem;">
+                        Gender: 
+                        <label style="margin-right:10px;"><input type="radio" name="genderCart" value="Male" checked> Male</label>
+                        <label><input type="radio" name="genderCart" value="Female"> Female</label>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="cartCity" class="neon-input" placeholder="City" style="width:50%">
+                        <input type="number" id="cartPincode" class="neon-input" placeholder="Pincode" style="width:50%">
+                    </div>
+
+                    <textarea id="cartAddr" class="neon-input" placeholder="Address"></textarea>
+                </div>
+
+                <button class="mega-confirm-btn" onclick="checkoutCart()">ORDER ALL NOW</button>
+            </div>
         </div>
     </div>
 
