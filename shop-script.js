@@ -15,20 +15,22 @@ function toggleTheme() {
 // 10-PIECE SLIDER
 function initSlider() {
     const slider = document.getElementById('heroSlider');
-    if(!slider || !products.length) return;
+    if(!slider || !products || products.length === 0) return;
     const items = products.slice(0, 10);
     slider.innerHTML = items.map((p, i) => `<div class="slide ${i===0?'active':''}" style="background-image:url('${p.img}')"></div>`).join('');
     let cur = 0; const slides = document.querySelectorAll('.slide');
     setInterval(() => {
+        if(!slides.length) return;
         slides[cur].classList.remove('active');
         cur = (cur + 1) % slides.length;
         slides[cur].classList.add('active');
     }, 3000);
 }
 
-// Render Grid
+// Render Grid (Buy Button Fix)
 function renderGrid(items) {
     const grid = document.getElementById('grid');
+    if(!grid) return;
     grid.innerHTML = items.map(p => `
         <div class="product-card">
             <div class="img-box"><img src="${p.img}"></div>
@@ -40,7 +42,19 @@ function renderGrid(items) {
         </div>`).join('');
 }
 
-// Telegram & WhatsApp Order
+// Notifications
+function showNotification() {
+    const notif = document.getElementById('notificationPopup');
+    if(!notif || !products.length) return;
+    const p = products[Math.floor(Math.random()*products.length)];
+    const names = ["Rahul", "Amit", "Priya", "Sneha", "Vikram"];
+    document.getElementById('notifImg').src = p.img;
+    document.getElementById('notifText').innerHTML = `<strong>${names[Math.floor(Math.random()*5)]}</strong> just ordered ${p.name}!`;
+    notif.style.left = "20px";
+    setTimeout(() => { notif.style.left = "-350px"; }, 4000);
+}
+
+// Order Logic
 let currentProduct = {}; let currentQty = 1;
 function openOrderModal(name, id, price) {
     currentProduct = { name, id, price }; currentQty = 1;
@@ -57,8 +71,9 @@ function confirmOrder() {
     const addr = document.getElementById('custAddress').value.trim();
     if(!name || !addr) return alert("Fill details Rajdev bhai!");
 
-    const msg = `*🆕 NEW ORDER ALERT*\n👤 *Name:* ${name}\n🏠 *Address:* ${addr}\n🛒 *Item:* ${currentProduct.name}\n🔢 *Qty:* ${currentQty}\n💰 *Total:* ${currentProduct.price}`;
+    const msg = `*🆕 NEW ORDER ALERT*\n👤 *Name:* ${name}\n🏠 *Address:* ${addr}\n🛒 *Item:* ${currentProduct.name}\n🔢 *Qty:* ${currentQty}\n💰 *Price:* ${currentProduct.price}`;
     
+    // Telegram Professional Message
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({chat_id: CHAT_ID, text: msg, parse_mode: 'Markdown'})
@@ -69,4 +84,5 @@ function confirmOrder() {
 
 window.onload = () => {
     if(typeof products !== 'undefined') { renderGrid(products); initSlider(); }
+    setInterval(showNotification, 15000);
 };
