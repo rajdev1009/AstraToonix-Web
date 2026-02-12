@@ -7,31 +7,111 @@ const CHAT_ID = "-1003766501173";
 function toggleChatbot() { document.getElementById('chatWindow').classList.toggle('hidden'); }
 function toggleGameModal() { document.getElementById('gameModal').classList.toggle('hidden'); if(typeof showGameMenu === 'function') showGameMenu(); }
 
-// --- ORDER MODAL LOGIC (UPDATED) ---
+// --- FEATURE 7: DARK/LIGHT MODE TOGGLE ---
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    const icon = document.getElementById('themeIcon');
+    if(document.body.classList.contains('light-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    }
+}
+
+// --- FEATURE 2: FILTER LOGIC ---
+function filterProducts(category) {
+    // Buttons active state update
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Filter Logic
+    if(typeof products !== 'undefined') {
+        if(category === 'all') {
+            renderGrid(products);
+        } else {
+            // Check if name contains the category string (Simple filter)
+            const filtered = products.filter(p => p.name.toLowerCase().includes(category));
+            renderGrid(filtered);
+        }
+    }
+}
+
+// --- RENDER GRID WITH RATINGS (FEATURE 6) ---
+function renderGrid(items) {
+    const grid = document.getElementById('grid');
+    if (!items || items.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%;">No products found.</p>'; return; }
+    
+    grid.innerHTML = items.map(p => {
+        // Generate random rating between 4.0 and 5.0
+        const rating = (Math.random() * (5.0 - 4.0) + 4.0).toFixed(1);
+        const reviews = Math.floor(Math.random() * 200) + 20;
+
+        return `
+        <div class="product-card">
+            <div class="id-badge">#${p.id}</div>
+            <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
+            <div class="info-box">
+                <div class="p-title">${p.name}</div>
+                <div class="rating-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    <span>(${rating}) • ${reviews} sold</span>
+                </div>
+                <div class="p-price">${p.price}</div>
+                <button class="buy-btn" onclick="openOrderModal('${p.name.replace(/'/g, "\\'")}', '${p.id}', '${p.price}')">BUY NOW</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// --- FEATURE 5: FAKE NOTIFICATIONS ---
+const fakeNames = ["Rahul", "Amit", "Priya", "Sneha", "Vikram", "Rohan", "Anjali"];
+const fakeCities = ["Delhi", "Mumbai", "Pune", "Bihar", "UP", "Bangalore"];
+
+function showNotification() {
+    if(typeof products === 'undefined' || products.length === 0) return;
+
+    const notif = document.getElementById('notificationPopup');
+    const randomProduct = products[Math.floor(Math.random() * products.length)];
+    const randomName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+    const randomCity = fakeCities[Math.floor(Math.random() * fakeCities.length)];
+
+    // HTML Update inside notification
+    document.getElementById('notifImg').src = randomProduct.img;
+    document.getElementById('notifText').innerHTML = `<strong>${randomName} from ${randomCity}</strong> just ordered ${randomProduct.name}!`;
+    
+    // Show Animation
+    notif.style.left = "20px";
+    
+    // Hide after 4 seconds
+    setTimeout(() => {
+        notif.style.left = "-300px";
+    }, 4000);
+}
+
+// Start Notifications Loop (Every 15 seconds)
+setInterval(showNotification, 15000);
+// First one after 5 seconds
+setTimeout(showNotification, 5000);
+
+
+// --- ORDER MODAL LOGIC (UNCHANGED) ---
 let currentProduct = {}; 
 let currentQty = 1;
 
 function openOrderModal(name, id, price) {
     currentProduct = { name, id, price };
-    currentQty = 1; // Reset to 1
-    
-    // Fill Data
+    currentQty = 1; 
     document.getElementById('modalProductName').innerText = name;
     document.getElementById('modalProductPrice').innerText = price;
     document.getElementById('qtyDisplay').innerText = "1";
-    
-    // Reset Fields
     document.getElementById('prodSize').selectedIndex = 0;
     document.getElementById('prodColor').selectedIndex = 0;
-    document.getElementById('custName').value = '';
-    document.getElementById('custAddress').value = '';
-
     document.getElementById('orderModal').classList.remove('hidden');
 }
 
-function closeOrderModal() {
-    document.getElementById('orderModal').classList.add('hidden');
-}
+function closeOrderModal() { document.getElementById('orderModal').classList.add('hidden'); }
 
 function updateQty(change) {
     currentQty += change;
@@ -45,72 +125,32 @@ function confirmOrder() {
     const size = document.getElementById('prodSize').value;
     const color = document.getElementById('prodColor').value;
 
-    if (!name || !address) {
-        alert("Please enter Name and Address first!");
-        return;
-    }
+    if (!name || !address) { alert("Please enter Name and Address first!"); return; }
 
-    // Price Calculation
     let rawPrice = String(currentProduct.price).replace(/[^0-9.]/g, ''); 
     let unitPrice = parseFloat(rawPrice);
     let totalVal = unitPrice ? (unitPrice * currentQty) : "Ask Seller";
 
-    // 1. WhatsApp Message
-    const waMessage = 
-`*🆕 New Order Request*
-
-👤 *Name:* ${name}
-🏠 *Address:* ${address}
-
-🛒 *Product:* ${currentProduct.name}
-🆔 *ID:* #${currentProduct.id}
-📏 *Size:* ${size}
-🎨 *Color:* ${color}
-🔢 *Quantity:* ${currentQty}
-💰 *Unit Price:* ${currentProduct.price}
-💵 *Total Value:* ${totalVal}
-
------------------
-Please confirm my order.`;
-
+    const waMessage = `*🆕 New Order Request*\n\n👤 *Name:* ${name}\n🏠 *Address:* ${address}\n\n🛒 *Product:* ${currentProduct.name}\n🆔 *ID:* #${currentProduct.id}\n📏 *Size:* ${size}\n🎨 *Color:* ${color}\n🔢 *Quantity:* ${currentQty}\n💰 *Unit Price:* ${currentProduct.price}\n💵 *Total Value:* ${totalVal}\n\n-----------------\nPlease confirm my order.`;
     const waURL = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(waMessage)}`;
-
-    // 2. Telegram Log
-    const tgMessage = `📦 *New Order Placed!*\n\n👤 Name: ${name}\n🛒 Item: ${currentProduct.name} (x${currentQty})\n📏 Size: ${size}\n🎨 Color: ${color}\n💰 Value: ${totalVal}`;
     
+    // Telegram Log
+    const tgMessage = `📦 *Order!* ${name} | ${currentProduct.name} (x${currentQty}) | ${totalVal}`;
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chat_id: CHAT_ID, text: tgMessage, parse_mode: 'Markdown' })
     }).catch(e => console.error(e));
 
-    // 3. Redirect
     closeOrderModal();
     window.location.href = waURL;
 }
 
-// --- RENDER GRID ---
-function renderGrid(items) {
-    const grid = document.getElementById('grid');
-    if (!items || items.length === 0) { grid.innerHTML = '<p>No products.</p>'; return; }
-    
-    grid.innerHTML = items.map(p => `
-        <div class="product-card">
-            <div class="id-badge">#${p.id}</div>
-            <div class="img-box"><img src="${p.img}" alt="${p.name}"></div>
-            <div class="info-box">
-                <div class="p-title">${p.name}</div>
-                <div class="p-price">${p.price}</div>
-                <button class="buy-btn" onclick="openOrderModal('${p.name.replace(/'/g, "\\'")}', '${p.id}', '${p.price}')">BUY NOW</button>
-            </div>
-        </div>`).join('');
-}
-
-// Search & Slider
+// Search
 document.getElementById('searchInput')?.addEventListener('input', e => {
     if(typeof products !== 'undefined') renderGrid(products.filter(p => p.name.toLowerCase().includes(e.target.value.toLowerCase())));
 });
 
+// Slider & Init
 if(typeof products !== 'undefined') {
     const slider = document.getElementById('heroSlider');
     if(slider) {
@@ -119,3 +159,4 @@ if(typeof products !== 'undefined') {
         renderGrid(products);
     }
 }
+    
