@@ -17,35 +17,45 @@ function startGame(gameType) {
     }
 }
 
-// Tic Tac Toe Engine
+// --- Tic Tac Toe Engine ---
 let tttBoard = ['', '', '', '', '', '', '', '', ''];
 let gameActive = true;
 
 function initTTT() {
-    tttBoard = ['', '', '', '', '', '', '', '', '']; gameActive = true;
+    tttBoard = ['', '', '', '', '', '', '', '', '']; 
+    gameActive = true;
     document.getElementById('tttStatus').innerText = "Your Turn (X)";
     renderTTT();
 }
 
 function renderTTT() {
     const boardDiv = document.getElementById('tttBoard');
-    boardDiv.innerHTML = tttBoard.map((cell, i) => `<div class="cell" onclick="playerMove(${i})">${cell}</div>`).join('');
+    // CSS class 'cell' ab shop-style.css mein defined hai
+    boardDiv.innerHTML = tttBoard.map((cell, i) => 
+        `<div class="cell" onclick="playerMove(${i})" style="color: ${cell === 'X' ? '#25D366' : '#FF0000'}">${cell}</div>`
+    ).join('');
 }
 
 function playerMove(i) {
     if(tttBoard[i] !== '' || !gameActive) return;
-    tttBoard[i] = 'X'; renderTTT();
-    if(checkWin('X')) { endTTT("You Won! 🎉"); return; }
+    tttBoard[i] = 'X'; 
+    renderTTT();
+    if(checkWin('X')) { endTTT("🎉 YOU WON!"); return; }
+    if(!tttBoard.includes('')) { endTTT("⚠️ DRAW!"); return; }
+    
     document.getElementById('tttStatus').innerText = "Thinking...";
-    setTimeout(computerMove, 600);
+    setTimeout(computerMove, 500);
 }
 
 function computerMove() {
+    if(!gameActive) return;
     let empty = tttBoard.map((v, i) => v === '' ? i : null).filter(v => v !== null);
     if(empty.length > 0) {
-        tttBoard[empty[Math.floor(Math.random() * empty.length)]] = 'O';
+        // Simple AI: Random Move
+        let move = empty[Math.floor(Math.random() * empty.length)];
+        tttBoard[move] = 'O';
         renderTTT();
-        if(checkWin('O')) endTTT("Computer Won! 🤖");
+        if(checkWin('O')) endTTT("🤖 COMPUTER WON!");
         else document.getElementById('tttStatus').innerText = "Your Turn (X)";
     }
 }
@@ -55,9 +65,12 @@ function checkWin(p) {
     return wins.some(c => tttBoard[c[0]] === p && tttBoard[c[1]] === p && tttBoard[c[2]] === p);
 }
 
-function endTTT(msg) { gameActive = false; document.getElementById('tttStatus').innerText = msg; }
+function endTTT(msg) { 
+    gameActive = false; 
+    document.getElementById('tttStatus').innerText = msg; 
+}
 
-// Chess Engine Fix
+// --- Chess Engine ---
 var board = null; var game = new Chess();
 function initChess() {
     game = new Chess();
