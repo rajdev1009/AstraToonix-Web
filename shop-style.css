@@ -1,16 +1,17 @@
 /* =========================================
-   1. BASE VARIABLES & THEME
+   1. BASE VARIABLES & THEME SETUP
    ========================================= */
 :root {
-    --bg-color: #050505;
-    --card-bg: #121212;
-    --text-color: #ffffff;
-    --accent-color: #25D366; /* WhatsApp Green */
-    --border-color: #333;
+    --bg-color: #050505;       /* Dark Background */
+    --card-bg: #121212;        /* Card Background */
+    --text-color: #ffffff;     /* White Text */
+    --accent-color: #25D366;   /* WhatsApp Green */
+    --border-color: #333;      /* Dark Border */
+    --danger-color: #ff4444;   /* Red for Badges */
 }
 
 body.light-mode {
-    --bg-color: #f0f0f0;
+    --bg-color: #f1f3f6;
     --card-bg: #ffffff;
     --text-color: #000000;
     --border-color: #ddd;
@@ -23,15 +24,15 @@ body {
     margin: 0; 
     padding-bottom: 80px; 
     transition: 0.3s;
-    overflow-x: hidden; /* Horizontal scroll rokne ke liye */
+    overflow-x: hidden; 
 }
 
 /* =========================================
-   2. HEADER & NAVIGATION (Mobile Fixed)
+   2. HEADER (Mobile Fixed Layout)
    ========================================= */
 header { 
     background: rgba(0,0,0,0.95); 
-    padding: 10px; 
+    padding: 8px 10px; 
     position: sticky; 
     top: 0; 
     z-index: 100; 
@@ -43,40 +44,26 @@ header {
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    margin-bottom: 10px;
-    flex-wrap: nowrap; /* Icons niche nahi girne chahiye */
+    margin-bottom: 5px;
+    flex-wrap: nowrap; 
 }
 
-/* Home Button */
+/* Navigation Buttons */
 .nav-home-btn {
-    background: #222; 
-    color: var(--accent-color); 
-    padding: 8px 12px; 
-    border-radius: 20px;
-    text-decoration: none; 
-    font-weight: bold; 
-    border: 1px solid var(--accent-color);
-    font-size: 0.9rem; 
-    display: flex; 
-    align-items: center; 
-    gap: 5px;
-    white-space: nowrap;
+    background: #222; color: var(--accent-color); 
+    padding: 6px 12px; border-radius: 20px; 
+    text-decoration: none; font-weight: bold; 
+    border: 1px solid var(--accent-color); font-size: 0.8rem; 
+    display: flex; align-items: center; gap: 5px; white-space: nowrap;
 }
 
-/* Brand Name (Animated) */
+/* Brand Title Animation */
 .brand-title { 
-    font-size: 1.4rem; 
-    font-weight: 900; 
-    text-transform: uppercase; 
-    letter-spacing: 1px;
-    text-align: center;
-    flex-grow: 1;
-    margin: 0 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 1.2rem; font-weight: 900; 
+    text-transform: uppercase; text-align: center; 
+    flex-grow: 1; margin: 0 5px; white-space: nowrap; 
+    overflow: hidden; text-overflow: ellipsis;
 }
-
 .rgb-text { animation: textRGB 4s infinite alternate; }
 @keyframes textRGB {
     0% { color: #25D366; text-shadow: 0 0 10px #25D366; }
@@ -84,169 +71,193 @@ header {
     100% { color: #25D366; text-shadow: 0 0 10px #25D366; }
 }
 
-/* Social Icons Bar */
-.social-bar { 
-    display: flex; 
-    gap: 8px; 
-    align-items: center;
-    flex-shrink: 0;
-}
-
+/* Social Icons */
+.social-bar { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
 .social-icon { 
-    width: 35px; 
-    height: 35px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    border-radius: 50%; 
-    color: white; 
-    text-decoration: none; 
-    font-size: 1.1rem; 
-    background: #222; 
-    transition: 0.3s; 
-    border: 1px solid #444;
+    width: 32px; height: 32px; display: flex; 
+    align-items: center; justify-content: center; 
+    border-radius: 50%; color: white; text-decoration: none; 
+    font-size: 1rem; background: #222; border: 1px solid #444; 
+    transition: 0.3s;
 }
-
-/* Specific Social Colors */
 .social-icon.fb { background: #1877F2; }
 .social-icon.insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
 .social-icon.yt { background: #FF0000; }
 .social-icon.game { background: purple; border: 1px solid white; }
-.social-icon:hover { transform: scale(1.1); border-color: white; }
 
 /* Cart Icon */
-.cart-icon-box {
-    position: relative; 
-    margin-right: 5px; 
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
+.cart-icon-box { 
+    position: relative; margin-right: 8px; cursor: pointer; 
+    display: flex; align-items: center; 
 }
 .cart-icon-box i { font-size: 1.4rem; color: white; transition: 0.3s; }
 .cart-icon-box:hover i { color: var(--accent-color); }
-#cartCount {
+#cartCount, #pPageCartCount { 
     position: absolute; top: -8px; right: -8px; 
-    background: red; color: white;
-    font-size: 0.7rem; padding: 2px 6px; 
-    border-radius: 50%; font-weight: bold;
+    background: red; color: white; font-size: 0.7rem; 
+    padding: 2px 5px; border-radius: 50%; font-weight: bold; 
     border: 1px solid white;
 }
 
-/* --- MOBILE ADJUSTMENTS (Imp for your layout) --- */
+/* Mobile Screen Fixes */
 @media (max-width: 480px) {
-    .nav-home-btn span { display: none; } /* Text hide karo mobile pe */
+    .nav-home-btn span { display: none; }
     .nav-home-btn { padding: 8px; }
-    .brand-title { font-size: 1.1rem; text-align: left; }
+    .brand-title { font-size: 1rem; text-align: left; margin-left: 5px; }
     .social-bar { gap: 4px; }
-    .social-icon { width: 30px; height: 30px; font-size: 0.9rem; }
+    .social-icon { width: 28px; height: 28px; font-size: 0.85rem; }
 }
 
 /* =========================================
-   3. SEARCH & SLIDER & TIMER
+   3. HOME PAGE ELEMENTS (Slider, Timer, Grid)
    ========================================= */
-.search-box { position: relative; margin-top: 5px; }
 .search-box input { 
-    width: 90%; padding: 12px 15px; 
-    background: #1a1a1a; border: 1px solid #444; 
-    border-radius: 25px; color: white; 
-    outline: none; display: block; margin: 0 auto;
-    transition: 0.3s;
+    width: 90%; padding: 10px 15px; background: #1a1a1a; 
+    border: 1px solid #444; color: white; border-radius: 20px; 
+    display: block; margin: 5px auto; outline: none;
 }
-.search-box input:focus { border-color: var(--accent-color); box-shadow: 0 0 10px rgba(37,211,102,0.2); }
-.search-icon { position: absolute; right: 25px; top: 12px; color: #888; }
-
-.flash-sale-strip {
-    background: linear-gradient(90deg, #d32f2f, #b71c1c);
-    color: white; text-align: center; padding: 8px; font-weight: bold;
-    font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
+.search-icon { position: absolute; right: 25px; top: 15px; color: #888; }
 
 .hero-slider { 
-    width: 100%; height: 55vh; min-height: 400px;
-    position: relative; overflow: hidden; 
+    width: 100%; height: 50vh; min-height: 350px; 
+    overflow: hidden; position: relative; 
     border-bottom: 3px solid var(--accent-color); 
 }
-.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 1s ease-in-out; background-size: cover; background-position: center; }
+.slide { 
+    position: absolute; width: 100%; height: 100%; 
+    opacity: 0; transition: 1s ease-in-out; 
+    background-size: cover; background-position: center; 
+}
 .slide.active { opacity: 1; transform: scale(1.05); transition: 5s ease; }
 
-/* =========================================
-   4. PRODUCT GRID & AMAZON CARDS
-   ========================================= */
+.flash-sale-strip { 
+    background: linear-gradient(90deg, #d32f2f, #b71c1c); 
+    color: white; text-align: center; padding: 8px; 
+    font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; 
+}
+
+/* Product Grid */
 .shop-container { padding: 10px; max-width: 1200px; margin: 0 auto; }
 .section-title h3 { margin: 0; color: var(--accent-color); display: flex; align-items: center; gap: 10px; }
+.line { height: 2px; background: #333; margin-top: 5px; width: 50px; }
+
 .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
 @media (min-width: 600px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
 
 .product-card { 
-    background: var(--card-bg); 
-    border: 1px solid #333; 
-    border-radius: 12px; 
-    overflow: hidden; 
-    position: relative; 
-    transition: 0.3s;
+    background: var(--card-bg); border: 1px solid #333; 
+    border-radius: 12px; overflow: hidden; position: relative; 
 }
-.product-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+.img-box { height: 180px; overflow: hidden; position: relative; }
+.img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-.img-box { width: 100%; height: 180px; overflow: hidden; position: relative; }
-.img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-.product-card:hover .img-box img { transform: scale(1.1); }
-
-/* Badges & Icons on Image */
+/* Badges & Icons */
 .discount-badge { 
-    position: absolute; top: 8px; left: 8px; 
-    background: red; color: white; padding: 3px 8px; 
-    font-size: 0.7rem; font-weight: bold; border-radius: 4px; 
-    z-index: 20; animation: pulseBadge 2s infinite; 
+    position: absolute; top: 5px; left: 5px; background: var(--danger-color); 
+    color: white; padding: 2px 6px; font-size: 0.65rem; 
+    font-weight: bold; border-radius: 4px; z-index: 10; 
 }
-@keyframes pulseBadge { 0% {transform:scale(1);} 50% {transform:scale(1.1);} 100% {transform:scale(1);} }
-
 .id-badge { 
     position: absolute; bottom: 5px; right: 5px; 
     background: rgba(0,0,0,0.8); color: var(--accent-color); 
-    padding: 3px 6px; font-size: 0.7rem; border-radius: 4px; 
-    font-weight: bold; border: 1px solid var(--accent-color);
+    padding: 2px 6px; font-size: 0.7rem; border-radius: 4px; 
+    border: 1px solid var(--accent-color); z-index: 10;
 }
 
 .card-actions { 
-    position: absolute; top: 8px; right: 8px; 
-    display: flex; flex-direction: column; gap: 8px; z-index: 20; 
+    position: absolute; top: 5px; right: 5px; 
+    display: flex; flex-direction: column; gap: 5px; z-index: 20; 
 }
 .action-btn { 
-    width: 32px; height: 32px; 
-    background: rgba(0,0,0,0.6); 
-    border-radius: 50%; 
-    display: flex; align-items: center; justify-content: center; 
-    color: white; cursor: pointer; 
-    backdrop-filter: blur(5px); transition: 0.3s;
+    width: 30px; height: 30px; background: rgba(0,0,0,0.6); 
+    border-radius: 50%; display: flex; align-items: center; 
+    justify-content: center; color: white; cursor: pointer; 
+    backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.2);
 }
-.action-btn:hover { background: white; color: black; }
 .action-btn.heart.active { color: red; background: white; }
 .action-btn.share { color: #00ffea; }
 
-/* Product Info */
-.info-box { padding: 10px; }
-.rating-box { color: #FFD700; font-size: 0.75rem; margin-bottom: 5px; display: flex; align-items: center; }
-.p-title { font-size: 0.85rem; height: 36px; overflow: hidden; color: #ddd; margin-bottom: 5px; }
-.p-price { color: var(--accent-color); font-weight: bold; font-size: 1.1rem; }
+.info-box { padding: 8px; }
+.rating-box { color: gold; font-size: 0.7rem; margin-bottom: 5px; }
+.p-title { font-size: 0.8rem; height: 32px; overflow: hidden; color: #ddd; margin-bottom: 5px; }
+.p-price { color: var(--accent-color); font-weight: bold; font-size: 1rem; }
 .p-price span { text-decoration: line-through; color: #666; font-size: 0.8rem; margin-left: 5px; }
 
-/* Card Buttons */
-.btn-group { display: flex; gap: 8px; margin-top: 10px; }
-.cart-btn { 
-    flex: 1; background: #222; border: 1px solid #444; 
-    color: white; border-radius: 6px; cursor: pointer; transition: 0.2s;
-}
-.cart-btn:active { transform: scale(0.9); background: var(--accent-color); color: black; }
 .buy-btn { 
-    flex: 2; background: transparent; 
-    border: 2px solid var(--accent-color); color: var(--accent-color); 
-    padding: 8px; border-radius: 6px; font-weight: bold; 
-    cursor: pointer; text-transform: uppercase; font-size: 0.8rem;
+    width: 100%; background: transparent; border: 1px solid var(--accent-color); 
+    color: var(--accent-color); padding: 6px; border-radius: 5px; 
+    font-weight: bold; cursor: pointer; margin-top: 5px; font-size: 0.8rem;
 }
-.buy-btn:hover { background: var(--accent-color); color: black; }
 
 /* =========================================
-   5. MODALS & FORMS (Glassmorphism)
+   4. FLIPKART PRODUCT PAGE (Full Screen)
+   ========================================= */
+.full-page-view { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: var(--bg-color); z-index: 2000; 
+    overflow-y: auto; display: flex; flex-direction: column; 
+}
+.p-view-header { 
+    background: #000; padding: 12px; color: white; font-weight: bold; 
+    display: flex; justify-content: space-between; align-items: center; 
+    border-bottom: 2px solid var(--accent-color); position: sticky; top: 0; z-index: 50; 
+}
+.p-view-body { flex: 1; overflow-y: auto; padding-bottom: 70px; }
+
+.p-gallery { 
+    background: #111; padding: 20px; text-align: center; 
+    position: relative; border-bottom: 1px solid #333; 
+}
+#mainImg { width: 100%; height: 300px; object-fit: contain; }
+.discount-badge-large { 
+    position: absolute; top: 15px; left: 15px; background: red; 
+    padding: 5px 10px; font-weight: bold; border-radius: 5px; 
+}
+.id-badge-large { 
+    position: absolute; top: 15px; right: 15px; background: black; 
+    border: 1px solid var(--accent-color); color: var(--accent-color); 
+    padding: 5px 10px; font-weight: bold; border-radius: 5px; 
+}
+
+.p-details-box { padding: 15px; background: var(--card-bg); }
+.p-brand { color: #888; font-size: 0.9rem; font-weight: bold; }
+#pPageName { font-size: 1.4rem; margin: 5px 0; color: white; }
+.p-pricing-row { margin: 12px 0; display: flex; align-items: center; gap: 10px; }
+.real-price-large { font-size: 1.8rem; font-weight: bold; color: var(--accent-color); }
+.cut-price-large { text-decoration: line-through; color: #666; font-size: 1rem; }
+
+/* Chips (Size/Color) */
+.selector-box { margin-bottom: 20px; border-top: 1px solid #333; padding-top: 10px; }
+.selector-box h4 { margin: 0 0 10px 0; color: #ccc; font-size: 0.9rem; }
+.chips-container { display: flex; gap: 10px; flex-wrap: wrap; }
+.chip { 
+    padding: 10px 18px; border: 1px solid #444; border-radius: 6px; 
+    color: white; background: #222; cursor: pointer; font-weight: bold; 
+    min-width: 40px; text-align: center; transition: 0.2s;
+}
+.chip.selected { 
+    border-color: var(--accent-color); background: rgba(37,211,102,0.1); 
+    color: var(--accent-color); box-shadow: 0 0 8px rgba(37,211,102,0.3); 
+}
+
+.features-list p { margin: 8px 0; color: #bbb; display: flex; align-items: center; gap: 10px; }
+.features-list i { color: var(--accent-color); }
+
+/* Sticky Footer */
+.sticky-footer { 
+    position: fixed; bottom: 0; left: 0; width: 100%; 
+    display: flex; z-index: 200; border-top: 1px solid #333; 
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+}
+.footer-btn { 
+    flex: 1; border: none; padding: 16px; font-size: 1rem; 
+    font-weight: 900; cursor: pointer; color: white; 
+}
+.cart-action { background: #222; } 
+.buy-action { background: var(--accent-color); color: black; }
+
+/* =========================================
+   5. UNIVERSAL MODAL & UTILS
    ========================================= */
 .modal-overlay { 
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
@@ -255,113 +266,58 @@ header {
     backdrop-filter: blur(5px); 
 }
 .glass-modal { 
-    background: rgba(15, 15, 15, 0.95); 
-    width: 95%; max-width: 450px; 
-    border-radius: 20px; border: 2px solid var(--accent-color); 
-    box-shadow: 0 0 30px rgba(37, 211, 102, 0.3); overflow: hidden;
+    background: rgba(15, 15, 15, 0.98); width: 95%; max-width: 450px; 
+    border-radius: 15px; border: 2px solid var(--accent-color); 
+    box-shadow: 0 0 30px rgba(37, 211, 102, 0.2); overflow: hidden; 
 }
 .modal-header-fancy { 
-    background: linear-gradient(90deg, #000, #111); padding: 15px; 
-    color: var(--accent-color); font-weight: bold; 
-    display: flex; justify-content: space-between; align-items: center; 
-    border-bottom: 1px solid #333; letter-spacing: 1px;
+    background: #000; padding: 15px; display: flex; 
+    justify-content: space-between; color: var(--accent-color); 
+    font-weight: bold; border-bottom: 1px solid #333; 
 }
 .modal-body { padding: 20px; }
 
-/* Price Breakdown */
-.price-breakdown { 
-    background: rgba(255,255,255,0.05); padding: 12px; 
-    border-radius: 8px; margin-top: 15px; border: 1px dashed #444; 
+/* Dynamic Order Content */
+.order-summary-item { 
+    display: flex; justify-content: space-between; 
+    border-bottom: 1px solid #333; padding: 8px 0; font-size: 0.9rem; 
 }
-.price-row { display: flex; justify-content: space-between; color: #aaa; margin-bottom: 5px; }
 .price-row.total-row { 
-    font-size: 1.3rem; font-weight: bold; color: white; 
-    border-top: 1px solid #444; margin-top: 10px; padding-top: 10px; 
+    display: flex; justify-content: space-between; font-size: 1.3rem; 
+    font-weight: bold; color: white; margin-top: 10px; 
+    border-top: 1px solid #333; padding-top: 10px; 
 }
 .glowing-price { color: var(--accent-color); text-shadow: 0 0 10px rgba(37,211,102,0.6); }
 
-/* Form Inputs */
+/* Form Elements */
 .neon-input { 
-    width: 100%; padding: 12px; margin-bottom: 12px; 
+    width: 100%; padding: 12px; margin-bottom: 10px; 
     background: #000; border: 1px solid #444; color: white; 
-    border-radius: 8px; font-size: 1rem; box-sizing: border-box; 
+    border-radius: 5px; box-sizing: border-box; 
 }
-.neon-input:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 10px rgba(37,211,102,0.2); }
+.neon-input:focus { border-color: var(--accent-color); outline: none; }
 
-/* Mega Button (Heartbeat Animation) */
 .mega-confirm-btn { 
-    width: 100%; padding: 16px; 
-    background: linear-gradient(45deg, #25D366, #128C7E); 
-    border: none; color: white; font-weight: 900; font-size: 1.1rem; 
-    border-radius: 10px; margin-top: 15px; cursor: pointer; 
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    animation: heartbeat 1.5s infinite; 
+    width: 100%; padding: 15px; background: linear-gradient(45deg, #25D366, #128C7E); 
+    border: none; color: white; font-weight: bold; border-radius: 10px; 
+    margin-top: 10px; cursor: pointer; animation: pulseBtn 2s infinite; 
 }
-@keyframes heartbeat { 
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,211,102,0.7); } 
-    50% { transform: scale(1.02); box-shadow: 0 0 20px 10px rgba(37,211,102,0); } 
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,211,102,0); } 
-}
+@keyframes pulseBtn { 0%{transform:scale(1);} 50%{transform:scale(1.02);} 100%{transform:scale(1);} }
 
-/* Quantity Controls */
-.qty-control-panel { display: flex; justify-content: center; gap: 20px; margin: 15px 0; align-items: center; }
-.qty-control-panel button { 
-    width: 40px; height: 40px; background: #222; 
-    border: 1px solid var(--accent-color); color: var(--accent-color);
-    font-weight: bold; font-size: 1.5rem; border-radius: 8px; cursor: pointer;
-}
-.qty-control-panel span { font-size: 1.5rem; color: white; font-weight: bold; }
-
-/* =========================================
-   6. UTILITIES (Chat, Notif, Games)
-   ========================================= */
+/* Utils */
 .hidden { display: none !important; }
+.qty-control-panel { display: flex; justify-content: center; gap: 20px; margin: 10px 0; align-items: center; }
+.qty-control-panel button { width: 35px; height: 35px; background: #222; border: 1px solid var(--accent-color); color: var(--accent-color); border-radius: 5px; }
 
-/* Chat Window */
-.chat-window { 
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-    width: 90%; max-width: 400px; height: 600px; 
-    background: #000; border: 2px solid var(--accent-color); 
-    z-index: 1000; border-radius: 15px; 
-    display: flex; flex-direction: column; overflow: hidden; 
-}
-.chat-header { background: var(--accent-color); padding: 15px; display: flex; justify-content: space-between; font-weight: bold; color: black; }
-.chat-window iframe { width: 100%; height: 100%; border: none; }
+/* Chat & Notif */
+.chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; border: 3px solid white; z-index: 200; overflow: hidden; }
+.chat-float-btn img { width: 100%; height: 100%; }
+.chat-window { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 600px; background: #000; border: 2px solid var(--accent-color); z-index: 1000; display: flex; flex-direction: column; }
+.chat-window iframe { flex: 1; border: none; }
+.chat-header { background: var(--accent-color); padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
+.notification-popup { position: fixed; bottom: 20px; left: -350px; background: #222; border-left: 4px solid var(--accent-color); padding: 10px; display: flex; gap: 10px; width: 250px; transition: 0.5s; z-index: 250; } 
+.notification-popup img { width: 40px; height: 40px; border-radius: 5px; }
 
-/* Floating Button (RGB Glow) */
-.chat-float-btn { 
-    position: fixed; bottom: 20px; right: 20px; 
-    width: 65px; height: 65px; border-radius: 50%; 
-    border: 3px solid white; overflow: hidden; z-index: 200; cursor: pointer;
-    animation: rgbBorder 3s infinite;
-}
-.chat-float-btn img { width: 100%; height: 100%; object-fit: cover; }
-@keyframes rgbBorder {
-    0% { border-color: red; box-shadow: 0 0 15px red; }
-    33% { border-color: lime; box-shadow: 0 0 15px lime; }
-    66% { border-color: blue; box-shadow: 0 0 15px blue; }
-    100% { border-color: red; box-shadow: 0 0 15px red; }
-}
-
-/* Notification Popup */
-.notification-popup { 
-    position: fixed; bottom: 20px; left: -350px; 
-    background: #222; border-left: 4px solid var(--accent-color); 
-    padding: 10px; display: flex; gap: 10px; width: 260px; 
-    transition: 0.5s; z-index: 250; align-items: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
-.notification-popup img { width: 45px; height: 45px; border-radius: 4px; object-fit: cover; }
-.notify-text { font-size: 0.9rem; color: white; display: block; }
-
-/* Game Board Colors */
-.ttt-board { 
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; 
-    width: 280px; margin: 0 auto; background: var(--accent-color); 
-    padding: 5px; border-radius: 10px; 
-}
-.cell { 
-    background: #000; height: 85px; 
-    display: flex; align-items: center; justify-content: center; 
-    font-size: 2.5rem; color: white; font-weight: bold; cursor: pointer; 
-}
+/* Game Board */
+.ttt-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 250px; margin: 0 auto; background: var(--accent-color); padding: 5px; border-radius: 10px; }
+.cell { background: #000; height: 75px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; font-weight: bold; }
