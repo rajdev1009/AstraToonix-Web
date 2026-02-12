@@ -48,7 +48,7 @@ window.onload = () => {
     }, 10000);
 };
 
-// --- RENDER GRID (Home Page) ---
+// --- RENDER GRID (Home Page - FIXED: Heart & Share Added Back) ---
 function renderGrid(items) {
     const grid = document.getElementById('grid');
     if(!grid) return;
@@ -61,18 +61,54 @@ function renderGrid(items) {
         return `
         <div class="product-card">
             <div class="discount-badge">-${discount}% OFF</div>
+            
             <div class="id-badge">#${p.id}</div>
+            
             <div class="img-box">
                 <img src="${p.img}" alt="${p.name}" onclick="openProductPage('${p.id}', '${safeName}', '${p.price}', '${p.img}')">
+                
+                <div class="card-actions">
+                    <div class="action-btn heart" onclick="toggleHeart(this); event.stopPropagation();">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <div class="action-btn share" onclick="shareProduct('${safeName}', '${p.price}'); event.stopPropagation();">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                </div>
             </div>
+            
             <div class="info-box">
                 <div class="rating-box"><i class="fas fa-star"></i> 4.5</div>
+                
                 <div class="p-title">${p.name}</div>
                 <div class="p-price">${p.price} <span style="text-decoration:line-through; color:#666; font-size:0.8rem;">${oldPrice}</span></div>
+                
                 <button class="buy-btn" onclick="openProductPage('${p.id}', '${safeName}', '${p.price}', '${p.img}')">VIEW & BUY</button>
             </div>
         </div>`;
     }).join('');
+}
+
+// --- NEW FEATURES LOGIC (Heart & Share) ---
+function toggleHeart(btn) {
+    btn.classList.toggle('active');
+    const icon = btn.querySelector('i');
+    if(btn.classList.contains('active')) {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+        icon.style.color = "red";
+    } else {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+        icon.style.color = "white";
+    }
+}
+
+function shareProduct(name, price) {
+    const text = `Check out this ${name} for only ${price} at AstraToonix!`;
+    const url = window.location.href;
+    // WhatsApp Share Link
+    window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`, '_blank');
 }
 
 // --- PRODUCT PAGE LOGIC (Flipkart Style) ---
@@ -126,7 +162,11 @@ function selectColor(el, color) {
 function addToCartFromPage() {
     cart.push({ ...currentProduct, size: selectedSize, color: selectedColor });
     updateCartCount();
-    alert("✅ Item Added to Cart!");
+    // Animation for feedback
+    const btn = document.querySelector('.cart-action');
+    const originalText = btn.innerText;
+    btn.innerText = "ADDED ✔";
+    setTimeout(() => btn.innerText = originalText, 1500);
 }
 
 // --- BUY NOW (Checkout Modal) ---
@@ -259,6 +299,7 @@ function sendToSeller(msg) {
     window.location.href = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
+// UI Toggles
 function toggleChatbot() { document.getElementById('chatWindow').classList.toggle('hidden'); }
 function toggleGameModal() { document.getElementById('gameModal').classList.toggle('hidden'); }
 function showGameMenu() { document.getElementById('tttGame').classList.add('hidden'); document.getElementById('chessGame').classList.add('hidden'); }
@@ -271,3 +312,4 @@ function toggleTheme() {
     const icon = document.getElementById('themeIcon');
     icon.classList.toggle('fa-moon'); icon.classList.toggle('fa-sun');
 }
+function closeImageModal() { document.getElementById('imageModal').classList.add('hidden'); }
