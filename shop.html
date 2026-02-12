@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AstraToonix - Shop & Games</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="shop-style.css">
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
     
@@ -17,33 +17,26 @@
 
     <header>
         <div class="header-top">
-            <a href="index.html" class="back-home-btn"><i class="fas fa-arrow-left"></i> Home</a>
+            <div class="brand-title rgb-text">AstraToonix Shop</div>
             <div class="social-bar">
                 <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/share/188TWR8ZdD/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://youtube.com/@astratoonix" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
-                
                 <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
                 <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
             </div>
         </div>
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search products...">
+            <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
         </div>
     </header>
 
     <div id="heroSlider" class="hero-slider"></div>
 
     <div class="shop-container">
-        <div class="filter-container">
-            <span class="filter-btn active" onclick="filterProducts('all')">All</span>
-            <span class="filter-btn" onclick="filterProducts('watch')">Watches</span>
-            <span class="filter-btn" onclick="filterProducts('shoe')">Shoes</span>
-            <span class="filter-btn" onclick="filterProducts('shirt')">Clothes</span>
-            <span class="filter-btn" onclick="filterProducts('gadget')">Gadgets</span>
+        <div class="section-title">
+            <h3 style="color: #25D366;">Premium Collection</h3>
+            <div class="line"></div>
         </div>
-        
-        <h3 style="border-left: 4px solid #25D366; padding-left: 10px; margin-top: 15px;">Premium Collection</h3>
         <div class="product-grid" id="grid"></div>
     </div>
 
@@ -68,40 +61,54 @@
     </div>
 
     <div id="orderModal" class="modal-overlay hidden">
-        <div class="modal-content">
+        <div class="modal-content large-modal">
             <div class="modal-header">
                 <span><i class="fas fa-clipboard-check"></i> Order Details</span>
                 <i class="fas fa-times" onclick="closeOrderModal()" style="cursor:pointer;"></i>
             </div>
             <div class="modal-body">
                 <div class="order-form">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <h4 id="modalProductName" style="color:#25D366; margin:0;">Product Name</h4>
-                        <span id="modalProductPrice" style="color:#aaa; font-size:0.9rem;"></span>
+                    <div style="text-align:center; margin-bottom:15px;">
+                        <h2 id="modalProductName" style="color:#25D366; margin:0; text-transform:uppercase;">Product Name</h2>
+                        <span id="modalProductPrice" style="color:#fff; font-size:1.2rem; font-weight:bold;"></span>
                     </div>
+                    
                     <div class="variant-row">
-                        <select id="prodSize">
+                        <select id="prodSize" class="glow-input">
                             <option value="Free Size">Size: Free Size</option>
-                            <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option>
+                            <option value="S">Small</option><option value="M">Medium</option><option value="L">Large</option><option value="XL">Extra Large</option>
                         </select>
-                        <select id="prodColor">
+                        <select id="prodColor" class="glow-input">
                             <option value="As Shown">Color: As Shown</option>
                             <option value="Black">Black</option><option value="White">White</option>
                         </select>
                     </div>
+
                     <div class="qty-box">
-                        <span style="color:#888;">Quantity:</span>
-                        <div style="display:flex; gap:10px; align-items:center;">
+                        <span style="color:#ccc;">Quantity:</span>
+                        <div style="display:flex; gap:15px; align-items:center;">
                             <button class="qty-btn" onclick="updateQty(-1)">-</button>
-                            <span id="qtyDisplay">1</span>
+                            <span id="qtyDisplay" style="font-size:1.2rem; font-weight:bold;">1</span>
                             <button class="qty-btn" onclick="updateQty(1)">+</button>
                         </div>
                     </div>
-                    <input type="text" id="custName" placeholder="Enter Your Name" required>
-                    <textarea id="custAddress" placeholder="Full Address with Pincode" required></textarea>
-                    <button class="confirm-btn" onclick="confirmOrder()">Confirm Order <i class="fab fa-whatsapp"></i></button>
+
+                    <input type="text" id="custName" class="glow-input" placeholder="Enter Your Name" required>
+                    <textarea id="custAddress" class="glow-input" rows="3" placeholder="Full Address with Pincode" required></textarea>
+                    
+                    <button class="confirm-btn rgb-btn" onclick="confirmOrder()">Confirm Order <i class="fab fa-whatsapp"></i></button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal-overlay hidden" style="z-index: 400;">
+        <div class="modal-content" style="background:transparent; border:none; box-shadow:none; text-align:center;">
+            <i class="fas fa-times" onclick="closeImageModal()" style="position:absolute; top:20px; right:20px; color:white; font-size:2rem; cursor:pointer; z-index:401;"></i>
+            <img id="previewImage" src="" style="width:100%; max-height:60vh; object-fit:contain; border-radius:10px; border: 2px solid #25D366; box-shadow: 0 0 20px #25D366;">
+            <br>
+            <h3 id="previewTitle" style="color:white; margin: 10px 0;"></h3>
+            <button id="previewBuyBtn" class="buy-btn rgb-btn" style="width:200px; padding:15px; font-size:1.2rem;">ORDER NOW</button>
         </div>
     </div>
 
@@ -112,19 +119,21 @@
                 <i class="fas fa-times" onclick="toggleGameModal()" style="cursor:pointer;"></i>
             </div>
             <div class="modal-body">
-                <div id="gameMenu" style="text-align:center;">
-                    <p>AI के खिलाफ खेलें:</p>
-                    <button class="buy-btn" onclick="startGame('ttt')" style="margin-bottom:10px;">Tic Tac Toe</button>
-                    <button class="buy-btn" onclick="startGame('chess')">Chess (Beta)</button>
+                <div id="gameMenu" style="text-align:center; padding: 20px;">
+                    <p style="color:#fff;">Choose a Game:</p>
+                    <button class="buy-btn" onclick="startGame('ttt')" style="margin-bottom:15px; width:100%;">Tic Tac Toe (X/O)</button>
+                    <button class="buy-btn" onclick="startGame('chess')" style="width:100%;">Chess (Beta)</button>
                 </div>
-                <div id="tttGame" class="hidden">
+                
+                <div id="tttGame" class="hidden" style="text-align:center;">
                     <div class="ttt-board" id="tttBoard"></div>
-                    <div id="tttStatus" style="text-align:center; margin:10px; color:#25D366;">Your Turn!</div>
-                    <button class="buy-btn" onclick="showGameMenu()">Back</button>
+                    <div id="tttStatus" style="margin:15px; color:#25D366; font-weight:bold; font-size:1.2rem;">Your Turn!</div>
+                    <button class="buy-btn" onclick="showGameMenu()">Exit Game</button>
                 </div>
+
                 <div id="chessGame" class="hidden">
-                    <div id="myBoard" style="width: 100%"></div>
-                    <button class="buy-btn" onclick="showGameMenu()" style="margin-top:10px;">Back</button>
+                    <div id="myBoard" style="width: 100%; margin: 0 auto;"></div>
+                    <button class="buy-btn" onclick="showGameMenu()" style="margin-top:15px;">Exit Game</button>
                 </div>
             </div>
         </div>
