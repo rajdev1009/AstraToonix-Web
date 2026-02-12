@@ -40,7 +40,7 @@ const moviesDB = [
     { id: 16, title: "Leo", img: "/pD6sL4vntUOXHmuvJPPZAgvyfd9.jpg" },
     { id: 17, title: "K.G.F: Chapter 2", img: "https://i.ibb.co/nsppWJ4Y/MV5-BZm-Qz-Zj-Vk-ZTUt-Yj-I4-ZC00-ZDJm-LWI0-ZDUt-ZTFm-MGM1-Mzc5-Zj-Iy-Xk-Ey-Xk-Fqc-Gc-V1-FMjpg-UX1000.jpg" }, 
     { id: 18, title: "Border 2", img: "https://i.ibb.co/LzHYJ5sc/images.jpg" },
-    { id: 19, title: "Pushpa 2: The Rule", img: "https://ibb.co/4gsLX3Hh" },
+    { id: 19, title: "Pushpa 2: The Rule", img: "https://i.ibb.co/60Zw9qyk/MV5-BZjll-NTdi-M2-Qt-Yj-Q0-Ni00-ZGM1-LWFl-Ym-Ut-NWY0-Yj-Mz-YWIx-OTYx-Xk-Ey-Xk-Fqc-Gc-V1.jpg" },
     { id: 20, title: "Pathaan", img: "https://i.ibb.co/QvrhLb1W/MV5-BNTU2-Mz-Zk-NDMt-YTM3-Yy00-Zj-Ey-LTlj-ZDUt-NWZh-YTNj-YWRl-ODc5-Xk-Ey-Xk-Fqc-Gc-V1.jpg" },
 
     // --- 21 to 40: HOLLYWOOD ACTION ---
