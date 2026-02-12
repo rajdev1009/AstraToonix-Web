@@ -79,11 +79,20 @@
             <div class="modal-body">
                 <div class="product-summary">
                     <h2 id="modalProductName">PRODUCT NAME</h2>
-                    <div class="price-tag" id="modalProductPrice">₹000</div>
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Rate (Per Item):</span>
+                            <span id="modalProductPrice" style="color: #ccc;">₹0</span>
+                        </div>
+                        <div class="price-row total-row">
+                            <span>TOTAL PAYABLE:</span>
+                            <span id="totalPriceDisplay" class="glowing-price">₹0</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label><i class="fas fa-ruler-combined"></i> Size & Color</label>
+                    <label><i class="fas fa-ruler-combined"></i> Select Options</label>
                     <div class="variant-row">
                         <select id="prodSize" class="neon-input">
                             <option value="Free Size">Size: Free Size</option>
@@ -102,21 +111,24 @@
 
                 <div class="form-group">
                     <label><i class="fas fa-layer-group"></i> Quantity</label>
-                    <div class="qty-control">
-                        <button onclick="updateQty(-1)">-</button>
-                        <span id="qtyDisplay">1</span>
-                        <button onclick="updateQty(1)">+</button>
+                    <div class="qty-control-panel">
+                        <div class="qty-btn-group">
+                            <button onclick="updateQty(-1)">-</button>
+                            <span id="qtyDisplay">1</span>
+                            <button onclick="updateQty(1)">+</button>
+                        </div>
+                        <span style="font-size:0.8rem; color:#666;">(Adjust Qty)</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label><i class="fas fa-user"></i> Your Details</label>
+                    <label><i class="fas fa-user"></i> Delivery Details</label>
                     <input type="text" id="custName" class="neon-input" placeholder="Full Name" required>
-                    <textarea id="custAddress" class="neon-input" rows="2" placeholder="Full Address (House No, Area, City, Pincode)" required></textarea>
+                    <textarea id="custAddress" class="neon-input" rows="2" placeholder="Full Address (House No, City, Pincode)" required></textarea>
                 </div>
 
                 <button class="mega-confirm-btn" onclick="confirmOrder()">
-                    <span>PLACE ORDER NOW</span>
+                    <span id="btnText">CONFIRM ORDER</span>
                     <i class="fab fa-whatsapp"></i>
                 </button>
             </div>
