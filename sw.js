@@ -1,12 +1,16 @@
-const CACHE_NAME = 'astratoonix-v3'; // Version change kar diya
+const CACHE_NAME = 'astratoonix-v4'; // Version v4 kar diya hai
 const ASSETS = [
     './', 
     './index.html', 
-    './shop.html',       // Shop page add kiya
-    './shop-data.js',    // New data file add ki
+    './shop.html',       
+    './shop-data.js',    
     './style.css', 
     './script.js', 
-    './logo.png'
+    './logo.png',
+    // Ye 3 nayi files add ki hain:
+    './shop-style.css',  
+    './shop-script.js',  
+    './games.js'
 ];
 
 self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS))));
