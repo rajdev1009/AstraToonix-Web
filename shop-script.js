@@ -1,180 +1,217 @@
-// CONFIG
+// ===========================================
+// 1. CONFIGURATION
+// ===========================================
 const SELLER_WHATSAPP = "919395744401"; 
 const BOT_TOKEN = "8546441412:AAHaEQ0PEnJeoDuDAyfDEL_qbv4kWI1IkmU";
 const CHAT_ID = "-1003766501173";
 
-// STATE
+// STATE VARIABLES
 let cart = [];
-let currentProduct = {}; 
+let currentProduct = {};
 let currentQty = 1;
+let selectedSize = 'S'; 
+let selectedColor = 'Default';
+let orderMode = 'single'; // Can be 'single' or 'cart'
 
-// --- 1. RENDER GRID (With Cart, Heart, Share, Timer) ---
+// ===========================================
+// 2. INITIALIZATION
+// ===========================================
+window.onload = () => {
+    if(typeof products !== 'undefined') renderGrid(products);
+    
+    // Slider Logic
+    const slider = document.getElementById('heroSlider');
+    if(slider && products) {
+        slider.innerHTML = products.slice(0,5).map((p,i) => 
+            `<div class="slide ${i===0?'active':''}" style="background-image:linear-gradient(to top,#000,transparent),url('${p.img}')"></div>`
+        ).join('');
+        let cur = 0; const slides = document.querySelectorAll('.slide');
+        setInterval(() => { slides[cur].classList.remove('active'); cur=(cur+1)%slides.length; slides[cur].classList.add('active'); }, 4000);
+    }
+    
+    startTimer();
+    updateCartCount();
+    
+    // Fake Notification
+    setInterval(() => {
+        const p = products[Math.floor(Math.random()*products.length)];
+        const n = document.getElementById('notificationPopup');
+        if(n) { document.getElementById('notifImg').src = p.img; document.getElementById('notifText').innerHTML = `Someone ordered<br>${p.name}`; n.style.left="20px"; setTimeout(()=>n.style.left="-350px", 4000); }
+    }, 10000);
+};
+
+// ===========================================
+// 3. HOME GRID RENDER (With Heart & Share)
+// ===========================================
 function renderGrid(items) {
     const grid = document.getElementById('grid');
     if(!grid) return;
-    
     grid.innerHTML = items.map(p => {
         const safeName = p.name.replace(/'/g, "\\'");
-        const discount = Math.floor(Math.random() * 40) + 10;
-        const rating = (Math.random() * (5.0 - 4.2) + 4.2).toFixed(1);
+        const discount = Math.floor(Math.random()*40)+10;
         const oldPrice = '₹' + Math.floor(parseInt(p.price.replace(/\D/g,'')) * 1.4);
-
+        
         return `
         <div class="product-card">
             <div class="discount-badge">-${discount}% OFF</div>
-            
+            <div class="id-badge">#${p.id}</div>
             <div class="img-box">
-                <img src="${p.img}" onclick="openImageModal('${p.img}')" alt="${p.name}">
-                
+                <img src="${p.img}" alt="${p.name}" onclick="openProductPage('${p.id}', '${safeName}', '${p.price}', '${p.img}')">
                 <div class="card-actions">
-                    <div class="action-btn heart" onclick="toggleHeart(this)"><i class="far fa-heart"></i></div>
-                    <div class="action-btn share" onclick="shareProduct('${safeName}', '${p.price}')"><i class="fas fa-share-alt"></i></div>
+                    <div class="action-btn heart" onclick="toggleHeart(this); event.stopPropagation()"><i class="far fa-heart"></i></div>
+                    <div class="action-btn share" onclick="shareProduct('${safeName}', '${p.price}'); event.stopPropagation()"><i class="fas fa-share-alt"></i></div>
                 </div>
-                <div class="id-badge">#${p.id}</div>
             </div>
-            
             <div class="info-box">
-                <div class="rating-box">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    <span>${rating}</span>
-                </div>
+                <div class="rating-box"><i class="fas fa-star"></i> 4.5</div>
                 <div class="p-title">${p.name}</div>
-                <div class="p-price">${p.price} <span style="text-decoration:line-through; color:#666; font-size:0.8rem;">${oldPrice}</span></div>
-                
-                <div class="btn-group">
-                    <button class="cart-btn" onclick="addToCart('${p.id}', '${safeName}', '${p.price}')"><i class="fas fa-plus"></i></button>
-                    <button class="buy-btn" onclick="openOrderModal('${safeName}', '${p.id}', '${p.price}')">BUY NOW</button>
+                <div class="p-price">${p.price} <span>${oldPrice}</span></div>
+                <button class="buy-btn" onclick="openProductPage('${p.id}', '${safeName}', '${p.price}', '${p.img}')">VIEW & BUY</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ===========================================
+// 4. FLIPKART STYLE PAGE LOGIC
+// ===========================================
+function openProductPage(id, name, price, img) {
+    currentProduct = { id, name, price, img };
+    currentQty = 1; selectedSize='S'; selectedColor='Default';
+    
+    document.getElementById('mainAppContainer').classList.add('hidden');
+    document.getElementById('productViewPage').classList.remove('hidden');
+    window.scrollTo(0,0);
+
+    document.getElementById('mainImg').src = img;
+    document.getElementById('pPageId').innerText = `ID: #${id}`;
+    document.getElementById('pPageName').innerText = name;
+    document.getElementById('pPagePrice').innerText = price;
+    
+    let val = parseInt(price.replace(/\D/g,''));
+    document.getElementById('pPageOldPrice').innerText = '₹' + Math.floor(val * 1.5);
+    
+    // Reset Chips
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+    if(document.querySelector('#sizeChips .chip')) document.querySelector('#sizeChips .chip').classList.add('selected');
+    if(document.querySelector('#colorChips .chip')) document.querySelector('#colorChips .chip').classList.add('selected');
+}
+
+function closeProductPage() {
+    document.getElementById('productViewPage').classList.add('hidden');
+    document.getElementById('mainAppContainer').classList.remove('hidden');
+}
+
+function selectSize(el, s) { document.querySelectorAll('#sizeChips .chip').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); selectedSize=s; }
+function selectColor(el, c) { document.querySelectorAll('#colorChips .chip').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); selectedColor=c; }
+
+// ===========================================
+// 5. UNIVERSAL MODAL LOGIC (The Magic Part)
+// ===========================================
+function openUniversalModal(mode) {
+    orderMode = mode; // 'single' or 'cart'
+    const modalContent = document.getElementById('orderContent');
+    const totalDisplay = document.getElementById('finalTotalDisplay');
+    
+    if (mode === 'cart') {
+        if(cart.length === 0) return alert("Your Cart is Empty!");
+        
+        // Render Cart List
+        let total = 0;
+        let html = '<div style="max-height:200px; overflow-y:auto;">';
+        cart.forEach((item, index) => {
+            let p = parseInt(item.price.replace(/\D/g,''));
+            total += p;
+            html += `
+            <div class="order-summary-item">
+                <div>
+                    <strong style="color:white;">${item.name}</strong><br>
+                    <span style="color:#888; font-size:0.8rem;">Size: ${item.size} | Color: ${item.color}</span>
                 </div>
+                <div style="text-align:right;">
+                    <span style="color:var(--accent-color);">${item.price}</span>
+                    <i class="fas fa-trash" style="color:red; margin-left:10px; cursor:pointer;" onclick="removeItem(${index})"></i>
+                </div>
+            </div>`;
+        });
+        html += '</div>';
+        modalContent.innerHTML = html;
+        totalDisplay.innerText = "₹" + total;
+        
+    } else {
+        // Render Single Item
+        let p = parseInt(currentProduct.price.replace(/\D/g,''));
+        let total = p * currentQty;
+        
+        modalContent.innerHTML = `
+        <div style="text-align:center; padding:10px;">
+            <h3 style="color:var(--accent-color); margin:0;">${currentProduct.name}</h3>
+            <p style="color:#aaa;">ID: #${currentProduct.id} | Size: ${selectedSize} | Color: ${selectedColor}</p>
+            <div class="qty-control-panel">
+                <button onclick="updateQty(-1)">-</button>
+                <span id="uniQty">${currentQty}</span>
+                <button onclick="updateQty(1)">+</button>
             </div>
         </div>`;
-    }).join('');
-}
-
-// --- 2. CART SYSTEM LOGIC ---
-function addToCart(id, name, price) {
-    cart.push({ id, name, price });
-    updateCartCount();
-    
-    // Animation effect
-    const btn = event.target;
-    btn.innerHTML = '<i class="fas fa-check"></i>';
-    setTimeout(() => btn.innerHTML = '<i class="fas fa-plus"></i>', 1000);
-}
-
-function updateCartCount() {
-    document.getElementById('cartCount').innerText = cart.length;
-    document.getElementById('cartItemCount').innerText = cart.length;
-}
-
-function toggleCartModal() {
-    const modal = document.getElementById('cartModal');
-    modal.classList.toggle('hidden');
-    renderCartList();
-}
-
-function renderCartList() {
-    const list = document.getElementById('cartItemsList');
-    if(cart.length === 0) {
-        list.innerHTML = '<p style="text-align:center; color:#888; padding:20px;">Cart is empty!</p>';
-        document.getElementById('cartTotalDisplay').innerText = "₹0";
-        return;
+        totalDisplay.innerText = "₹" + total;
     }
-
-    let total = 0;
-    list.innerHTML = cart.map((item, index) => {
-        const val = parseInt(item.price.replace(/\D/g,''));
-        total += val;
-        return `
-        <div class="cart-item">
-            <div>
-                <div style="color:white; font-size:0.9rem;">${item.name}</div>
-                <div style="color:#25D366; font-size:0.8rem;">${item.price}</div>
-            </div>
-            <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="removeFromCart(${index})"></i>
-        </div>`;
-    }).join('');
     
-    document.getElementById('cartTotalDisplay').innerText = "₹" + total;
+    document.getElementById('universalModal').classList.remove('hidden');
 }
 
-function removeFromCart(index) {
+function closeModal() { document.getElementById('universalModal').classList.add('hidden'); }
+
+// Quantity Logic for Single Order inside Universal Modal
+function updateQty(v) {
+    if(orderMode === 'cart') return; // Qty only for single buy now
+    currentQty = Math.max(1, currentQty + v);
+    document.getElementById('uniQty').innerText = currentQty;
+    
+    let p = parseInt(currentProduct.price.replace(/\D/g,''));
+    document.getElementById('finalTotalDisplay').innerText = "₹" + (p * currentQty);
+}
+
+function removeItem(index) {
     cart.splice(index, 1);
     updateCartCount();
-    renderCartList();
+    if(cart.length === 0) closeModal();
+    else openUniversalModal('cart'); // Re-render
 }
 
-function checkoutCart() {
-    const name = document.getElementById('cartName').value;
-    const addr = document.getElementById('cartAddress').value;
-    if(!name || !addr || cart.length === 0) return alert("Cart empty or details missing!");
-
-    let msg = `*🛒 CART ORDER (AstraToonix)*\n👤 *${name}*\n🏠 *${addr}*\n━━━━━━━━━━━━━━━━\n`;
-    let total = 0;
-    cart.forEach(item => {
-        msg += `▪️ ${item.name} (${item.price})\n`;
-        total += parseInt(item.price.replace(/\D/g,''));
-    });
-    msg += `━━━━━━━━━━━━━━━━\n💰 *GRAND TOTAL: ₹${total}*`;
-
-    sendToSeller(msg);
-}
-
-// --- 3. PRO FEATURES (Timer, Heart, Share) ---
-function startTimer() {
-    // 3 hours countdown
-    let time = 3 * 60 * 60; 
-    setInterval(() => {
-        const h = Math.floor(time / 3600);
-        const m = Math.floor((time % 3600) / 60);
-        const s = time % 60;
-        document.getElementById('countdownTimer').innerText = 
-            `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-        time--;
-        if(time < 0) time = 3 * 60 * 60; // Reset loop
-    }, 1000);
-}
-
-function toggleHeart(btn) {
-    btn.classList.toggle('active');
-    const icon = btn.querySelector('i');
-    if(btn.classList.contains('active')) {
-        icon.classList.remove('far'); icon.classList.add('fas');
-    } else {
-        icon.classList.remove('fas'); icon.classList.add('far');
-    }
-}
-
-function shareProduct(name, price) {
-    const text = `Check out this ${name} for only ${price} at AstraToonix!`;
-    const url = window.location.href;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`, '_blank');
-}
-
-// --- 4. EXISTING SINGLE BUY LOGIC ---
-function openOrderModal(name, id, price) {
-    currentProduct = { name, id, price }; currentQty = 1;
-    document.getElementById('modalProdId').innerText = `ID: #${id}`;
-    document.getElementById('modalProductName').innerText = name;
-    updateSingleTotal();
-    document.getElementById('orderModal').classList.remove('hidden');
-}
-function closeOrderModal() { document.getElementById('orderModal').classList.add('hidden'); }
-function updateQty(v) { currentQty = Math.max(1, currentQty + v); document.getElementById('qtyDisplay').innerText = currentQty; updateSingleTotal(); }
-function updateSingleTotal() {
-    const p = parseInt(currentProduct.price.replace(/\D/g,''));
-    document.getElementById('totalPriceDisplay').innerText = "₹" + (p * currentQty);
-}
-function confirmOrder() {
+// ===========================================
+// 6. UNIFIED CONFIRM ORDER (Smart Message)
+// ===========================================
+function confirmUnifiedOrder() {
     const name = document.getElementById('custName').value;
     const addr = document.getElementById('custAddress').value;
-    if(!name || !addr) return alert("Fill Details!");
-    const total = parseInt(currentProduct.price.replace(/\D/g,'')) * currentQty;
-    
-    const msg = `*🆔 ID: #${currentProduct.id}*\n*🆕 SINGLE ORDER*\n👤 ${name}\n🏠 ${addr}\n🛒 ${currentProduct.name}\n🔢 Qty: ${currentQty}\n💰 *PAY: ₹${total}*`;
-    sendToSeller(msg);
-}
+    if(!name || !addr) return alert("Please enter Name & Address!");
 
-function sendToSeller(msg) {
+    let msg = `*🆕 NEW ASTRATOONIX ORDER*\n----------------------\n👤 *Name:* ${name}\n🏠 *Address:* ${addr}\n----------------------\n`;
+    let grandTotal = 0;
+
+    if (orderMode === 'single') {
+        // --- SINGLE ITEM FORMAT ---
+        let total = parseInt(currentProduct.price.replace(/\D/g,'')) * currentQty;
+        grandTotal = total;
+        
+        msg += `🛒 *Item:* ${currentProduct.name}\n`;
+        msg += `🆔 *ID:* #${currentProduct.id}\n`;
+        msg += `📏 *Size:* ${selectedSize} | 🎨 *Color:* ${selectedColor}\n`;
+        msg += `🔢 *Qty:* ${currentQty}\n`;
+        msg += `💰 *Price:* ${currentProduct.price}\n`;
+        
+    } else {
+        // --- CART LIST FORMAT ---
+        cart.forEach(item => {
+            let p = parseInt(item.price.replace(/\D/g,''));
+            grandTotal += p;
+            msg += `▪️ ${item.name} (${item.size}/${item.color}) - ${item.price}\n`;
+        });
+    }
+
+    msg += `----------------------\n💰 *GRAND TOTAL: ₹${grandTotal}*`;
+
+    // Send Message
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({chat_id: CHAT_ID, text: msg, parse_mode: 'Markdown'})
@@ -182,31 +219,39 @@ function sendToSeller(msg) {
     window.location.href = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
-// UTILS
-function openImageModal(src) { document.getElementById('previewImage').src = src; document.getElementById('imageModal').classList.remove('hidden'); }
-function closeImageModal() { document.getElementById('imageModal').classList.add('hidden'); }
-function toggleChatbot() { document.getElementById('chatWindow').classList.toggle('hidden'); }
-function toggleGameModal() { document.getElementById('gameModal').classList.toggle('hidden'); }
-function searchProducts() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    renderGrid(products.filter(p => p.name.toLowerCase().includes(q) || p.id == q.replace('#','')));
+// ===========================================
+// 7. UTILITIES
+// ===========================================
+function addToCartFromPage() {
+    cart.push({ ...currentProduct, size: selectedSize, color: selectedColor });
+    updateCartCount();
+    const btn = document.querySelector('.cart-action');
+    const old = btn.innerText; btn.innerText="ADDED ✔"; setTimeout(()=>btn.innerText=old, 1500);
 }
 
-window.onload = () => {
-    if(typeof products !== 'undefined') { renderGrid(products); }
-    // Slider Logic
-    const slider = document.getElementById('heroSlider');
-    if(slider && products) {
-        slider.innerHTML = products.slice(0,5).map((p,i) => `<div class="slide ${i===0?'active':''}" style="background-image:linear-gradient(to top,#000,transparent),url('${p.img}')"></div>`).join('');
-        let cur = 0; const slides = document.querySelectorAll('.slide');
-        setInterval(() => { slides[cur].classList.remove('active'); cur=(cur+1)%slides.length; slides[cur].classList.add('active'); }, 4000);
-    }
-    startTimer();
-    setInterval(() => { // Fake Notif
-        const p = products[Math.floor(Math.random()*products.length)];
-        const n = document.getElementById('notificationPopup');
-        document.getElementById('notifImg').src = p.img;
-        document.getElementById('notifText').innerHTML = `Someone ordered<br>${p.name}`;
-        n.style.left="20px"; setTimeout(()=>n.style.left="-350px", 4000);
-    }, 10000);
-};
+function updateCartCount() {
+    document.getElementById('cartCount').innerText = cart.length;
+    if(document.getElementById('pPageCartCount')) document.getElementById('pPageCartCount').innerText = cart.length;
+}
+
+function toggleHeart(btn) {
+    btn.classList.toggle('active');
+    const i = btn.querySelector('i');
+    if(btn.classList.contains('active')) { i.classList.remove('far'); i.classList.add('fas'); i.style.color='red'; }
+    else { i.classList.remove('fas'); i.classList.add('far'); i.style.color='white'; }
+}
+
+function shareProduct(n, p) { window.open(`https://wa.me/?text=${encodeURIComponent('Check: '+n+' for '+p)}`, '_blank'); }
+
+function startTimer() {
+    let t=9000; setInterval(()=>{ t--; let h=Math.floor(t/3600), m=Math.floor((t%3600)/60), s=t%60; document.getElementById('countdownTimer').innerText=`${h}:${m}:${s}`; if(t<0)t=9000; }, 1000);
+}
+
+// Toggles
+function toggleChatbot() { document.getElementById('chatWindow').classList.toggle('hidden'); }
+function toggleGameModal() { document.getElementById('gameModal').classList.toggle('hidden'); }
+function toggleCartModal() { openUniversalModal('cart'); } // Connects Cart Icon to Universal Modal
+function showGameMenu() { document.getElementById('tttGame').classList.add('hidden'); document.getElementById('chessGame').classList.add('hidden'); }
+function searchProducts() { const q=document.getElementById('searchInput').value.toLowerCase(); renderGrid(products.filter(p=>p.name.toLowerCase().includes(q)||p.id==q.replace('#',''))); }
+function toggleTheme() { document.body.classList.toggle('light-mode'); }
+function closeImageModal() { document.getElementById('imageModal').classList.add('hidden'); }
