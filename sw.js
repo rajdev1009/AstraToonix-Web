@@ -1,8 +1,9 @@
-const CACHE_NAME = 'astratoonix-v5';
+const CACHE_NAME = 'astratoonix-v6'; // Version badha diya
 const ASSETS = [
     './', 
     './index.html', 
-    './shop.html',       
+    './shop.html',
+    './shop-data.js', // Is line ko add kiya hai     
     './style.css', 
     './script.js', 
     './shop-style.css',  
