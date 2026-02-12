@@ -32,7 +32,7 @@ header { background: var(--card-bg); padding: 10px 15px; position: sticky; top: 
 
 .search-box input { width: 100%; padding: 12px 15px; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 25px; color: var(--text-color); outline: none; }
 
-/* 10-ITEM HERO SLIDER */
+/* 10 PIECE SLIDER */
 .hero-slider { width: 100%; height: 300px; position: relative; overflow: hidden; margin-bottom: 20px; background: #000; border-bottom: 3px solid var(--accent-color); }
 .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 1s ease-in-out; background-size: contain; background-position: center; background-repeat: no-repeat; }
 .slide.active { opacity: 1; }
@@ -43,23 +43,32 @@ header { background: var(--card-bg); padding: 10px 15px; position: sticky; top: 
 @media (min-width: 600px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
 
 .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; position: relative; transition: 0.2s; }
-.img-box { width: 100%; height: 150px; overflow: hidden; }
+.img-box { width: 100%; height: 160px; overflow: hidden; }
 .img-box img { width: 100%; height: 100%; object-fit: cover; }
 .info-box { padding: 10px; text-align: center; }
 .p-title { font-size: 0.85rem; height: 32px; overflow: hidden; color: var(--text-color); }
 .p-price { color: var(--accent-color); font-weight: bold; font-size: 1rem; }
 
-/* RGB CHATBOT GLOW */
+/* RGB CHATBOT BUTTON */
 @keyframes rgbGlow {
     0% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
     33% { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
     66% { border-color: #0000ff; box-shadow: 0 0 10px #0000ff; }
     100% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
 }
-.chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; border-radius: 50%; border: 3px solid #fff; z-index: 200; cursor: pointer; animation: rgbGlow 3s linear infinite; }
+.chat-float-btn { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; border-radius: 50%; border: 3px solid #fff; z-index: 200; cursor: pointer; animation: rgbGlow 3s linear infinite; display: flex; align-items: center; justify-content: center; background: #000; overflow: hidden; }
+.chat-float-btn img { width: 100%; height: 100%; object-fit: cover; }
 
 /* NOTIFICATION */
 .notification-popup { position: fixed; bottom: 20px; left: -350px; background: var(--card-bg); border-left: 4px solid var(--accent-color); padding: 12px; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.5s; z-index: 250; display: flex; align-items: center; gap: 10px; width: 250px; }
 .notification-popup img { width: 45px; height: 45px; border-radius: 4px; object-fit: cover; }
 
 .hidden { display: none !important; }
+
+/* MODALS */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 300; display: flex; align-items: center; justify-content: center; }
+.modal-content { background: var(--card-bg); width: 92%; max-width: 400px; border-radius: 15px; border: 1px solid var(--accent-color); overflow: hidden; }
+.modal-header { background: var(--accent-color); padding: 15px; color: #000; font-weight: bold; display: flex; justify-content: space-between; }
+.qty-box { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: var(--bg-color); border-radius: 8px; margin-bottom: 15px; }
+.qty-btn { width: 35px; height: 35px; border-radius: 50%; border: none; background: var(--accent-color); color: #000; font-weight: bold; cursor: pointer; }
+.confirm-btn { background: var(--accent-color); color: #000; border: none; padding: 14px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
