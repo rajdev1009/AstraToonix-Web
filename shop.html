@@ -20,10 +20,12 @@
         <div class="header-top">
             <a href="index.html" class="back-home-btn"><i class="fas fa-arrow-left"></i> Home</a>
             <div class="social-bar">
+                <a href="#" class="social-icon" style="background:#333; border:1px solid #555;"><i class="fas fa-shopping-cart"></i></a>
+                
+                <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
+
                 <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
                 <a href="https://youtube.com/@astratoonix?si=KBw-c3A1Y9y5TbdN" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.instagram.com/itz_dminem_official43" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/share/1Db4mRv1pj/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
             </div>
         </div>
         <div class="search-box">
@@ -34,8 +36,24 @@
     <div id="heroSlider" class="hero-slider"></div>
 
     <div class="shop-container">
-        <h3 style="border-left: 4px solid #25D366; padding-left: 10px; margin-top: 20px;">Premium Collection</h3>
+        <div class="filter-container">
+            <span class="filter-btn active" onclick="filterProducts('all')">All</span>
+            <span class="filter-btn" onclick="filterProducts('watch')">Watches</span>
+            <span class="filter-btn" onclick="filterProducts('shoe')">Shoes</span>
+            <span class="filter-btn" onclick="filterProducts('shirt')">Clothes</span>
+            <span class="filter-btn" onclick="filterProducts('gadget')">Gadgets</span>
+        </div>
+        
+        <h3 style="border-left: 4px solid #25D366; padding-left: 10px; margin-top: 15px;">Premium Collection</h3>
         <div class="product-grid" id="grid"></div>
+    </div>
+
+    <div id="notificationPopup" class="notification-popup">
+        <img id="notifImg" src="" alt="Product">
+        <div style="flex:1;">
+            <span id="notifText" class="notify-text"></span>
+            <span class="notify-time">Just now</span>
+        </div>
     </div>
 
     <div class="chat-float-btn" onclick="toggleChatbot()">
@@ -69,7 +87,6 @@
                             <option value="M">Size: M</option>
                             <option value="L">Size: L</option>
                             <option value="XL">Size: XL</option>
-                            <option value="XXL">Size: XXL</option>
                         </select>
                         <select id="prodColor">
                             <option value="As Shown">Color: As Shown</option>
@@ -81,8 +98,8 @@
                     </div>
 
                     <div class="qty-box">
-                        <span style="color:#ccc;">Quantity:</span>
-                        <div class="qty-controls">
+                        <span style="color:#888;">Quantity:</span>
+                        <div class="qty-controls" style="display:flex; gap:10px; align-items:center;">
                             <button class="qty-btn" onclick="updateQty(-1)">-</button>
                             <span id="qtyDisplay" class="qty-val">1</span>
                             <button class="qty-btn" onclick="updateQty(1)">+</button>
@@ -136,4 +153,5 @@
     <script src="shop-script.js"></script>
 
 </body>
-</html>
+    </html>
+    
