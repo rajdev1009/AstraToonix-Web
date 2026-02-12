@@ -35,13 +35,13 @@ const moviesDB = [
     { id: 11, title: "Kalki 2898 AD", img: "https://i.ibb.co/jk6f1mHZ/Kalki-2898-AD.jpg" },
     { id: 12, title: "Stree 2", img: "https://i.ibb.co/JFbwfpQ5/images-1.jpg" }, 
     { id: 13, title: "Animal", img: "https://i.ibb.co/Cp9VRNQC/Animal-2023-film-poster.jpg" },
-    { id: 14, title: "Jawan", img: "https://i.ibb.co/sdFxpW6z/images-2.jpg" },
-    { id: 15, title: "Salaar: Part 1 – Ceasefire", img: "https://ibb.co/0VGfCnPQ" }, 
+    { id: 14, title: "Dhurandhar", img: "https://i.ibb.co/5XR54QST/MV5-BMz-Fi-NTVk-Zj-Yt-M2-I3-Yi00-MGNj-LWEy-YTAt-MGVi-NGEx-Zm-Mz-MGMz-Xk-Ey-Xk-Fqc-Gc-V1.jpg" },
+    { id: 15, title: "Salaar: Part 1 – Ceasefire", img: "https://i.ibb.co/FqgS9W9K/MV5-BYz-U2-Mz-Zi-OTEt-ZTgw-OS00-MTdl-LWJm-MDQt-Njdj-OGIx-YTA0-NTYx-Xk-Ey-Xk-Fqc-Gc-V1-1.jpg" }, 
     { id: 16, title: "Leo", img: "/pD6sL4vntUOXHmuvJPPZAgvyfd9.jpg" },
-    { id: 17, title: "K.G.F: Chapter 2", img: "https://ibb.co/LDDMgbN1" }, 
-    { id: 18, title: "RRR", img: "https://ibb.co/cSwqzqwc" },
+    { id: 17, title: "K.G.F: Chapter 2", img: "https://i.ibb.co/nsppWJ4Y/MV5-BZm-Qz-Zj-Vk-ZTUt-Yj-I4-ZC00-ZDJm-LWI0-ZDUt-ZTFm-MGM1-Mzc5-Zj-Iy-Xk-Ey-Xk-Fqc-Gc-V1-FMjpg-UX1000.jpg" }, 
+    { id: 18, title: "Border 2", img: "https://i.ibb.co/LzHYJ5sc/images.jpg" },
     { id: 19, title: "Pushpa 2: The Rule", img: "https://ibb.co/4gsLX3Hh" },
-    { id: 20, title: "Pathaan", img: "https://ibb.co/dswM1MCN" },
+    { id: 20, title: "Pathaan", img: "https://i.ibb.co/QvrhLb1W/MV5-BNTU2-Mz-Zk-NDMt-YTM3-Yy00-Zj-Ey-LTlj-ZDUt-NWZh-YTNj-YWRl-ODc5-Xk-Ey-Xk-Fqc-Gc-V1.jpg" },
 
     // --- 21 to 40: HOLLYWOOD ACTION ---
     { id: 21, title: "Black Panther", img: "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg" },
