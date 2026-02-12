@@ -1,15 +1,30 @@
-const CACHE_NAME = 'astratoonix-v6'; // Version badha diya
+const CACHE_NAME = 'astratoonix-v15';
 const ASSETS = [
     './', 
     './index.html', 
     './shop.html',
-    './shop-data.js', // Is line ko add kiya hai     
-    './style.css', 
-    './script.js', 
-    './shop-style.css',  
-    './shop-script.js',  
+    './style.css',
+    './shop-style.css',
+    './script.js',
+    './shop-script.js',
+    './shop-data.js',
+    './games.js',
+    './manifest.json',
     './logo.png'
 ];
 
-self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS))));
-self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))));
+self.addEventListener('install', e => {
+    e.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.addAll(ASSETS);
+        })
+    );
+});
+
+self.addEventListener('fetch', e => {
+    e.respondWith(
+        caches.match(e.request).then(response => {
+            return response || fetch(e.request);
+        })
+    );
+});
