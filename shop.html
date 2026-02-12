@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AstraToonix - Premium Store</title>
+    <title>AstraToonix - Amazon Pro</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="shop-style.css">
@@ -17,16 +17,14 @@
 
     <header>
         <div class="header-top">
-            <a href="index.html" class="nav-home-btn">
-                <i class="fas fa-home"></i> HOME
-            </a>
-
+            <a href="index.html" class="nav-home-btn"><i class="fas fa-home"></i></a>
             <div class="brand-title rgb-text">AstraToonix</div>
             
             <div class="social-bar">
-                <a href="https://www.facebook.com/share/188TWR8ZdD/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
-                <a href="https://youtube.com/@astratoonix" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
+                <div class="cart-icon-box" onclick="toggleCartModal()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount">0</span>
+                </div>
                 
                 <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
                 <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
@@ -34,16 +32,21 @@
         </div>
         
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+            <input type="text" id="searchInput" placeholder="Search Product or #ID..." onkeyup="searchProducts()">
             <i class="fas fa-search search-icon"></i>
         </div>
     </header>
 
     <div id="heroSlider" class="hero-slider"></div>
 
+    <div class="flash-sale-strip">
+        <span>⚡ FLASH SALE ENDS IN: </span>
+        <span id="countdownTimer">02:45:30</span>
+    </div>
+
     <div class="shop-container">
         <div class="section-title">
-            <h3><i class="fas fa-crown"></i> Premium Collection</h3>
+            <h3><i class="fas fa-fire"></i> Trending Deals</h3>
             <div class="line"></div>
         </div>
         <div class="product-grid" id="grid"></div>
@@ -60,7 +63,6 @@
     <div class="chat-float-btn" onclick="toggleChatbot()">
         <img src="https://i.ibb.co/kY1Nyzs/1765464889401-2.jpg" alt="AI Chat">
     </div>
-
     <div class="chat-window hidden" id="chatWindow">
         <div class="chat-header">
             <span>🤖 Assistant</span>
@@ -69,103 +71,84 @@
         <iframe src="https://high-rhinoceros-dminemraj-83bdb398.koyeb.app/" title="Chatbot"></iframe>
     </div>
 
+    <div id="cartModal" class="modal-overlay hidden">
+        <div class="modal-content glass-modal large-modal">
+            <div class="modal-header-fancy">
+                <span>MY CART (<span id="cartItemCount">0</span>)</span>
+                <i class="fas fa-times-circle close-btn" onclick="toggleCartModal()"></i>
+            </div>
+            <div class="modal-body">
+                <div id="cartItemsList" class="cart-list-container">
+                    <p style="text-align:center; color:#888;">Your cart is empty.</p>
+                </div>
+                
+                <div class="cart-total-section">
+                    <span>Total:</span>
+                    <span id="cartTotalDisplay">₹0</span>
+                </div>
+
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="text" id="cartName" class="neon-input" placeholder="Your Name" required>
+                    <textarea id="cartAddress" class="neon-input" rows="2" placeholder="Full Address" required></textarea>
+                </div>
+
+                <button class="mega-confirm-btn" onclick="checkoutCart()">
+                    ORDER ALL NOW <i class="fab fa-whatsapp"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div id="orderModal" class="modal-overlay hidden">
         <div class="modal-content glass-modal">
             <div class="modal-header-fancy">
                 <span>CONFIRM ORDER</span>
                 <i class="fas fa-times-circle close-btn" onclick="closeOrderModal()"></i>
             </div>
-            
             <div class="modal-body">
                 <div class="product-summary">
+                    <div class="modal-id-badge" id="modalProdId">ID: #00</div>
                     <h2 id="modalProductName">PRODUCT NAME</h2>
                     <div class="price-breakdown">
-                        <div class="price-row">
-                            <span>Rate (Per Item):</span>
-                            <span id="modalProductPrice" style="color: #ccc;">₹0</span>
-                        </div>
                         <div class="price-row total-row">
-                            <span>TOTAL PAYABLE:</span>
+                            <span>TOTAL:</span>
                             <span id="totalPriceDisplay" class="glowing-price">₹0</span>
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label><i class="fas fa-ruler-combined"></i> Select Options</label>
-                    <div class="variant-row">
-                        <select id="prodSize" class="neon-input">
-                            <option value="Free Size">Size: Free Size</option>
-                            <option value="S">S - Small</option>
-                            <option value="M">M - Medium</option>
-                            <option value="L">L - Large</option>
-                            <option value="XL">XL - Extra Large</option>
-                        </select>
-                        <select id="prodColor" class="neon-input">
-                            <option value="As Shown">Color: Default</option>
-                            <option value="Black">Black</option>
-                            <option value="White">White</option>
-                        </select>
-                    </div>
+                <div class="qty-control-panel">
+                    <button onclick="updateQty(-1)">-</button>
+                    <span id="qtyDisplay">1</span>
+                    <button onclick="updateQty(1)">+</button>
                 </div>
-
                 <div class="form-group">
-                    <label><i class="fas fa-layer-group"></i> Quantity</label>
-                    <div class="qty-control-panel">
-                        <div class="qty-btn-group">
-                            <button onclick="updateQty(-1)">-</button>
-                            <span id="qtyDisplay">1</span>
-                            <button onclick="updateQty(1)">+</button>
-                        </div>
-                        <span style="font-size:0.8rem; color:#666;">(Adjust Qty)</span>
-                    </div>
+                    <input type="text" id="custName" class="neon-input" placeholder="Name">
+                    <textarea id="custAddress" class="neon-input" rows="2" placeholder="Address"></textarea>
                 </div>
-
-                <div class="form-group">
-                    <label><i class="fas fa-user"></i> Delivery Details</label>
-                    <input type="text" id="custName" class="neon-input" placeholder="Full Name" required>
-                    <textarea id="custAddress" class="neon-input" rows="2" placeholder="Full Address (House No, City, Pincode)" required></textarea>
-                </div>
-
                 <button class="mega-confirm-btn" onclick="confirmOrder()">
-                    <span id="btnText">CONFIRM ORDER</span>
-                    <i class="fab fa-whatsapp"></i>
+                    <span id="btnText">CONFIRM</span> <i class="fab fa-whatsapp"></i>
                 </button>
             </div>
         </div>
     </div>
 
     <div id="imageModal" class="modal-overlay hidden" style="z-index: 400;">
-        <div class="modal-content" style="background:transparent; border:none; box-shadow:none; text-align:center;">
-            <i class="fas fa-times" onclick="closeImageModal()" style="position:absolute; top:20px; right:20px; color:white; font-size:2rem; cursor:pointer; z-index:401;"></i>
-            <img id="previewImage" src="" style="width:100%; max-height:60vh; object-fit:contain; border-radius:10px; border: 2px solid #25D366; box-shadow: 0 0 20px #25D366;">
-            <br>
-            <h3 id="previewTitle" style="color:white; margin: 10px 0;"></h3>
-            <button id="previewBuyBtn" class="mega-confirm-btn" style="width:200px; margin-top:10px;">BUY NOW</button>
+        <div class="modal-content" style="background:transparent; border:none; text-align:center;">
+            <i class="fas fa-times" onclick="closeImageModal()" style="position:absolute; top:20px; right:20px; color:white; font-size:2rem; cursor:pointer;"></i>
+            <img id="previewImage" src="" style="width:100%; max-height:60vh; border-radius:10px; border: 2px solid #25D366;">
         </div>
     </div>
 
     <div id="gameModal" class="modal-overlay hidden">
         <div class="modal-content">
-            <div class="modal-header">
-                <span><i class="fas fa-gamepad"></i> Game Zone</span>
-                <i class="fas fa-times" onclick="toggleGameModal()" style="cursor:pointer;"></i>
-            </div>
-            <div class="modal-body">
-                <div id="gameMenu" style="text-align:center; padding: 20px;">
-                    <p style="color:#fff;">Choose a Game:</p>
-                    <button class="buy-btn" onclick="startGame('ttt')" style="margin-bottom:15px; width:100%;">Tic Tac Toe</button>
-                    <button class="buy-btn" onclick="startGame('chess')" style="width:100%;">Chess (Beta)</button>
+            <div class="modal-header"><span>Game Zone</span><i class="fas fa-times" onclick="toggleGameModal()"></i></div>
+            <div class="modal-body" style="text-align:center;">
+                <div id="gameMenu">
+                    <button class="buy-btn" onclick="startGame('ttt')">Tic Tac Toe</button>
+                    <button class="buy-btn" onclick="startGame('chess')">Chess</button>
                 </div>
-                <div id="tttGame" class="hidden" style="text-align:center;">
-                    <div class="ttt-board" id="tttBoard"></div>
-                    <div id="tttStatus" style="margin:15px; color:#25D366; font-weight:bold;">Your Turn!</div>
-                    <button class="buy-btn" onclick="showGameMenu()">Back</button>
-                </div>
-                <div id="chessGame" class="hidden">
-                    <div id="myBoard" style="width: 100%; margin: 0 auto;"></div>
-                    <button class="buy-btn" onclick="showGameMenu()" style="margin-top:15px;">Back</button>
-                </div>
+                <div id="tttGame" class="hidden"><div class="ttt-board" id="tttBoard"></div><div id="tttStatus" style="color:green;"></div><button onclick="showGameMenu()" class="buy-btn">Back</button></div>
+                <div id="chessGame" class="hidden"><div id="myBoard" style="width:100%"></div><button onclick="showGameMenu()" class="buy-btn">Back</button></div>
             </div>
         </div>
     </div>
