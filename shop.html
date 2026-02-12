@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AstraToonix - Shop & Games</title>
+    <title>AstraToonix - Premium Store</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="shop-style.css">
@@ -17,16 +17,25 @@
 
     <header>
         <div class="header-top">
-            <div class="brand-title rgb-text">AstraToonix Shop</div>
+            <a href="index.html" class="nav-home-btn">
+                <i class="fas fa-home"></i> HOME
+            </a>
+
+            <div class="brand-title rgb-text">AstraToonix</div>
+            
             <div class="social-bar">
+                <a href="https://www.facebook.com/share/188TWR8ZdD/" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://www.instagram.com/itz_dminem_official43?igsh=MTZpNGMwOGwwMWl5dA==" target="_blank" class="social-icon insta"><i class="fab fa-instagram"></i></a>
                 <a href="https://youtube.com/@astratoonix" target="_blank" class="social-icon yt"><i class="fab fa-youtube"></i></a>
+                
                 <div onclick="toggleTheme()" class="social-icon theme-btn"><i id="themeIcon" class="fas fa-moon"></i></div>
                 <a href="#" onclick="toggleGameModal()" class="social-icon game"><i class="fas fa-gamepad"></i></a>
             </div>
         </div>
+        
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+            <i class="fas fa-search search-icon"></i>
         </div>
     </header>
 
@@ -34,7 +43,7 @@
 
     <div class="shop-container">
         <div class="section-title">
-            <h3 style="color: #25D366;">Premium Collection</h3>
+            <h3><i class="fas fa-crown"></i> Premium Collection</h3>
             <div class="line"></div>
         </div>
         <div class="product-grid" id="grid"></div>
@@ -42,7 +51,7 @@
 
     <div id="notificationPopup" class="notification-popup">
         <img id="notifImg" src="" alt="Product">
-        <div style="flex:1;">
+        <div>
             <span id="notifText" class="notify-text"></span>
             <span class="notify-time">Just now</span>
         </div>
@@ -61,43 +70,55 @@
     </div>
 
     <div id="orderModal" class="modal-overlay hidden">
-        <div class="modal-content large-modal">
-            <div class="modal-header">
-                <span><i class="fas fa-clipboard-check"></i> Order Details</span>
-                <i class="fas fa-times" onclick="closeOrderModal()" style="cursor:pointer;"></i>
+        <div class="modal-content glass-modal">
+            <div class="modal-header-fancy">
+                <span>CONFIRM ORDER</span>
+                <i class="fas fa-times-circle close-btn" onclick="closeOrderModal()"></i>
             </div>
+            
             <div class="modal-body">
-                <div class="order-form">
-                    <div style="text-align:center; margin-bottom:15px;">
-                        <h2 id="modalProductName" style="color:#25D366; margin:0; text-transform:uppercase;">Product Name</h2>
-                        <span id="modalProductPrice" style="color:#fff; font-size:1.2rem; font-weight:bold;"></span>
-                    </div>
-                    
-                    <div class="variant-row">
-                        <select id="prodSize" class="glow-input">
-                            <option value="Free Size">Size: Free Size</option>
-                            <option value="S">Small</option><option value="M">Medium</option><option value="L">Large</option><option value="XL">Extra Large</option>
-                        </select>
-                        <select id="prodColor" class="glow-input">
-                            <option value="As Shown">Color: As Shown</option>
-                            <option value="Black">Black</option><option value="White">White</option>
-                        </select>
-                    </div>
-
-                    <div class="qty-box">
-                        <span style="color:#ccc;">Quantity:</span>
-                        <div style="display:flex; gap:15px; align-items:center;">
-                            <button class="qty-btn" onclick="updateQty(-1)">-</button>
-                            <span id="qtyDisplay" style="font-size:1.2rem; font-weight:bold;">1</span>
-                            <button class="qty-btn" onclick="updateQty(1)">+</button>
-                        </div>
-                    </div>
-
-                    <input type="text" id="custName" class="glow-input" placeholder="Enter Your Name" required>
-                    <textarea id="custAddress" class="glow-input" rows="3" placeholder="Full Address with Pincode" required></textarea>
-                    
-                    <button class="confirm-btn rgb-btn" onclick="confirmOrder()">Confirm Order <i class="fab fa-whatsapp"></i></button>
+                <div class="product-summary">
+                    <h2 id="modalProductName">PRODUCT NAME</h2>
+                    <div class="price-tag" id="modalProductPrice">₹000</div>
                 </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-ruler-combined"></i> Size & Color</label>
+                    <div class="variant-row">
+                        <select id="prodSize" class="neon-input">
+                            <option value="Free Size">Size: Free Size</option>
+                            <option value="S">S - Small</option>
+                            <option value="M">M - Medium</option>
+                            <option value="L">L - Large</option>
+                            <option value="XL">XL - Extra Large</option>
+                        </select>
+                        <select id="prodColor" class="neon-input">
+                            <option value="As Shown">Color: Default</option>
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-layer-group"></i> Quantity</label>
+                    <div class="qty-control">
+                        <button onclick="updateQty(-1)">-</button>
+                        <span id="qtyDisplay">1</span>
+                        <button onclick="updateQty(1)">+</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Your Details</label>
+                    <input type="text" id="custName" class="neon-input" placeholder="Full Name" required>
+                    <textarea id="custAddress" class="neon-input" rows="2" placeholder="Full Address (House No, Area, City, Pincode)" required></textarea>
+                </div>
+
+                <button class="mega-confirm-btn" onclick="confirmOrder()">
+                    <span>PLACE ORDER NOW</span>
+                    <i class="fab fa-whatsapp"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -108,7 +129,7 @@
             <img id="previewImage" src="" style="width:100%; max-height:60vh; object-fit:contain; border-radius:10px; border: 2px solid #25D366; box-shadow: 0 0 20px #25D366;">
             <br>
             <h3 id="previewTitle" style="color:white; margin: 10px 0;"></h3>
-            <button id="previewBuyBtn" class="buy-btn rgb-btn" style="width:200px; padding:15px; font-size:1.2rem;">ORDER NOW</button>
+            <button id="previewBuyBtn" class="mega-confirm-btn" style="width:200px; margin-top:10px;">BUY NOW</button>
         </div>
     </div>
 
@@ -121,19 +142,17 @@
             <div class="modal-body">
                 <div id="gameMenu" style="text-align:center; padding: 20px;">
                     <p style="color:#fff;">Choose a Game:</p>
-                    <button class="buy-btn" onclick="startGame('ttt')" style="margin-bottom:15px; width:100%;">Tic Tac Toe (X/O)</button>
+                    <button class="buy-btn" onclick="startGame('ttt')" style="margin-bottom:15px; width:100%;">Tic Tac Toe</button>
                     <button class="buy-btn" onclick="startGame('chess')" style="width:100%;">Chess (Beta)</button>
                 </div>
-                
                 <div id="tttGame" class="hidden" style="text-align:center;">
                     <div class="ttt-board" id="tttBoard"></div>
-                    <div id="tttStatus" style="margin:15px; color:#25D366; font-weight:bold; font-size:1.2rem;">Your Turn!</div>
-                    <button class="buy-btn" onclick="showGameMenu()">Exit Game</button>
+                    <div id="tttStatus" style="margin:15px; color:#25D366; font-weight:bold;">Your Turn!</div>
+                    <button class="buy-btn" onclick="showGameMenu()">Back</button>
                 </div>
-
                 <div id="chessGame" class="hidden">
                     <div id="myBoard" style="width: 100%; margin: 0 auto;"></div>
-                    <button class="buy-btn" onclick="showGameMenu()" style="margin-top:15px;">Exit Game</button>
+                    <button class="buy-btn" onclick="showGameMenu()" style="margin-top:15px;">Back</button>
                 </div>
             </div>
         </div>
